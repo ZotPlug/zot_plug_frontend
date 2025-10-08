@@ -7,4 +7,6 @@ Dockerfile
 .git
 tests
 .env*
+lib/**/package.json
+
 
