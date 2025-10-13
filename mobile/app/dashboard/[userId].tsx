@@ -3,9 +3,9 @@ import { useEffect } from "react"
 import { useQuery } from '@tanstack/react-query'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { getAllDevices, validate_jwt } from "@/api_utils/api_actions"   
-// import BasicButton from "ui/components/basic_button"
-// import Category from "ui/components/category"
-import { Category, BasicButton } from 'ui/components'
+import BasicButton from "ui/components/basic_button"
+import Category from "ui/components/category"
+// import { Category, BasicButton } from 'ui/components'
 
 export default function Dashboard() {
   const { userId } = useLocalSearchParams();
