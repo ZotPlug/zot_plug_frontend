@@ -1,13 +1,13 @@
 // web/app/dashboard/[userId]/page.tsx
 
 'use client'
+import React from "react"
 import { useParams } from "next/navigation"
 import DeviceControl from "ui/deviceControl/comp"
 import { deviceControl } from "@/app/api_utils/api_actions";
 import { DeviceControlReqs } from "ui/types";
-import BasicButton from 'ui/components/basic_button'
 import { useRouter } from 'next/navigation'
-import { Category } from "ui/components"
+import { Category, BasicButton } from "ui/components"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>();
@@ -40,14 +40,20 @@ export default function Dashboard() {
 					displayText="Lightning"
 					imageFilePath="/images/lightning.png"
 					size="big"
-					onPress={() => console.log('Lightning pressed')}
+					onPress={() => console.log('Lightning pressed')} 
+					accessibilityLabel={""} 
+					testID={""} 
+					style={undefined}				
 				/>
 
 				<Category
 					displayText="Fans"
 					imageFilePath="/images/fan.png"
 					size="small"
-					onPress={() => console.log('Fans pressed')}
+					onPress={() => console.log('Fans pressed')} 
+					accessibilityLabel={""} 
+					testID={""} 
+					style={undefined}				
 				/>
 
 				<Category
@@ -55,6 +61,9 @@ export default function Dashboard() {
 					imageFilePath="/images/heater.png"
 					size="small"
 					onPress={() => console.log('Heating pressed')}
+					accessibilityLabel={""} 
+					testID={""} 
+					style={undefined}	
 				/>
 			</div>
 		</div>
