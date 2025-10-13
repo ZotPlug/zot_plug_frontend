@@ -7,12 +7,23 @@ export type signUpInfo = {
 	password: string,
 }
 
+export type DeviceControlReqs = {
+	topic: string,
+	payload: object,
+	qos: number,
+	retain: boolean
+}
+
 export type basicCreds = { email: string, password: string }
 
 export type LoginCompParams = {
 	onSubmit: (params: basicCreds) => void
 	errorText: string | null
 	setErrorText: React.Dispatch<React.SetStateAction<string | null>>
+}
+
+export type DeviceControlProps = {
+	deviceEndpointFn: (params: DeviceControlReqs) => Promise<void>,
 }
 
 export type SignUpCompParams = {

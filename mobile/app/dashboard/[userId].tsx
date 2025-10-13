@@ -25,6 +25,26 @@ export default function Dashboard() {
     const res = await validate_jwt()
     console.log(res)
   }
+  
+  async function openPlugs() {
+    router.push(`/dashboard/${userId}/plugs`)
+  }
+
+  async function openPowerUsage() {
+    router.push(`/dashboard/${userId}/power_usage`)
+  }
+
+  async function openRewards() {
+    router.push(`/dashboard/${userId}/rewards`)
+  }
+  
+  async function openFriends() {
+    router.push(`/dashboard/${userId}/friends`)
+  }
+  
+  async function openSettings() {
+    router.push(`/dashboard/${userId}/settings`)
+  }
 
   useEffect(() => {
     if (!isValidating) {
@@ -70,9 +90,15 @@ export default function Dashboard() {
       <Text> {`Elllo Ello, Unique Dash of user ${userId} `}</Text>
       <BasicButton onPress={test_token} text={"Get All Devices"} />
       <BasicButton onPress={test_val} text={"Validate Token"} />
-    </View> */
 
-  );
+      <Text>Pages</Text>
+      <BasicButton onPress={openPlugs} text={"Plugs"} />
+      <BasicButton onPress={openPowerUsage} text={"Power Usage"} />
+      <BasicButton onPress={openRewards} text={"Rewards"} />
+      <BasicButton onPress={openFriends} text={"Friends"} />
+      <BasicButton onPress={openSettings} text={"Settings"} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

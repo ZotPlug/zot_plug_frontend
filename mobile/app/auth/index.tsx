@@ -1,4 +1,5 @@
-import { Text, View } from "react-native"
+
+import { KeyboardAvoidingView, Text, View } from "react-native"
 import { login_user, signup_user } from "@/api_utils/api_actions"
 import { signUpInfo, basicCreds } from "@/api_utils/types"
 import { Link, useLocalSearchParams, useRouter } from "expo-router"
@@ -11,8 +12,7 @@ export default function LoginPage() {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
 
-  async function try_login(params: basicCreds) {
-    const res = await login_user({ email: params.email, password: params.password })
+  async function try_login(params: basicCreds) { const res = await login_user({ email: params.email, password: params.password })
     if (res.ok) router.push(`/dashboard/${res.value.userId}`)
     else setError(res.error)
   }
@@ -24,7 +24,7 @@ export default function LoginPage() {
   }
 
   return (
-    <View className="justify-center items-center h-screen">
+    <KeyboardAvoidingView behavior="padding" enabled className="justify-center items-center min-h-screen">
       {mode === 'login' ? (
         <>
           <LoginComp onSubmit={try_login} errorText={error} setErrorText={setError} />
@@ -37,6 +37,6 @@ export default function LoginPage() {
           <Link className="pt-2" href={{ pathname: "/auth", params: { mode: "login" } }}>Log In</Link>
         </>
       )}
-    </View>
+    </KeyboardAvoidingView>
   )
 }

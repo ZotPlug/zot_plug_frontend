@@ -1,5 +1,6 @@
 import { toErrorMessage } from "./helper";
 import { signUpInfo, basicCreds } from "./types";
+import { DeviceControlReqs } from "ui/types";
 type Result<T> = { ok: true; value: T } | { ok: false, error: string }
 
 export async function fetch_test() {
@@ -58,6 +59,24 @@ export async function signup_user(params: signUpInfo): Promise<Result<{ userId: 
 
 		if (!signup_res.ok) throw new Error(signup_res.message)
 		return { ok: true, value: { userId: signup_res.userId } }
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
+
+export async function deviceControl(params: DeviceControlReqs) {
+	try {
+		const deviceControlRes = await fetch('/api/deviceControl', {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				topic: params.topic
+			})
+		}).then(e => e.json())
+		if (!deviceControlRes.ok) throw new Error(deviceControlRes.message)
+		return { ok: true, value: deviceControlRes.message }
 	} catch (err) {
 		return { ok: false, error: toErrorMessage(err) }
 	}
