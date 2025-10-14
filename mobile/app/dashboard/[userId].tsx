@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { getAllDevices, validate_jwt } from "@/api_utils/api_actions"   
 import BasicButton from "ui/components/basic_button"
-import Category from "ui/components/category"
+// import Category from "ui/components/category"
 // import { Category, BasicButton } from 'ui/components'
 
 export default function Dashboard() {
@@ -64,8 +64,12 @@ export default function Dashboard() {
       <BasicButton onPress={openRewards} text={"Rewards"} />
       <BasicButton onPress={openFriends} text={"Friends"} />
       <BasicButton onPress={openSettings} text={"Settings"} />
+    </View>
+  )
+}
 
-      <ScrollView contentContainerStyle={styles.container}>
+
+{/* <ScrollView contentContainerStyle={styles.container}>
         <Text style={[ styles.header, { marginTop: 24 }]}>Categories</Text>
         <View style={styles.grid}>
           <Category
@@ -98,18 +102,15 @@ export default function Dashboard() {
             style={undefined} 
           />
         </View>
-      </ScrollView>
-    </View>
-  )
-}
+      </ScrollView> */}
 
-const styles = StyleSheet.create({
-  container: { padding: 16 },
-  header: { fontSize: 18, fontWeight: 'bold', marginBottom: 12 },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
-    alignItems: 'flex-start',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: { padding: 16 },
+//   header: { fontSize: 18, fontWeight: 'bold', marginBottom: 12 },
+//   grid: {
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
+//     gap: 12,
+//     alignItems: 'flex-start',
+//   },
+// });

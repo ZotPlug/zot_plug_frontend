@@ -10,11 +10,13 @@ const config = getDefaultConfig(projectRoot);
 config.watchFolders = [workspaceRoot];
 config.resolver = {
   ...config.resolver,
-  disableHierarchicalLookup: true,
+  disableHierarchicalLookup: false,
   nodeModulesPaths: [path.join(projectRoot, 'node_modules')],
   alias: {
     ...(config.resolver?.alias || {}),
-    'react-native': path.join(projectRoot, 'node_modules/react-native'),
+    'react': path.join(projectRoot, 'node_modules', 'react'),
+    'react-dom': path.join(projectRoot, 'node_modules', 'react-dom'),
+    'react-native': path.join(projectRoot, 'node_modules', 'react-native'),
   },
   sourceExts: [...config.resolver.sourceExts, 'cjs'],
 };
