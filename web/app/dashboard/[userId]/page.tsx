@@ -57,10 +57,10 @@ export default function Dashboard() {
 			/>
 
 			<Category
-				displayText="Heating"
+				displayText="Heater"
 				imageFilePath="/images/heater.png"
 				size="small"
-				onPress={() => console.log('Heating pressed')}
+				onPress={() => console.log('Heater pressed')}
 				accessibilityLabel={""} 
 				testID={""} 
 				style={undefined}
