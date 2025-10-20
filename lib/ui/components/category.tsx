@@ -1,6 +1,6 @@
 // lib/ui/components/category.tsx
 import React from "react"
-import { View, Text, Pressable, Image, StyleSheet } from "react-native"
+import { Platform, View, Text, Pressable, Image as RNImage, StyleSheet } from "react-native"
 import { CategoryProps } from "../types"
 import { CATEGORY_TOKENS, COLORS } from "../styleTokens"
 
@@ -14,29 +14,38 @@ const Category = ({
     style
 }: CategoryProps) => {
     const tokens = size === 'big' ? CATEGORY_TOKENS.big : CATEGORY_TOKENS.small;
-    const source = typeof imageFilePath === 'string' ? { uri: imageFilePath } : (imageFilePath as any);
+
+    const rnSource = typeof imageFilePath === 'string' ? { uri: imageFilePath } : (imageFilePath as any);
 
     return (
         <Pressable
             onPress={onPress}
             accessibilityLabel={accessibilityLabel ?? displayText}
             testID={testID}
-            style={({ pressed }) => [
+            style={({ pressed }: { pressed: boolean }) => [
                 styles.container,
-                {
-                    width: tokens.containerSize,
-                    height: tokens.containerSize,
-                },
+                { width: tokens.containerSize, height: tokens.containerSize },
                 pressed && styles.pressed,
                 style
             ]}
         >
             <View style={styles.inner}>
-                <Image
-                    source={source as any}
+                {Platform.OS === 'web' ? (
+                    <img
+                        src={imageFilePath as string}
+                        alt={displayText}
+                        width={tokens.imageSize}
+                        height={tokens.imageSize}
+                        style={{ marginBottom: 8, objectFit: 'contain' }}
+                    />
+                ) : (
+                    <RNImage
+                    source={rnSource as any}
                     style={[styles.image, { width: tokens.imageSize, height: tokens.imageSize }]}
                     resizeMode="contain"
                 />
+                )}
+
                 <Text style={[styles.text, { fontSize: tokens.fontSize }]} numberOfLines={2}>
                     {displayText}
                 </Text>
