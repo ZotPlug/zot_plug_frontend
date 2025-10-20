@@ -71,7 +71,7 @@ export default function Dashboard() {
         <View style={styles.grid}>
           <Category
             displayText="Lightning"
-            imageFilePath={require('../../../assets/images/lightning.png')}
+            imageFilePath={require('../../assets/images/lightning.png')}
             size="big"
             onPress={() => console.log('Lightning pressed')} 
             accessibilityLabel={""} 
@@ -81,7 +81,7 @@ export default function Dashboard() {
 
           <Category
             displayText="Fans"
-            imageFilePath={require('../../../assets/images/fan.png')}
+            imageFilePath={require('../../assets/images/fan.png')}
             size="small"
             onPress={() => console.log('Fans pressed')} 
             accessibilityLabel={""} 
@@ -90,10 +90,10 @@ export default function Dashboard() {
           />
 
           <Category
-            displayText="Heating"
-            imageFilePath={require('../../../assets/images/heating.png')}
+            displayText="Heater"
+            imageFilePath={require('../../assets/images/heater.png')}
             size="small"
-            onPress={() => console.log('Heating pressed')}
+            onPress={() => console.log('Heater pressed')}
             accessibilityLabel={""} 
             testID={""} 
             style={undefined} 
