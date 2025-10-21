@@ -41,3 +41,14 @@ export type dailyTargetProps = {
 	currProgress: number,
 	maxProgress: number,
 }
+
+export type sharedH1Props = {
+    text: string
+}
+
+export type devicePreviewProps = {
+    deviceImage: string,
+    deviceName: string,
+    currUsage: number,
+    totalUsage: number
+}
