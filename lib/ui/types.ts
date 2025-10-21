@@ -42,7 +42,6 @@ export type dailyTargetProps = {
 	maxProgress: number,
 }
 
-
 export type CategorySize = 'big' | 'small'
 
 export type CategoryProps = {
