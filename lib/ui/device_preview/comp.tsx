@@ -1,5 +1,5 @@
 import React from "react"
-import { Platform, Text, View, Image as RNImage, StyleSheet } from "react-native"
+import { Platform, Text, View, Image as RNImage, Pressable, StyleSheet } from "react-native"
 import { devicePreviewProps } from "../types"
 import ProgressBar from "../components/progress_bar";
 
@@ -9,10 +9,12 @@ export default function DevicePreview({ deviceImage, deviceName, currUsage, tota
         <View style={styles.deviceDetails}>
             <Text style={styles.deviceName}>{deviceName}</Text>
             <View style={styles.alignHorizontal}>
-                <ProgressBar height={15} currProgress={currUsage} maxProgress={totalUsage} />
+                <View style={styles.progressBar}>
+                    <ProgressBar height={15} currProgress={currUsage} maxProgress={totalUsage} />
+                </View>
                 <View>
-                    <Text>{currUsage} W</Text>
-                    <Text>(last 24 hrs)</Text>
+                    <Text style={styles.powerStats}>{currUsage} W</Text>
+                    <Text style={styles.textStats}>(last 24 hrs)</Text>
                 </View>
             </View>
         </View>
@@ -28,20 +30,24 @@ export default function DevicePreview({ deviceImage, deviceName, currUsage, tota
         ))
         
         return (
-            <View style={styles.container}>
-                {image}
-                {deviceDetails}
-            </View>
+                <Pressable style={styles.container} onPress={OpenDeviceStats}>
+                    {image}
+                    {deviceDetails}
+                </Pressable>
         )
     }
     else
     {
         return (
-            <View style={styles.container}>
-                {deviceDetails}
-            </View>
+                <Pressable style={styles.container} onPress={OpenDeviceStats}>
+                    {deviceDetails}
+                </Pressable>
         )
     }
+}
+
+function OpenDeviceStats() {
+    console.log("Open device stats")
 }
 
 const styles = StyleSheet.create({
@@ -63,10 +69,22 @@ const styles = StyleSheet.create({
     deviceName: {
         color: 'white',
         fontSize: 20,
-        padding: 5
+        padding: 5,
+        width: '85%',
+    },
+    progressBar: {
+        marginVertical: 10,
+        width: '85%',
     },
     alignHorizontal: {
         display: 'flex',
-        //flexDirection: 'row',
+        flexDirection: 'row',
     },
+    textStats: {
+        textAlign: 'right',
+    },
+    powerStats: {
+        textAlign: 'right',
+        fontWeight: 'bold',
+    }
 })
