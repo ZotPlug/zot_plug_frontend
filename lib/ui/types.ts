@@ -51,4 +51,14 @@ export type devicePreviewProps = {
     deviceName: string,
     currUsage: number,
     totalUsage: number
+export type CategorySize = 'big' | 'small'
+
+export type CategoryProps = {
+	displayText: string,
+	imageFilePath: string | null,
+	size: CategorySize,
+	onPress: () => void,
+	accessibilityLabel: string,
+	testID: string,
+	style: any,
 }

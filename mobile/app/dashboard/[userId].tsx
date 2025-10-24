@@ -1,9 +1,12 @@
-import { View, Text } from "react-native"
+// mobile/app/dashboard/[userId].tsx
+
+import { View, Text, ScrollView, StyleSheet } from "react-native"
 import { useEffect } from "react"
 import { useQuery } from '@tanstack/react-query'
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import { getAllDevices, validate_jwt } from "@/api_utils/api_actions"
+import { validate_jwt } from '@/api_utils/api_actions'    // removed getAllDevices import (doesn't exist)
 import BasicButton from 'ui/components/basic_button'
+import Category  from 'ui/components/category'
 
 export default function Dashboard() {
   const { userId } = useLocalSearchParams();
@@ -14,10 +17,10 @@ export default function Dashboard() {
     queryFn: async () => await validate_jwt()
   })
 
-  async function test_token() {
-    const res = await getAllDevices()
-    console.log(res)
-  }
+  // async function test_token() {
+  //   const res = await getAllDevices()
+  //   console.log(res)
+  // }
 
   async function test_val() {
     const res = await validate_jwt()
@@ -53,7 +56,7 @@ export default function Dashboard() {
   return (
     <View>
       <Text> {`Elllo Ello, Unique Dash of user ${userId} `}</Text>
-      <BasicButton onPress={test_token} text={"Get All Devices"} />
+      {/* <BasicButton onPress={test_token} text={"Get All Devices"} /> */}
       <BasicButton onPress={test_val} text={"Validate Token"} />
 
       <Text>Pages</Text>
@@ -62,6 +65,52 @@ export default function Dashboard() {
       <BasicButton onPress={openRewards} text={"Rewards"} />
       <BasicButton onPress={openFriends} text={"Friends"} />
       <BasicButton onPress={openSettings} text={"Settings"} />
+
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={[ styles.header, { marginTop: 24 }]}>Categories</Text>
+        <View style={styles.grid}>
+          <Category
+            displayText="Lightning"
+            imageFilePath={require('../../assets/images/lightning.png')}
+            size="big"
+            onPress={() => console.log('Lightning pressed')} 
+            accessibilityLabel={""} 
+            testID={""} 
+            style={undefined}          
+          />
+
+          <Category
+            displayText="Fans"
+            imageFilePath={require('../../assets/images/fan.png')}
+            size="small"
+            onPress={() => console.log('Fans pressed')} 
+            accessibilityLabel={""} 
+            testID={""} 
+            style={undefined}          
+          />
+
+          <Category
+            displayText="Heater"
+            imageFilePath={require('../../assets/images/heater.png')}
+            size="small"
+            onPress={() => console.log('Heater pressed')}
+            accessibilityLabel={""} 
+            testID={""} 
+            style={undefined} 
+          />
+        </View>
+      </ScrollView>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: { padding: 16 },
+  header: { fontSize: 18, fontWeight: 'bold', marginBottom: 12 },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+    alignItems: 'flex-start',
+  },
+});
