@@ -27,7 +27,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 				editable={true}
 				style={styles.textInput}
 			/>
-			<View style={styles.row}>
+			<View style={!isMobile ? styles.row : null}>
 				<TextInput
 					value={userInfo.firstname}
 					onChangeText={(firstname) => SetUserInfo((prev) => ({ ...prev, firstname }))}
