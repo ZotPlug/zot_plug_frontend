@@ -5,7 +5,7 @@ import { Link, useLocalSearchParams, useRouter } from "expo-router"
 import { useState } from "react"
 import LoginComp from 'ui/login/comp'
 import SignUpComp from 'ui/signup/comp'
-import SharedH1 from 'ui/components/h1/comp'
+import SharedH1 from 'ui/components/shared_h1'
 import DevicePreview from 'ui/device_preview/comp'
 
 export default function PowerUsagePage() {

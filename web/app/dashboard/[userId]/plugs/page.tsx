@@ -1,7 +1,7 @@
 'use client'
 import { useParams } from "next/navigation"
 import BasicButton from "ui/components/basic_button"
-import SharedH1 from "ui/components/h1/comp"
+import SharedH1 from "ui/components/shared_h1"
 import { useRouter } from 'next/navigation'
 import DevicePreview from "ui/device_preview/comp"
 

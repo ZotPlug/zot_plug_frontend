@@ -3,9 +3,11 @@ import { Platform, Text, View, Image as RNImage, Pressable, StyleSheet } from "r
 import { devicePreviewProps } from "../types"
 import ProgressBar from "../components/progress_bar";
 
+function OpenDeviceStats() {
+    console.log("Open device stats")
+}
+
 export default function DevicePreview({ deviceImage, deviceName, currUsage, totalUsage}: devicePreviewProps) {
-
-
     const deviceDetails =
         <View style={styles.deviceDetails}>
             <Text style={styles.deviceName}>{deviceName}</Text>
@@ -31,24 +33,20 @@ export default function DevicePreview({ deviceImage, deviceName, currUsage, tota
         ))
         
         return (
-                <Pressable style={styles.container} onPress={OpenDeviceStats}>
-                    {image}
-                    {deviceDetails}
-                </Pressable>
+            <Pressable style={styles.container} onPress={OpenDeviceStats}>
+                {image}
+                {deviceDetails}
+            </Pressable>
         )
     }
     else
     {
         return (
-                <Pressable style={styles.container} onPress={OpenDeviceStats}>
-                    {deviceDetails}
-                </Pressable>
+            <Pressable style={styles.container} onPress={OpenDeviceStats}>
+                {deviceDetails}
+            </Pressable>
         )
     }
-}
-
-function OpenDeviceStats() {
-    console.log("Open device stats")
 }
 
 const styles = StyleSheet.create({
@@ -89,7 +87,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     }
 })
-
-function useWindowDimensions(): { width: any; height: any; } {
-    throw new Error("Function not implemented.");
-}

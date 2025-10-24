@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from "react-native"
-import { sharedH1Props } from "../../types"
+import { sharedH1Props } from "../types"
 
 export default function SharedH1({ text }: sharedH1Props) {
     return (
