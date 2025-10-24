@@ -34,7 +34,6 @@ export default function RootLayout({
             {children}
           </ReactQueryProvider>
         </ClientApplication>
-
       </body>
     </html>
   );
