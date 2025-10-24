@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
 	},
 	progress: {
 		height: '100%',
-		backgroundColor: 'green',
+		backgroundColor: 'blue',
 	}
 })

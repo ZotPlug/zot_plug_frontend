@@ -1,8 +1,15 @@
 import { useState } from 'react'
-import { SignUpCompParams } from '../types'
+import { SignUpCompParams, signUpInfo } from '../types'
 import { TextInput, View, Text, StyleSheet, useWindowDimensions } from 'react-native'
 import basic_filter_check from './helpers'
 import BasicButton from '../components/basic_button'
+
+function submitOnEnter(event: Event, onSubmit: (params: signUpInfo) => Promise<void>, params: signUpInfo) {
+    if (event.key === "Enter" || event.key === "NumpadEnter") {
+        event.preventDefault();
+        onSubmit(params)
+    }
+}
 
 export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUpCompParams) {
 	const [userInfo, SetUserInfo] = useState({ firstname: "", lastname: "", username: "", email: "", password: "", confirm: "" })
@@ -14,6 +21,8 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 			<TextInput
 				value={userInfo.username}
 				onChangeText={(username) => SetUserInfo((prev) => ({ ...prev, username }))}
+                onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, {firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password})}
+                
 				placeholder="User name"
 				editable={true}
 				style={styles.textInput}
@@ -22,6 +31,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 				<TextInput
 					value={userInfo.firstname}
 					onChangeText={(firstname) => SetUserInfo((prev) => ({ ...prev, firstname }))}
+                    onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, {firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password})}
 					placeholder="First name"
 					editable={true}
 					style={[styles.textInput, { marginRight: 2 }]}
@@ -29,6 +39,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 				<TextInput
 					value={userInfo.lastname}
 					onChangeText={(lastname) => SetUserInfo((prev) => ({ ...prev, lastname }))}
+                    onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, {firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password})}
 					placeholder="Last name"
 					editable={true}
 					style={[styles.textInput, { marginLeft: 2 }]}
@@ -37,6 +48,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 			<TextInput
 				value={userInfo.email}
 				onChangeText={(email) => SetUserInfo((prev) => ({ ...prev, email }))}
+                onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, {firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password})}
 				placeholder="Email"
 				editable={true}
 				style={styles.textInput}
@@ -44,6 +56,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 			<TextInput
 				value={userInfo.password}
 				onChangeText={(password) => SetUserInfo((prev) => ({ ...prev, password }))}
+                onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, {firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password})}
 				placeholder="Password"
 				editable={true}
 				style={styles.textInput}
@@ -51,6 +64,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 			<TextInput
 				value={userInfo.confirm}
 				onChangeText={(confirm) => SetUserInfo((prev) => ({ ...prev, confirm }))}
+                onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, {firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password})}
 				placeholder="Confirm Password"
 				editable={true}
 				style={styles.textInput}
@@ -83,7 +97,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-	},
+    },
 	textInput: {
 		padding: 16,
 		backgroundColor: 'white',

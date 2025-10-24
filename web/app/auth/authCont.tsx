@@ -1,12 +1,13 @@
 import { login_user, signup_user } from '../api_utils/api_actions'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation';
 import { signUpInfo, basicCreds } from '@/app/api_utils/types';
 import LoginComp from 'ui/login/comp'
 import SignUpComp from 'ui/signup/comp'
 
 export default function AuthContent() {
+  
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode') === 'signup' ? 'signup' : 'login'
   const router = useRouter()
