@@ -6,9 +6,11 @@ export async function login_user(params: basicCreds): Promise<Result<{ userId: s
 	try {
 		const { valid, userId, mobileJwt } = await api.fetchJSON<CheckUserbasicCredsRes>({ endpoint: "/api/users/checkUserCreds", method: "POST", body: { email: params.email, password: params.password } })
 
-		await SecureStore.setItemAsync("access_token", mobileJwt);
-
-		if (!valid) throw new Error("Invalid Credentials")
+		if (!valid) {
+			throw new Error("Invalid Credentials")
+		} else {
+			await SecureStore.setItemAsync("access_token", mobileJwt);
+		}
 		return { ok: true, value: { userId } }
 	} catch (err) {
 		return { ok: false, error: toErrorMessage(err) }
@@ -19,10 +21,13 @@ export async function signup_user(params: signUpInfo): Promise<Result<{ userId: 
 	try {
 		const { userId, mobileJwt } = await api.fetchJSON<{ userId: string, mobileJwt: string }>({ method: "POST", endpoint: "/api/users/addUser", body: { firstname: params.firstname, lastname: params.lastname, username: params.username, email: params.email, password: params.password } })
 
-		await SecureStore.setItemAsync("access_token", mobileJwt);
-
-		if (userId) { return { ok: true, value: { userId } } }
-		else { throw new Error("Account Creation Failed") }
+		if (userId) {
+			await SecureStore.setItemAsync("access_token", mobileJwt);
+			return { ok: true, value: { userId } }
+		}
+		else {
+			throw new Error("Account Creation Failed")
+		}
 	} catch (err) {
 		return { ok: false, error: toErrorMessage(err) }
 	}

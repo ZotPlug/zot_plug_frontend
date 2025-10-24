@@ -12,7 +12,8 @@ export default function LoginPage() {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
 
-  async function try_login(params: basicCreds) { const res = await login_user({ email: params.email, password: params.password })
+  async function try_login(params: basicCreds) {
+    const res = await login_user({ email: params.email, password: params.password })
     if (res.ok) router.push(`/dashboard/${res.value.userId}`)
     else setError(res.error)
   }
