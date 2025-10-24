@@ -3,7 +3,8 @@ import { Platform, Text, View, Image as RNImage, Pressable, StyleSheet } from "r
 import { devicePreviewProps } from "../types"
 import ProgressBar from "../components/progress_bar";
 
-export default function DevicePreview({ deviceImage, deviceName, currUsage, totalUsage }: devicePreviewProps) {
+export default function DevicePreview({ deviceImage, deviceName, currUsage, totalUsage}: devicePreviewProps) {
+
 
     const deviceDetails =
         <View style={styles.deviceDetails}>
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
 
     },
     deviceDetails: {
-        width: '75%',
+        width: '95%',
         justifyContent: 'center',
         backgroundColor: 'gray',
         padding: 5,
@@ -88,3 +89,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     }
 })
+
+function useWindowDimensions(): { width: any; height: any; } {
+    throw new Error("Function not implemented.");
+}

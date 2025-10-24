@@ -6,6 +6,7 @@ import { useState } from "react"
 import LoginComp from 'ui/login/comp'
 import SignUpComp from 'ui/signup/comp'
 import SharedH1 from 'ui/components/h1/comp'
+import DevicePreview from 'ui/device_preview/comp'
 
 export default function PowerUsagePage() {
   const { mode } = useLocalSearchParams<{ mode: string }>()
@@ -14,7 +15,13 @@ export default function PowerUsagePage() {
 
   return (
     <View style={styles.container} className="justify-center items-center h-screen">
-      <SharedH1 text='Plugs'/>
+    <SharedH1 text='Plugs'/>
+    <View>
+        <DevicePreview deviceImage="" deviceName="Plug 1" currUsage={10} totalUsage={30}/>
+        <DevicePreview deviceImage="" deviceName="Plug 2" currUsage={5} totalUsage={30}/>
+        <DevicePreview deviceImage="" deviceName="Plug 3" currUsage={15} totalUsage={30}/>
+    </View>
+      
     </View>
   )
 }
