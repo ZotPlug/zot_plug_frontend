@@ -25,23 +25,6 @@ export default function AuthContent() {
     else setError(res.error)
   }
 
-  // Submit on enter
-  //useEffect(() => {
-  //    const listener = (event: { code: string; preventDefault: () => void }) => {
-  //        console.log("Hit enter")
-  //        if (event.code === "Enter" || event.code === "NumpadEnter") {
-  //            event.preventDefault();
-  //            console.log("Login")
-  //            const password = pass 
-  //            onSubmit({email, password})
-  //        }
-  //        document.addEventListener("keydown", listener)
-  //        return () => {
-  //            document.removeEventListener("keydown", listener)
-  //        }
-  //   }
-  //})
-
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       {mode === 'login' ? (
