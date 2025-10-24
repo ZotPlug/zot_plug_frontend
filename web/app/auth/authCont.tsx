@@ -1,12 +1,13 @@
 import { login_user, signup_user } from '../api_utils/api_actions'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation';
 import { signUpInfo, basicCreds } from '@/app/api_utils/types';
 import LoginComp from 'ui/login/comp'
 import SignUpComp from 'ui/signup/comp'
 
 export default function AuthContent() {
+  
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode') === 'signup' ? 'signup' : 'login'
   const router = useRouter()
@@ -23,6 +24,23 @@ export default function AuthContent() {
     if (res.ok) router.push(`/dashboard/${res.value.userId}`)
     else setError(res.error)
   }
+
+  // Submit on enter
+  //useEffect(() => {
+  //    const listener = (event: { code: string; preventDefault: () => void }) => {
+  //        console.log("Hit enter")
+  //        if (event.code === "Enter" || event.code === "NumpadEnter") {
+  //            event.preventDefault();
+  //            console.log("Login")
+  //            const password = pass 
+  //            onSubmit({email, password})
+  //        }
+  //        document.addEventListener("keydown", listener)
+  //        return () => {
+  //            document.removeEventListener("keydown", listener)
+  //        }
+  //   }
+  //})
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">

@@ -9,19 +9,31 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 	const { width, height } = useWindowDimensions()
 	const isMobile = width >= 350
 
+    // Submit on enter
+    const submitOnEnter = (event: Event) => {
+        if (event.key === "Enter" || event.key === "NumpadEnter") {
+            event.preventDefault();
+            onSubmit({
+				firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password
+			})
+        }
+    }
+
 	return (
 		<View style={styles.container}>
 			<TextInput
 				value={userInfo.username}
 				onChangeText={(username) => SetUserInfo((prev) => ({ ...prev, username }))}
+                onKeyPress={submitOnEnter}
 				placeholder="User name"
 				editable={true}
 				style={styles.textInput}
 			/>
-			<View style={!isMobile ? styles.row : null}>
+			<View style={styles.row}>
 				<TextInput
 					value={userInfo.firstname}
 					onChangeText={(firstname) => SetUserInfo((prev) => ({ ...prev, firstname }))}
+                    onKeyPress={submitOnEnter}
 					placeholder="First name"
 					editable={true}
 					style={[styles.textInput, { marginRight: 2 }]}
@@ -29,6 +41,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 				<TextInput
 					value={userInfo.lastname}
 					onChangeText={(lastname) => SetUserInfo((prev) => ({ ...prev, lastname }))}
+                    onKeyPress={submitOnEnter}
 					placeholder="Last name"
 					editable={true}
 					style={[styles.textInput, { marginLeft: 2 }]}
@@ -37,6 +50,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 			<TextInput
 				value={userInfo.email}
 				onChangeText={(email) => SetUserInfo((prev) => ({ ...prev, email }))}
+                onKeyPress={submitOnEnter}
 				placeholder="Email"
 				editable={true}
 				style={styles.textInput}
@@ -44,6 +58,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 			<TextInput
 				value={userInfo.password}
 				onChangeText={(password) => SetUserInfo((prev) => ({ ...prev, password }))}
+                onKeyPress={submitOnEnter}
 				placeholder="Password"
 				editable={true}
 				style={styles.textInput}
@@ -51,6 +66,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 			<TextInput
 				value={userInfo.confirm}
 				onChangeText={(confirm) => SetUserInfo((prev) => ({ ...prev, confirm }))}
+                onKeyPress={submitOnEnter}
 				placeholder="Confirm Password"
 				editable={true}
 				style={styles.textInput}

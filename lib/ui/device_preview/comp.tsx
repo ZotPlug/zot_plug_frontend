@@ -70,15 +70,15 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         padding: 5,
-        width: '85%',
     },
     progressBar: {
         marginVertical: 10,
-        width: '85%',
+        width: '75%',
     },
     alignHorizontal: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     textStats: {
         textAlign: 'right',

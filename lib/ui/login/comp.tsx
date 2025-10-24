@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TextInput, View, Text, StyleSheet } from 'react-native'
 import { basicCreds, LoginCompParams } from '../types'
 import BasicButton from '../components/basic_button'
@@ -13,11 +13,20 @@ export default function LoginComp({ onSubmit, errorText, setErrorText }: LoginCo
 	const [email, setEmail] = useState("")
 	const [pass, setPass] = useState("")
 
+    // Submit on enter
+    const submitOnEnter = (event: Event) => {
+        if (event.key === "Enter" || event.key === "NumpadEnter") {
+            event.preventDefault();
+            onSubmit({email: email, password: pass})
+        }
+    }
+    
 	return (
 		<View style={styles.container}>
 			<TextInput
 				value={email}
 				onChangeText={setEmail}
+                onKeyPress={submitOnEnter}
 				placeholder="Email"
 				editable={true}
 				style={styles.textInput}
@@ -25,6 +34,7 @@ export default function LoginComp({ onSubmit, errorText, setErrorText }: LoginCo
 			<TextInput
 				value={pass}
 				onChangeText={setPass}
+                onKeyPress={submitOnEnter}
 				placeholder="Password"
 				editable={true}
 				style={styles.textInput}
