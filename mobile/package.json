@@ -11,6 +11,7 @@
     "lint": "expo lint"
   },
   "dependencies": {
+    "@expo-google-fonts/poppins": "^0.4.1",
     "@expo/vector-icons": "^14.1.0",
     "@react-native/virtualized-lists": "0.79.5",
     "@react-navigation/bottom-tabs": "^7.3.10",

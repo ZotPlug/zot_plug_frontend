@@ -7,6 +7,7 @@ export const CATEGORY_TOKENS = {
         maxContainerHeight: 180,
         imageSize: '70%',
         fontSize: 17,
+        fontFamily: 'Poppins_600SemiBold',
     },
     small: {
         containerSize: '100%',
@@ -14,6 +15,7 @@ export const CATEGORY_TOKENS = {
         maxContainerHeight: 100,
         imageSize: '60%',
         fontSize: 13,
+        fontFamily: 'Poppins_400Regular',
     },
 }
 
@@ -23,4 +25,10 @@ export const COLORS = {
     text: '#333333',
     accent: '#0B74FF',
     pressedBg: '#C8E6C9',
+}
+
+export const FONTS = {
+    regular: 'Poppins_400Regular',
+    semiBold: 'Poppins_600SemiBold',
+    bold: 'Poppins_700Bold',
 }
