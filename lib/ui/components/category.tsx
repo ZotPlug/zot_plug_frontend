@@ -1,8 +1,10 @@
 // lib/ui/components/category.tsx
 import React from "react"
-import { Platform, View, Text, Pressable, Image as RNImage, StyleSheet } from "react-native"
+import { Platform, View, Text, Pressable, Image as RNImage, StyleSheet, Dimensions } from "react-native"
 import { CategoryProps } from "../types"
 import { CATEGORY_TOKENS, COLORS } from "../styleTokens"
+
+const screenWidth = Dimensions.get('window').width;
 
 const Category = ({
     displayText,
@@ -15,8 +17,16 @@ const Category = ({
 }: CategoryProps) => {
     const tokens = size === 'big' ? CATEGORY_TOKENS.big : CATEGORY_TOKENS.small;
     const rnSource = typeof imageFilePath === 'string' ? { uri: imageFilePath } : (imageFilePath as any);
-
     const isSmall = size === 'small' 
+
+    const dynamicWidth = Math.min(
+        isSmall ? screenWidth * 0.3 : screenWidth * 0.45,
+        tokens.maxContainerWidth
+    );
+
+    const imageScale = Platform.OS === 'web' 
+        ? (isSmall ? '65%' : '75%')
+        : (isSmall ? '70%' : '80%');
 
     return (
         <Pressable
@@ -26,9 +36,7 @@ const Category = ({
             style={({ pressed }) => [
                 styles.container,
                 { 
-                    width: '100%',
-                    maxWidth: tokens.maxContainerWidth,
-                    maxHeight: tokens.maxContainerHeight,
+                    width: dynamicWidth,
                     aspectRatio: 1,
                 },
                 pressed && styles.pressed,
@@ -39,8 +47,8 @@ const Category = ({
                 style={[
                     styles.inner,
                     {
-                        paddingVertical: isSmall ? 6 : 8,
-                        gap: isSmall ? 6 : 10,
+                        paddingVertical: isSmall ? (Platform.OS === 'web' ? 4 : 8) : 8,
+                        gap: isSmall ? (Platform.OS === 'web' ? 2 : 5) : 5,
                     },
                 ]}
             >
@@ -49,7 +57,7 @@ const Category = ({
                         src={imageFilePath as string}
                         alt={displayText}
                         style={{ 
-                            width: isSmall ? '60%' : '70%',
+                            width: imageScale,
                             height: 'auto',
                             aspectRatio: 1,
                             objectFit: 'contain' 
@@ -58,8 +66,11 @@ const Category = ({
                 ) : (
                     <RNImage
                     source={rnSource as any}
-                    style={[styles.image, { width: tokens.imageSize, height: tokens.imageSize }]}
-                    resizeMode="contain"
+                    style={{ 
+                        width: isSmall ? '55%' : '65%',
+                        aspectRatio: 1,
+                        resizeMode: 'contain',
+                    }}
                 />
                 )}
 
@@ -67,13 +78,14 @@ const Category = ({
                     style={[
                         styles.text, 
                         { 
-                            fontSize: tokens.fontSize,
-                            maxWidth: '90%', 
+                            fontSize: isSmall ? 12 : 16,
+                            maxWidth: '85%', 
                         },
                     ]} 
                     numberOfLines={2}
                     adjustsFontSizeToFit
-                    minimumFontScale={0.8}
+                    minimumFontScale={0.85}
+                    allowFontScaling={false}
                 >
                     {displayText}
                 </Text>
@@ -87,20 +99,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: COLORS.cardBg,
-        borderWidth: 3,
-        borderRadius: 20,
-        padding: 12,
+        borderWidth: 2,
+        borderRadius: 16,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 5,
-        elevation: 4,
+        elevation: 3,
         borderColor: COLORS.cardBorder,
-        transition: 'background-color 0.15s',
     },
     inner: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         flexDirection: 'column-reverse',
         width : '100%',
     },
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
         color: COLORS.text,
         textAlign: 'center',
         marginTop: 4,
-        flexShrink: 0,
+        flexShrink: 1,
         flexWrap: 'wrap',
     },
     pressed: {
