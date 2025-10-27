@@ -1,10 +1,8 @@
 // lib/ui/components/category.tsx
 import React from "react"
-import { Platform, View, Text, Pressable, Image as RNImage, StyleSheet, Dimensions } from "react-native"
+import { Platform, View, Text, Pressable, Image as RNImage, StyleSheet, useWindowDimensions } from "react-native"
 import { CategoryProps } from "../types"
-import { CATEGORY_TOKENS, COLORS } from "../styleTokens"
-
-const screenWidth = Dimensions.get('window').width;
+import { CATEGORY_TOKENS, COLORS, FONTS } from "../styleTokens"
 
 const Category = ({
     displayText,
@@ -15,18 +13,23 @@ const Category = ({
     testID,
     style
 }: CategoryProps) => {
-    const tokens = size === 'big' ? CATEGORY_TOKENS.big : CATEGORY_TOKENS.small;
+    const { width: screenWidth } = useWindowDimensions();
     const rnSource = typeof imageFilePath === 'string' ? { uri: imageFilePath } : (imageFilePath as any);
     const isSmall = size === 'small' 
+    const tokens = isSmall ? CATEGORY_TOKENS.small : CATEGORY_TOKENS.big;
+    const horizontalLayout = size === 'big' ? screenWidth > 600 : screenWidth > 300;
 
-    const dynamicWidth = Math.min(
-        isSmall ? screenWidth * 0.3 : screenWidth * 0.45,
-        tokens.maxContainerWidth
-    );
+    const containerWidth = isSmall 
+        ? Math.min(screenWidth * 0.22, 200)
+        : Math.min(screenWidth * 0.7, 540);
 
-    const imageScale = Platform.OS === 'web' 
-        ? (isSmall ? '65%' : '75%')
-        : (isSmall ? '70%' : '80%');
+    const containerHeight = isSmall
+        ? containerWidth * 0.8
+        : horizontalLayout
+        ? containerWidth * 0.4
+        : containerWidth * 0.7;
+
+    const layoutDirection = isSmall ? 'column' : horizontalLayout ? 'row' : 'column-reverse';
 
     return (
         <Pressable
@@ -36,8 +39,9 @@ const Category = ({
             style={({ pressed }) => [
                 styles.container,
                 { 
-                    width: dynamicWidth,
-                    aspectRatio: 1,
+                    width: containerWidth,
+                    height: containerHeight,
+                    flexDirection: layoutDirection,
                 },
                 pressed && styles.pressed,
                 style
@@ -45,44 +49,20 @@ const Category = ({
         >
             <View 
                 style={[
-                    styles.inner,
-                    {
-                        paddingVertical: isSmall ? (Platform.OS === 'web' ? 4 : 8) : 8,
-                        gap: isSmall ? (Platform.OS === 'web' ? 2 : 5) : 5,
-                        paddingBottom: isSmall ? 6 : 8,
-                    },
+                    styles.textContainer,
+                    !isSmall && horizontalLayout ? styles.textLeft : styles.textTop,
+                    isSmall ? { marginBottom: 6 } : null,
                 ]}
             >
-                {Platform.OS === 'web' ? (
-                    <img
-                        src={imageFilePath as string}
-                        alt={displayText}
-                        style={{ 
-                            width: imageScale,
-                            height: 'auto',
-                            aspectRatio: 1,
-                            objectFit: 'contain' 
-                        }}
-                    />
-                ) : (
-                    <RNImage
-                    source={rnSource as any}
-                    style={{ 
-                        width: isSmall ? '55%' : '65%',
-                        aspectRatio: 1,
-                        resizeMode: 'contain',
-                    }}
-                />
-                )}
-
-                <Text 
+                <Text
                     style={[
-                        styles.text, 
-                        { 
-                            fontSize: isSmall ? 12 : 16,
-                            maxWidth: '85%', 
+                        styles.text,
+                        {
+                            fontSize: Math.min(tokens.fontSize, screenWidth * (isSmall ? 0.03 : 0.04)),
+                            textAlign: !isSmall && horizontalLayout ? 'left' : 'center',
+                            fontFamily: `${tokens.fontFamily}, sans-serif`,
                         },
-                    ]} 
+                    ]}
                     numberOfLines={2}
                     adjustsFontSizeToFit
                     minimumFontScale={0.85}
@@ -91,48 +71,73 @@ const Category = ({
                     {displayText}
                 </Text>
             </View>
+
+            {Platform.OS === 'web' ? (
+                <img
+                    src={imageFilePath as string}
+                    alt={displayText}
+                    style={{ 
+                        width: !isSmall && horizontalLayout ? '40%' : '70%',
+                        height: 'auto',
+                        aspectRatio: 1,
+                        objectFit: 'contain',
+                        marginLeft: !isSmall && horizontalLayout ? 'auto' : 0,
+                        marginTop: isSmall ? 6 : 0,
+                    }}
+                />
+            ) : (
+                <RNImage
+                    source={rnSource}
+                    style={{ 
+                        width: tokens.imageSize,
+                        aspectRatio: 1,
+                        resizeMode: 'contain',
+                        marginTop: isSmall ? 6 : 0,
+                    }}
+                />
+            )}
         </Pressable>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: COLORS.cardBg,
         borderWidth: 2,
         borderRadius: 16,
+        borderColor: COLORS.cardBorder,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 12,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
-        borderColor: COLORS.cardBorder,
+        transition: 'all 0.2s ease',
     },
-    inner: {
+    textContainer: {
+        justifyContent: 'center',
+    },
+    textTop: {
+        width: '100%',
+        marginBottom: 6,
+    },
+    textLeft: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        flexDirection: 'column-reverse',
-        width : '100%',
+        paddingRight: 12,
     },
-    image: {
-        flexShrink: 0,
-        flexGrow: 0,
-        maxWidth: '80%',
-        height: 'auto',
-        aspectRatio: 1,
-        objectFit: 'contain',
+    textBottom: {
+        width: '100%',
+        marginTop: 6,
     },
     text: {
         fontWeight: '600',
         color: COLORS.text,
-        textAlign: 'center',
-        marginTop: 4,
         flexShrink: 1,
         flexWrap: 'wrap',
     },
     pressed: {
-        opacity: 0.85
+        opacity: 0.9,
     }
 });
 

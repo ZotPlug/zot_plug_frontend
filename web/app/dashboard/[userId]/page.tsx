@@ -32,34 +32,34 @@ export default function Dashboard() {
 			</div>
 			
 			<div className="flex flex-wrap gap-4 items-start">
+				<div className="flex flex-wrap gap-4 w-full items-center mb-2">
+					<Category
+						displayText="FANS"
+						imageFilePath="/images/fan.png"
+						size="small"
+						onPress={() => console.log('Fans pressed')}
+						accessibilityLabel={""}
+						testID={""}
+						style={undefined}
+					/>
+					<Category
+						displayText="HEATER"
+						imageFilePath="/images/heater.png"
+						size="small"
+						onPress={() => console.log('Heater pressed')}
+						accessibilityLabel={""} 
+						testID={""} 
+						style={undefined}
+					/>
+				</div>
 				<Category
-					displayText="Lightning"
+					displayText="LIGHTNING"
 					imageFilePath="/images/lightning.png"
 					size="big"
 					onPress={() => console.log('Lightning pressed')} 
 					accessibilityLabel={""} 
 					testID={""} 
 					style={undefined}			
-				/>
-
-				<Category
-					displayText="Fans"
-					imageFilePath="/images/fan.png"
-					size="small"
-					onPress={() => console.log('Fans pressed')}
-					accessibilityLabel={""} 
-					testID={""} 
-					style={undefined}
-				/>
-
-				<Category
-					displayText="Heater"
-					imageFilePath="/images/heater.png"
-					size="small"
-					onPress={() => console.log('Heater pressed')}
-					accessibilityLabel={""} 
-					testID={""} 
-					style={undefined}
 				/>
 			</div>
 		</div>
