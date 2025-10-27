@@ -19,52 +19,48 @@ export default function Dashboard() {
 	}
 
 	return (
-		<div>
-			<h1>Unique dashboard of user: {userId}</h1>
+		<div className="p-4">
+			<h1 className="text-xl font-bold mb-4">Unique dashboard of user: {userId}</h1>
 			<DeviceControl deviceEndpointFn={sendCommand} />
             
-            <BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`) } />
-            <BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
-            <BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
-            <BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
-            <BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
+			<div className="flex flex-col gap-2 mb-6">
+            	<BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`) } />
+            	<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
+            	<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
+            	<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
+            	<BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
+			</div>
+			
+			<div className="flex flex-wrap gap-4 items-start">
+				<Category
+					displayText="Lightning"
+					imageFilePath="/images/lightning.png"
+					size="big"
+					onPress={() => console.log('Lightning pressed')} 
+					accessibilityLabel={""} 
+					testID={""} 
+					style={undefined}			
+				/>
 
-			<div style={{
-				display: 'flex',
-				gap: 16,
-				flexWrap: 'wrap',
-				alignItems: 'flex-start',
-			}}>
-				
-			<Category
-				displayText="Lightning"
-				imageFilePath="/images/lightning.png"
-				size="big"
-				onPress={() => console.log('Lightning pressed')} 
-				accessibilityLabel={""} 
-				testID={""} 
-				style={undefined}			
-			/>
+				<Category
+					displayText="Fans"
+					imageFilePath="/images/fan.png"
+					size="small"
+					onPress={() => console.log('Fans pressed')}
+					accessibilityLabel={""} 
+					testID={""} 
+					style={undefined}
+				/>
 
-			<Category
-				displayText="Fans"
-				imageFilePath="/images/fan.png"
-				size="small"
-				onPress={() => console.log('Fans pressed')}
-				accessibilityLabel={""} 
-				testID={""} 
-				style={undefined}
-			/>
-
-			<Category
-				displayText="Heater"
-				imageFilePath="/images/heater.png"
-				size="small"
-				onPress={() => console.log('Heater pressed')}
-				accessibilityLabel={""} 
-				testID={""} 
-				style={undefined}
-			/>
+				<Category
+					displayText="Heater"
+					imageFilePath="/images/heater.png"
+					size="small"
+					onPress={() => console.log('Heater pressed')}
+					accessibilityLabel={""} 
+					testID={""} 
+					style={undefined}
+				/>
 			</div>
 		</div>
 	)
