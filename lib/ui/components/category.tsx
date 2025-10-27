@@ -14,6 +14,7 @@ const Category = ({
     style
 }: CategoryProps) => {
     const tokens = size === 'big' ? CATEGORY_TOKENS.big : CATEGORY_TOKENS.small;
+    const isSmall = size === 'small' ? <View style={{ height: 8 }} /> : null;
 
     const rnSource = typeof imageFilePath === 'string' ? { uri: imageFilePath } : (imageFilePath as any);
 
@@ -34,9 +35,12 @@ const Category = ({
                     <img
                         src={imageFilePath as string}
                         alt={displayText}
-                        width={tokens.imageSize}
-                        height={tokens.imageSize}
-                        style={{ marginBottom: 8, objectFit: 'contain' }}
+                        style={{ 
+                            width: '70%', 
+                            height: 'auto',
+                            aspectRatio: 1,
+                            objectFit: 'contain' 
+                        }}
                     />
                 ) : (
                     <RNImage
@@ -59,25 +63,37 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: COLORS.cardBg,
-        borderRadius: 12,
-        padding: 10,
+        borderWidth: 3,
+        borderRadius: 20,
+        padding: 12,
         shadowColor: '#000',
-        shadowOpacity: 0.08,
-        shadowRadius: 6,
-        elevation: 3,
-        borderWidth: 0.5,
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 4,
         borderColor: COLORS.cardBorder,
+        transition: 'background-color 0.15s',
     },
     inner: {
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-between',
+        flexDirection: 'column-reverse',
+        width : '100%',
+        paddingVertical: 8,
     },
     image: {
-        marginBottom: 8
+        flexShrink: 0,
+        flexGrow: 0,
+        maxWidth: '80%',
+        height: 'auto',
+        aspectRatio: 1,
+        objectFit: 'contain',
     },
     text: {
+        fontWeight: '600',
         color: COLORS.text,
-        textAlign: 'center'
+        textAlign: 'center',
+        flexShrink: 0,
     },
     pressed: {
         opacity: 0.85

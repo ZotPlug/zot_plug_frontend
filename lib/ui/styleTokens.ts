@@ -2,20 +2,21 @@
 
 export const CATEGORY_TOKENS = {
     big: {
-        containerSize: 152,
-        imageSize: 72,
-        fontSize: 16,
+        containerSize: 160,
+        imageSize: '70%',
+        fontSize: 17,
     },
     small: {
-        containerSize: 96,
-        imageSize: 40,
+        containerSize: 100,
+        imageSize: '60%',
         fontSize: 13,
     },
 }
 
 export const COLORS = {
-    cardBg: '#FFFFFF',
-    cardBorder: '#E6EEF6',
-    text: '#0F172A',
+    cardBg: '#E6F4EA',
+    cardBorder: '#2E7D32',
+    text: '#333333',
     accent: '#0B74FF',
+    pressedBg: '#C8E6C9',
 }
