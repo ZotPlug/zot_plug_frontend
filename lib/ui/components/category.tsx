@@ -14,29 +14,42 @@ const Category = ({
     style
 }: CategoryProps) => {
     const tokens = size === 'big' ? CATEGORY_TOKENS.big : CATEGORY_TOKENS.small;
-    const isSmall = size === 'small' ? <View style={{ height: 8 }} /> : null;
-
     const rnSource = typeof imageFilePath === 'string' ? { uri: imageFilePath } : (imageFilePath as any);
+
+    const isSmall = size === 'small' 
 
     return (
         <Pressable
             onPress={onPress}
             accessibilityLabel={accessibilityLabel ?? displayText}
             testID={testID}
-            style={({ pressed }: { pressed: boolean }) => [
+            style={({ pressed }) => [
                 styles.container,
-                { width: tokens.containerSize, height: tokens.containerSize },
+                { 
+                    width: '100%',
+                    maxWidth: tokens.maxContainerWidth,
+                    maxHeight: tokens.maxContainerHeight,
+                    aspectRatio: 1,
+                },
                 pressed && styles.pressed,
                 style
             ]}
         >
-            <View style={styles.inner}>
+            <View 
+                style={[
+                    styles.inner,
+                    {
+                        paddingVertical: isSmall ? 6 : 8,
+                        gap: isSmall ? 6 : 10,
+                    },
+                ]}
+            >
                 {Platform.OS === 'web' ? (
                     <img
                         src={imageFilePath as string}
                         alt={displayText}
                         style={{ 
-                            width: '70%', 
+                            width: isSmall ? '60%' : '70%',
                             height: 'auto',
                             aspectRatio: 1,
                             objectFit: 'contain' 
@@ -50,7 +63,18 @@ const Category = ({
                 />
                 )}
 
-                <Text style={[styles.text, { fontSize: tokens.fontSize }]} numberOfLines={2}>
+                <Text 
+                    style={[
+                        styles.text, 
+                        { 
+                            fontSize: tokens.fontSize,
+                            maxWidth: '90%', 
+                        },
+                    ]} 
+                    numberOfLines={2}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.8}
+                >
                     {displayText}
                 </Text>
             </View>
@@ -79,7 +103,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'column-reverse',
         width : '100%',
-        paddingVertical: 8,
     },
     image: {
         flexShrink: 0,
@@ -93,7 +116,9 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: COLORS.text,
         textAlign: 'center',
+        marginTop: 4,
         flexShrink: 0,
+        flexWrap: 'wrap',
     },
     pressed: {
         opacity: 0.85

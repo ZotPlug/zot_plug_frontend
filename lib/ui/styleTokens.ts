@@ -2,12 +2,16 @@
 
 export const CATEGORY_TOKENS = {
     big: {
-        containerSize: 160,
+        containerSize: '100%',
+        maxContainerWidth: 180,
+        maxContainerHeight: 180,
         imageSize: '70%',
         fontSize: 17,
     },
     small: {
-        containerSize: 100,
+        containerSize: '100%',
+        maxContainerWidth: 100,
+        maxContainerHeight: 100,
         imageSize: '60%',
         fontSize: 13,
     },
