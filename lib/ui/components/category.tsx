@@ -19,17 +19,35 @@ const Category = ({
     const tokens = isSmall ? CATEGORY_TOKENS.small : CATEGORY_TOKENS.big;
     const horizontalLayout = size === 'big' ? screenWidth > 600 : screenWidth > 300;
 
-    const containerWidth = isSmall 
-        ? Math.min(screenWidth * 0.22, 200)
-        : Math.min(screenWidth * 0.7, 540);
+    const isMobile = Platform.OS !== 'web';
 
-    const containerHeight = isSmall
-        ? containerWidth * 0.8
-        : horizontalLayout
-        ? containerWidth * 0.4
-        : containerWidth * 0.7;
+    const containerWidth = isMobile
+        ? isSmall
+            ? screenWidth * 0.45
+            : screenWidth * 0.9
+        : isSmall
+            ? Math.min(screenWidth * 0.22, tokens.maxContainerWidth) 
+            : Math.min(screenWidth * 0.7, tokens.maxContainerWidth);
 
-    const layoutDirection = isSmall ? 'column' : horizontalLayout ? 'row' : 'column-reverse';
+    const containerHeight = isMobile
+        ? isSmall
+            ? Math.max(containerWidth * 0.8, 100)
+            : Math.max(containerWidth * 0.5, 140)
+        : isSmall
+            ? tokens.maxContainerHeight * 0.8
+            : horizontalLayout
+            ? tokens.maxContainerHeight * 0.4
+            : tokens.maxContainerHeight * 0.7;
+
+    const layoutDirection = isMobile 
+        ? isSmall
+            ? 'column'
+            : 'row'
+        : isSmall
+            ? 'column'
+            : horizontalLayout 
+                ? 'row' 
+                : 'column-reverse';
 
     return (
         <Pressable
@@ -50,7 +68,7 @@ const Category = ({
             <View 
                 style={[
                     styles.textContainer,
-                    !isSmall && horizontalLayout ? styles.textLeft : styles.textTop,
+                    layoutDirection === 'row' ? styles.textLeft : styles.textTop,
                     isSmall ? { marginBottom: 6 } : null,
                 ]}
             >
@@ -58,8 +76,11 @@ const Category = ({
                     style={[
                         styles.text,
                         {
-                            fontSize: Math.min(tokens.fontSize, screenWidth * (isSmall ? 0.03 : 0.04)),
-                            textAlign: !isSmall && horizontalLayout ? 'left' : 'center',
+                            fontSize: Math.min(
+                                tokens.fontSize, 
+                                isMobile ? 16 : screenWidth * 0.04
+                            ),
+                            textAlign: !isSmall && (!isMobile || horizontalLayout) ? 'left' : 'center',
                             fontFamily: `${tokens.fontFamily}, sans-serif`,
                         },
                     ]}
@@ -89,8 +110,9 @@ const Category = ({
                 <RNImage
                     source={rnSource}
                     style={{ 
-                        width: tokens.imageSize,
-                        aspectRatio: 1,
+                        width: isSmall ? '70%' : undefined,
+                        flex: isSmall ? undefined : 1, 
+                        height: isSmall ? undefined : '100%',
                         resizeMode: 'contain',
                         marginTop: isSmall ? 6 : 0,
                     }}
@@ -103,7 +125,7 @@ const Category = ({
 const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.cardBg,
-        borderWidth: 2,
+        borderWidth: 4,
         borderRadius: 16,
         borderColor: COLORS.cardBorder,
         alignItems: 'center',
@@ -113,7 +135,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
-        transition: 'all 0.2s ease',
     },
     textContainer: {
         justifyContent: 'center',

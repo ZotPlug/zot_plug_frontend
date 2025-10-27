@@ -68,19 +68,10 @@ export default function Dashboard() {
 
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={[ styles.header, { marginTop: 24 }]}>Categories</Text>
+
         <View style={styles.grid}>
           <Category
-            displayText="Lightning"
-            imageFilePath={require('../../assets/images/lightning.png')}
-            size="big"
-            onPress={() => console.log('Lightning pressed')} 
-            accessibilityLabel={""} 
-            testID={""} 
-            style={undefined}          
-          />
-
-          <Category
-            displayText="Fans"
+            displayText="FANS"
             imageFilePath={require('../../assets/images/fan.png')}
             size="small"
             onPress={() => console.log('Fans pressed')} 
@@ -90,7 +81,7 @@ export default function Dashboard() {
           />
 
           <Category
-            displayText="Heater"
+            displayText="HEATER"
             imageFilePath={require('../../assets/images/heater.png')}
             size="small"
             onPress={() => console.log('Heater pressed')}
@@ -99,18 +90,40 @@ export default function Dashboard() {
             style={undefined} 
           />
         </View>
+
+          <Category
+            displayText="LIGHTNING"
+            imageFilePath={require('../../assets/images/lightning.png')}
+            size="big"
+            onPress={() => console.log('Lightning pressed')} 
+            accessibilityLabel={""} 
+            testID={""} 
+            style={{ marginBottom: 12 }}          
+          />
       </ScrollView>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 16 },
-  header: { fontSize: 18, fontWeight: 'bold', marginBottom: 12 },
+  container: { 
+    padding: 16 
+  },
+  header: { 
+    fontSize: 18, 
+    fontWeight: 'bold', 
+    marginBottom: 12 
+  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    justifyContent: 'space-between',
     alignItems: 'flex-start',
+  },
+  gridColumn: {
+    flexDirection: 'column',
+    width: '100%',
+    marginBottom: 12,
+    gap: 12,
   },
 });
