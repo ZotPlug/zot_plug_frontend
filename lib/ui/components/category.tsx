@@ -49,6 +49,7 @@ const Category = ({
                     {
                         paddingVertical: isSmall ? (Platform.OS === 'web' ? 4 : 8) : 8,
                         gap: isSmall ? (Platform.OS === 'web' ? 2 : 5) : 5,
+                        paddingBottom: isSmall ? 6 : 8,
                     },
                 ]}
             >
