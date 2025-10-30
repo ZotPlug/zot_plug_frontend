@@ -13,9 +13,9 @@ export default function Plugs() {
 		<div>
             <SharedH1 text='Plugs'/>
             <div>
-                <DevicePreview deviceImage="" deviceName="Plug 1" currUsage={10} totalUsage={30}/>
+                <DevicePreview deviceImage="/images/lightning.png" deviceName="Plug 1" currUsage={10} totalUsage={30}/>
                 <DevicePreview deviceImage="" deviceName="Plug 2" currUsage={5} totalUsage={30}/>
-                <DevicePreview deviceImage="" deviceName="Plug 3" currUsage={15} totalUsage={30}/>
+                <DevicePreview deviceImage="/images/heater.png" deviceName="Plug 3" currUsage={15} totalUsage={30}/>
                 
             </div>
 

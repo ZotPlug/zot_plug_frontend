@@ -47,10 +47,12 @@ export type sharedH1Props = {
 }
 
 export type devicePreviewProps = {
-    deviceImage: string,
+    deviceImage: string | null,
     deviceName: string,
     currUsage: number,
     totalUsage: number
+}
+
 export type CategorySize = 'big' | 'small'
 
 export type CategoryProps = {
