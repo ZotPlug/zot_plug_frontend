@@ -62,19 +62,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'gray',
         flexDirection: 'row',
-        width: '80%',
+        width: '95%',
         margin: 10,
-        padding: 5
+        padding: 5,
+        paddingLeft: 25,
+        paddingRight: 25,
+        flexShrink: 1
     },
     deviceImage: {
-        height: 'auto',
-        width: 64,
+        height: '100%',
+        width: '100%',
+        maxWidth: 64,
+        maxHeight: 64,
+        marginLeft: 30,
     },
     deviceDetails: {
-        width: '65%',
+        width: '85%',
         justifyContent: 'center',
         padding: 5,
-        marginLeft: 20
+        marginLeft: 20,
     },
     deviceName: {
         color: 'white',
@@ -82,7 +88,7 @@ const styles = StyleSheet.create({
     },
     progressBar: {
         marginVertical: 10,
-        width: '75%',
+        width: '70%',
     },
     alignHorizontal: {
         display: 'flex',

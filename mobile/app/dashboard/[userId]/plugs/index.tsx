@@ -18,7 +18,7 @@ export default function PowerUsagePage() {
     <SharedH1 text='Plugs'/>
     <View>
         <DevicePreview deviceImage={require('../../../../assets/images/lightning.png')} deviceName="Plug 1" currUsage={10} totalUsage={30}/>
-        <DevicePreview deviceImage="../../../../assets/images/fan.png" deviceName="Plug 2" currUsage={5} totalUsage={30}/>
+        <DevicePreview deviceImage={require('../../../../assets/images/fan.png')} deviceName="Plug 2" currUsage={5} totalUsage={30}/>
         <DevicePreview deviceImage="" deviceName="Plug 3" currUsage={15} totalUsage={30}/>
     </View>
       
