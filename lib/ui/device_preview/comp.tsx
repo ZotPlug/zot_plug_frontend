@@ -3,15 +3,13 @@ import { Platform, Text, View, Image as RNImage, Pressable, StyleSheet } from "r
 import { devicePreviewProps } from "../types"
 import ProgressBar from "../components/progress_bar";
 
-function OpenDeviceStats() {
-    console.log("Open device stats")
-}
-
 export default function DevicePreview({ 
     deviceImage, 
-    deviceName, 
+    deviceName,
+    deviceId,
     currUsage, 
-    totalUsage
+    totalUsage,
+    redirectOnClick
 }: devicePreviewProps) {
     const deviceDetails =
         <View style={styles.deviceDetails}>
@@ -47,8 +45,11 @@ export default function DevicePreview({
         />
     ))
     
+    // We pass redirectOnClick as a component function parameter because routing
+    // logic is different on mobile and web, and requires different router 
+    // libraries.
     return (
-        <Pressable style={styles.container} onPress={OpenDeviceStats}>
+        <Pressable style={styles.container} onPress={() => redirectOnClick(deviceId)}>
             {image}
             {deviceDetails}
         </Pressable>
