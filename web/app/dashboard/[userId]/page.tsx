@@ -7,6 +7,7 @@ import { deviceControl } from "@/app/api_utils/api_actions";
 import { DeviceControlReqs } from "ui/types";
 import { useRouter } from 'next/navigation'
 import { Category, BasicButton } from 'ui/components';
+import SharedH1 from "ui/components/shared_h1"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>();
@@ -20,7 +21,9 @@ export default function Dashboard() {
 
 	return (
 		<div>
-			<h1>Unique dashboard of user: {userId}</h1>
+        
+            <SharedH1 text="Dashboard" />
+			<h1>User: {userId}</h1>
 			<DeviceControl deviceEndpointFn={sendCommand} />
             
             <BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`) } />
