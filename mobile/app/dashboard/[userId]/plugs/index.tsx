@@ -11,9 +11,7 @@ import DevicePreview from 'ui/device_preview/comp'
 
 export default function PowerUsagePage()
 {
-    const { mode } = useLocalSearchParams<{ mode: string }>()
     const router = useRouter()
-    const [error, setError] = useState<string | null>(null)
 
     const { userId } = useLocalSearchParams();
 
