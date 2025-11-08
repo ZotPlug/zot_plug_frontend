@@ -7,6 +7,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router'
 import { validate_jwt } from '@/api_utils/api_actions'    // removed getAllDevices import (doesn't exist)
 import BasicButton from 'ui/components/basic_button'
 import Category  from 'ui/components/category'
+import SharedH1 from "ui/components/shared_h1"
 
 export default function Dashboard() {
   const { userId } = useLocalSearchParams();
@@ -55,6 +56,7 @@ export default function Dashboard() {
 
   return (
     <View>
+      <SharedH1 text={'Dashboard'} />
       <Text> {`Elllo Ello, Unique Dash of user ${userId} `}</Text>
       {/* <BasicButton onPress={test_token} text={"Get All Devices"} /> */}
       <BasicButton onPress={test_val} text={"Validate Token"} />

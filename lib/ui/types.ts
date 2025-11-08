@@ -42,15 +42,20 @@ export type dailyTargetProps = {
 	maxProgress: number,
 }
 
-export type sharedH1Props = {
-    text: string
+export type devicePreviewProps = {
+    deviceImage: string | null,
+    deviceName: string,
+    deviceId: number,
+    currUsage: number,
+    totalUsage: number,
+    redirectOnClick: Function
 }
 
-export type devicePreviewProps = {
-    deviceImage: string,
-    deviceName: string,
-    currUsage: number,
-    totalUsage: number
+export type deviceReadingsProps = {
+    voltage: number,
+    current: number
+}
+
 export type CategorySize = 'big' | 'small'
 
 export type CategoryProps = {
