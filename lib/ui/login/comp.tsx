@@ -10,10 +10,10 @@ function basic_filter_check(onSubmit: (params: basicCreds) => void, setBasicErr:
 }
 
 function submitOnEnter(event: Event, onSubmit: (params: basicCreds) => void, params: basicCreds) {
-    if (event.key === "Enter" || event.key === "NumpadEnter") {
-        event.preventDefault();
-        onSubmit(params)
-    }
+	if (event.key === "Enter" || event.key === "NumpadEnter") {
+		event.preventDefault();
+		onSubmit(params)
+	}
 }
 
 export default function LoginComp({ onSubmit, errorText, setErrorText }: LoginCompParams) {
@@ -25,7 +25,7 @@ export default function LoginComp({ onSubmit, errorText, setErrorText }: LoginCo
 			<TextInput
 				value={email}
 				onChangeText={setEmail}
-                onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, {email: email, password: pass})}
+				onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, { email: email, password: pass })}
 				placeholder="Email"
 				editable={true}
 				style={styles.textInput}
@@ -33,7 +33,7 @@ export default function LoginComp({ onSubmit, errorText, setErrorText }: LoginCo
 			<TextInput
 				value={pass}
 				onChangeText={setPass}
-                onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, {email: email, password: pass})}
+				onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, { email: email, password: pass })}
 				placeholder="Password"
 				editable={true}
 				style={styles.textInput}

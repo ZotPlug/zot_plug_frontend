@@ -1,9 +1,20 @@
+export type AddDeviceCompParams = {
+	onSubmit: (params: { deviceName: string }) => void
+	modalMessage: { ok: boolean, message: string } | null
+	SetModalMesage: React.Dispatch<React.SetStateAction<{ ok: boolean, message: string } | null>>
+}
+
 export type signUpInfo = {
 	firstname: string,
 	lastname: string,
 	username: string,
 	email: string,
 	password: string,
+}
+
+export type addDeviceReqs = {
+	userId: string,
+	deviceName: string
 }
 
 export type DeviceControlReqs = {
@@ -43,17 +54,17 @@ export type dailyTargetProps = {
 }
 
 export type devicePreviewProps = {
-    deviceImage: string | null,
-    deviceName: string,
-    deviceId: number,
-    currUsage: number,
-    totalUsage: number,
-    redirectOnClick: Function
+	deviceImage: string | null,
+	deviceName: string,
+	deviceId: number,
+	currUsage: number,
+	totalUsage: number,
+	redirectOnClick: Function
 }
 
 export type deviceReadingsProps = {
-    voltage: number,
-    current: number
+	voltage: number,
+	current: number
 }
 
 export type CategorySize = 'big' | 'small'

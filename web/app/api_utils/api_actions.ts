@@ -1,6 +1,6 @@
 import { toErrorMessage } from "./helper";
 import { signUpInfo, basicCreds } from "./types";
-import { DeviceControlReqs } from "ui/types";
+import { addDeviceReqs, DeviceControlReqs } from "ui/types";
 type Result<T> = { ok: true; value: T } | { ok: false, error: string }
 
 export async function fetch_test() {
@@ -64,7 +64,26 @@ export async function signup_user(params: signUpInfo): Promise<Result<{ userId: 
 	}
 }
 
-export async function deviceControl(params: DeviceControlReqs) {
+export async function add_device(params: addDeviceReqs) {
+	try {
+		const addDeviceRes = await fetch('/api/addDevice', {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				userId: params.userId,
+				deviceName: params.deviceName
+			})
+		}).then(e => e.json())
+		if (!addDeviceRes.ok) throw new Error(addDeviceRes.message)
+		return { ok: true, value: addDeviceRes.message }
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
+
+export async function device_control(params: DeviceControlReqs) {
 	try {
 		const deviceControlRes = await fetch('/api/deviceControl', {
 			method: "POST",
