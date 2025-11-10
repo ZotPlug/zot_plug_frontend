@@ -44,20 +44,10 @@ export default function Plugs() {
 
             ) : (
 
-                <div> Error loading plugs </div>
+                <div> No plugs attached to your account. </div>
             )}
             <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`)} />
         </div>
     )
 }
 
-export interface UserDeviceInfo {
-    accepted_at: string;
-    device_id: number;
-    device_name: string;
-    device_status: string;        // "offline" | "online" | etc.
-    last_seen: string | null;     // nullable timestamp
-    role_id: number;
-    role_name: string;            // "owner", "member", etc.
-    user_device_status: string;   // "active", "pending", etc.
-}

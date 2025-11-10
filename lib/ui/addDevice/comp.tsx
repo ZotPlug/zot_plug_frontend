@@ -8,7 +8,7 @@ export default function AddDevice({ onSubmit, modalMessage, SetModalMesage }: Ad
 	const [overlayState, SetOverlayState] = useState(false)
 	const [textInput, SetTextInput] = useState("")
 	const { width, height } = useWindowDimensions()
-	const isMobile = width >= 350
+	const isMobile = width <= 480
 
 	return (
 		<View>

@@ -14,7 +14,6 @@ async function sendCommand(params: DeviceControlReqs) {
 
 export default function PlugUsagePage() {
     const { userId, deviceName } = useLocalSearchParams();
-    console.log(useLocalSearchParams())
     const properDevice_name = Array.isArray(deviceName) ? deviceName[0] : deviceName // TS alerts that useLocalSearchParams, can be of type array
 
     return (
