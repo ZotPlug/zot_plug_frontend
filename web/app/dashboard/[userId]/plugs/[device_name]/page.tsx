@@ -9,15 +9,15 @@ import { useRouter } from 'next/navigation'
 import DeviceReadings from "ui/deviceReadings/comp"
 import SharedH2 from "ui/components/shared_h2"
 
+async function sendCommand(params: DeviceControlReqs) {
+    const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
+    if (!res.ok) console.log(res.value)
+}
+
 export default function DevicePage() {
     const { userId } = useParams<{ userId: string }>();
     const { device_name } = useParams<{ device_name: string }>(); // Device name is needed for mqtt to send cmd's to the proper device. I.e: Topic: {device_name}/cmd/relay/on
     const router = useRouter()
-
-    async function sendCommand(params: DeviceControlReqs) {
-        const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
-        if (!res.ok) console.log(res.value)
-    }
 
     return (
         <div>

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { toErrorMessage } from "@/app/api_utils/helper";
-import { DeviceControlRes } from "@/app/api_utils/types";
-import { DeviceControlReqs } from "ui/types";
+import { DeviceControlReqs, DeviceControlRes } from "ui/types";
 import createApiClient from "api/req";
 const api = createApiClient({ device: "web" })
 

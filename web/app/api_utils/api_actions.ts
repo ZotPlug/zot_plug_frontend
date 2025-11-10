@@ -1,17 +1,8 @@
 import { toErrorMessage } from "./helper";
 import { signUpInfo, basicCreds } from "./types";
-import { addDeviceReqs, DeviceControlReqs } from "ui/types";
+import { addDeviceReqs, DeviceControlReqs, UserDeviceInfo } from "ui/types";
 type Result<T> = { ok: true; value: T } | { ok: false, error: string }
-export interface UserDeviceInfo {
-	accepted_at: string;
-	device_id: number;
-	device_name: string;
-	device_status: string;        // "offline" | "online" | etc.
-	last_seen: string | null;     // nullable timestamp
-	role_id: number;
-	role_name: string;            // "owner", "member", etc.
-	user_device_status: string;   // "active", "pending", etc.
-}
+
 
 export async function fetch_test() {
 	try {

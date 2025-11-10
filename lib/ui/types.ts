@@ -24,6 +24,8 @@ export type DeviceControlReqs = {
 	retain: boolean
 }
 
+export interface DeviceControlRes { ok?: string, error?: string }
+
 export type basicCreds = { email: string, password: string }
 
 export type LoginCompParams = {
@@ -78,4 +80,15 @@ export type CategoryProps = {
 	accessibilityLabel: string,
 	testID: string,
 	style: any,
+}
+
+export interface UserDeviceInfo {
+	accepted_at: string;
+	device_id: number;
+	device_name: string;
+	device_status: string;        // "offline" | "online" | etc.
+	last_seen: string | null;     // nullable timestamp
+	role_id: number;
+	role_name: string;            // "owner", "member", etc.
+	user_device_status: string;   // "active", "pending", etc.
 }

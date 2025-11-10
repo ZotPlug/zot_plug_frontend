@@ -24,13 +24,5 @@ const styles = StyleSheet.create({
 		width: '100%',
 		maxWidth: 450,
 	},
-	textInput: {
-		padding: 16,
-		backgroundColor: 'white',
-		color: 'black',
-		borderRadius: 8,
-		width: '100%',
-		marginVertical: 8,
-	}
 })
 
