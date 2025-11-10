@@ -1,9 +1,7 @@
 // web/app/dashboard/[userId]/page.tsx
 'use client'
 import { useParams } from "next/navigation"
-import DeviceControl from "ui/deviceControl/comp"
-import { device_control, add_device } from "@/app/api_utils/api_actions";
-import { DeviceControlReqs } from "ui/types";
+import { add_device } from "@/app/api_utils/api_actions";
 import { useRouter } from 'next/navigation'
 import { Category, BasicButton } from 'ui/components';
 import SharedH1 from "ui/components/shared_h1"
@@ -13,13 +11,7 @@ import { useState } from "react";
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>();
 	const [modalMessage, SetModalMessage] = useState<{ ok: boolean, message: string } | null>(null)
-
 	const router = useRouter()
-
-	async function sendCommand(params: DeviceControlReqs) {
-		const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
-		if (!res.ok) console.log(res.value)
-	}
 
 	async function addDevice(params: { deviceName: string }) {
 		const res = await add_device({ userId, deviceName: params.deviceName })
@@ -37,7 +29,6 @@ export default function Dashboard() {
 			<div className="flex justify-center">
 				<div className="flex flex-col w-full">
 					<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
-					<DeviceControl deviceEndpointFn={sendCommand} />
 					<BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
 					<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
 					<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />

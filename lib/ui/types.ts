@@ -33,6 +33,7 @@ export type LoginCompParams = {
 }
 
 export type DeviceControlProps = {
+	deviceName: string,
 	deviceEndpointFn: (params: DeviceControlReqs) => Promise<void>,
 }
 

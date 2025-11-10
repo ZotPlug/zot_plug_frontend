@@ -2,6 +2,16 @@ import { toErrorMessage } from "./helper";
 import { signUpInfo, basicCreds } from "./types";
 import { addDeviceReqs, DeviceControlReqs } from "ui/types";
 type Result<T> = { ok: true; value: T } | { ok: false, error: string }
+export interface UserDeviceInfo {
+	accepted_at: string;
+	device_id: number;
+	device_name: string;
+	device_status: string;        // "offline" | "online" | etc.
+	last_seen: string | null;     // nullable timestamp
+	role_id: number;
+	role_name: string;            // "owner", "member", etc.
+	user_device_status: string;   // "active", "pending", etc.
+}
 
 export async function fetch_test() {
 	try {
@@ -64,7 +74,7 @@ export async function signup_user(params: signUpInfo): Promise<Result<{ userId: 
 	}
 }
 
-export async function add_device(params: addDeviceReqs) {
+export async function add_device(params: addDeviceReqs): Promise<Result<string>> {
 	try {
 		const addDeviceRes = await fetch('/api/addDevice', {
 			method: "POST",
@@ -78,6 +88,25 @@ export async function add_device(params: addDeviceReqs) {
 		}).then(e => e.json())
 		if (!addDeviceRes.ok) throw new Error(addDeviceRes.message)
 		return { ok: true, value: addDeviceRes.message }
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
+
+export async function get_all_devices_by_userId(params: { userId: string }): Promise<Result<UserDeviceInfo[]>> {
+	try {
+		const res = await fetch('/api/getAllDevices', {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				userId: params.userId
+			})
+		}).then(e => e.json())
+		if (!res.ok) throw new Error(res.message)
+		return { ok: true, value: res.value }
 	} catch (err) {
 		return { ok: false, error: toErrorMessage(err) }
 	}

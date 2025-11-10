@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const router = useRouter()
-  /* useQuery is best for any kind of data fetching logic */
+  /* useQuery, when you want to query data on page load */
   const { data: test_data, isLoading } = useQuery({
     queryKey: ['test'],
     queryFn: async () => await fetch_test()
