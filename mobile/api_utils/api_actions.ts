@@ -1,5 +1,5 @@
 import * as SecureStore from "expo-secure-store";
-import { basicCreds, CheckUserbasicCredsRes, Result, signUpInfo } from "./types"
+import { basicCreds, CheckUserbasicCredsRes, Result, signUpInfo, addDeviceReqs } from "./types"
 import { toErrorMessage, api, api_withMiddleWare } from "./helper"
 
 export async function login_user(params: basicCreds): Promise<Result<{ userId: string }>> {
@@ -28,6 +28,21 @@ export async function signup_user(params: signUpInfo): Promise<Result<{ userId: 
 		else {
 			throw new Error("Account Creation Failed")
 		}
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
+
+export async function add_device(params: addDeviceReqs): Promise<Result<string>> {
+	try {
+		await api_withMiddleWare<any>({
+			method: "POST", endpoint: "/api/devices/addDeviceMap",
+			body: {
+				userId: params.userId,
+				name: params.deviceName
+			}
+		})
+		return { ok: true, value: `Device of: ${params.deviceName} was mapped to User: ${params.userId}` }
 	} catch (err) {
 		return { ok: false, error: toErrorMessage(err) }
 	}
