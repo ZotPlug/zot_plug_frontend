@@ -21,7 +21,7 @@ export async function api_withMiddleWare<T>(params: { method: RestMethod, endpoi
 
 		return await api.fetchJSON<T>({ method: params.method, endpoint: params.endpoint, headers, body: params.body })
 	} catch (err) {
-		console.error("Fetch W/ MW error:", err);
+		//console.error("Fetch W/ MW error:", err);
 		throw err
 	}
 }

@@ -1,34 +1,53 @@
 'use client'
+import { useQuery } from '@tanstack/react-query'
 import { useParams } from "next/navigation"
 import BasicButton from "ui/components/basic_button"
 import SharedH1 from "ui/components/shared_h1"
 import { useRouter } from 'next/navigation'
 import DevicePreview from "ui/device_preview/comp"
+import { get_all_devices_by_userId } from '@/app/api_utils/api_actions'
 
 export default function Plugs() {
-	const { userId } = useParams<{ userId: string }>();
+    const img_arr = ["/images/lightning.png", "", "/images/heater.png"]
+    let img_i = 0
+    const { userId } = useParams<{ userId: string }>();
     const router = useRouter()
+
+    const { data: plugs, isLoading } = useQuery({
+        queryKey: ['plugs'],
+        queryFn: async () => await get_all_devices_by_userId({ userId })
+    })
 
     // Nested function because router is only accessible from 
     // the top level hook function Plugs()
-    function openDeviceStats(deviceId: number) {
-        const path = `/dashboard/${userId}/plugs/${deviceId}`
-
+    function openDeviceStats(device_name: string) {
+        const path = `/dashboard/${userId}/plugs/${device_name}`
         router.push(path)
     }
 
-    // TODO: Replace this code with a for loop when we're actually reading data 
-    // from the backend. Need to remove deviceId magic number redundancy
-	return (
-		<div>
-            <SharedH1 text='Plugs'/>
-            <div>
-                <DevicePreview deviceImage="/images/lightning.png" deviceName="Plug 1" currUsage={10} totalUsage={30} deviceId={1} redirectOnClick={() => openDeviceStats(1)}/>
-                <DevicePreview deviceImage="" deviceName="Plug 2" currUsage={5} totalUsage={30} deviceId={2} redirectOnClick={() => openDeviceStats(2)} />
-                <DevicePreview deviceImage="/images/heater.png" deviceName="Plug 3" currUsage={15} totalUsage={30} deviceId={3} redirectOnClick={() => openDeviceStats(3)} />
-            </div>
+    // TODO: Need to remove deviceId magic number redundancy
+    return (
+        <div>
+            <SharedH1 text='Plugs' />
+            {isLoading ? (
+                <div> Loading plug data... </div>
 
-            <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`) } />
-		</div>
-	)
+            ) : plugs && plugs.ok ? (
+
+                plugs.value.map(({ device_name, device_id }) => {
+                    // These two lines mainly just for test
+                    const currUsageTest = Number((Math.random() * 30).toFixed(2));
+                    if (img_i > 1) img_i = 0; else ++img_i
+
+                    return <DevicePreview key={device_id} deviceImage={img_arr[img_i]} deviceName={device_name} currUsage={currUsageTest} totalUsage={30} deviceId={device_id} redirectOnClick={() => openDeviceStats(device_name)} />
+                })
+
+            ) : (
+
+                <div> No plugs attached to your account. </div>
+            )}
+            <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`)} />
+        </div>
+    )
 }
+

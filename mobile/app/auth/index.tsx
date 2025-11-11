@@ -1,4 +1,3 @@
-
 import { KeyboardAvoidingView, Text, View } from "react-native"
 import { login_user, signup_user } from "@/api_utils/api_actions"
 import { signUpInfo, basicCreds } from "@/api_utils/types"

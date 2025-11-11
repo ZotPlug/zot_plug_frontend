@@ -1,6 +1,7 @@
 import * as SecureStore from "expo-secure-store";
-import { basicCreds, CheckUserbasicCredsRes, Result, signUpInfo } from "./types"
+import { basicCreds, CheckUserbasicCredsRes, Result, signUpInfo, addDeviceReqs } from "./types"
 import { toErrorMessage, api, api_withMiddleWare } from "./helper"
+import { UserDeviceInfo, DeviceControlReqs, DeviceControlRes } from "ui";
 
 export async function login_user(params: basicCreds): Promise<Result<{ userId: string }>> {
 	try {
@@ -30,6 +31,45 @@ export async function signup_user(params: signUpInfo): Promise<Result<{ userId: 
 		}
 	} catch (err) {
 		return { ok: false, error: toErrorMessage(err) }
+	}
+}
+
+export async function add_device(params: addDeviceReqs): Promise<Result<string>> {
+	try {
+		await api_withMiddleWare<any>({
+			method: "POST", endpoint: "/api/devices/addDeviceMap",
+			body: {
+				userId: params.userId,
+				name: params.deviceName
+			}
+		})
+		return { ok: true, value: `Device of: ${params.deviceName} was mapped to User: ${params.userId}` }
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
+
+export async function get_all_devices_by_userId(params: { userId: string }): Promise<Result<UserDeviceInfo[]>> {
+	try {
+		const res = await api_withMiddleWare<UserDeviceInfo[]>({ endpoint: `/api/devices/getAllDevicesByUserId/${params.userId}`, method: "GET" })
+		return { ok: true, value: res }
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
+
+export async function device_control(params: DeviceControlReqs) {
+	const { topic, payload, qos, retain } = params
+	try {
+		const res = await api_withMiddleWare<DeviceControlRes>({ endpoint: "/api/mqtt/publish", method: "POST", body: { topic, payload, qos, retain } })
+
+		if (res.ok) {
+			return { ok: true, message: `Command was sent to: ${topic}` }
+		} else {
+			return { ok: false, message: `Command failed to send to: ${topic}` }
+		}
+	} catch (err) {
+		return { ok: false, message: toErrorMessage(err) }
 	}
 }
 

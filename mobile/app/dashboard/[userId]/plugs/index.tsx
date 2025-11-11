@@ -1,39 +1,53 @@
 import { Text, View, StyleSheet } from "react-native"
-import { login_user, signup_user } from "@/api_utils/api_actions"
-import { signUpInfo, basicCreds } from "@/api_utils/types"
 import { Link, useLocalSearchParams, useRouter } from "expo-router"
-import { useState } from "react"
-import LoginComp from 'ui/login/comp'
-import SignUpComp from 'ui/signup/comp'
+import { useQuery } from '@tanstack/react-query'
 import SharedH1 from 'ui/components/shared_h1'
 import DevicePreview from 'ui/device_preview/comp'
+import { get_all_devices_by_userId } from "@/api_utils/api_actions"
 
 
-export default function PowerUsagePage()
-{
+export default function PowerUsagePage() {
+    const img_arr = ["../../../../assets/images/lightning.png", "", "../../../../assets/images/fan.png"]
+    let img_i = 0
     const router = useRouter()
-
     const { userId } = useLocalSearchParams();
+    const properUserId = Array.isArray(userId) ? userId[0] : userId // TS alerts that useLocalSearchParams, can be of type array
+
+    const { data: plugs, isLoading } = useQuery({
+        queryKey: ['plugs'],
+        queryFn: async () => await get_all_devices_by_userId({ userId: properUserId })
+    })
+
 
     // Nested function because router is only accessible from 
     // the top level hook function Plugs()
-    async function openDeviceStats(deviceId: number)
-    {
-        router.push(`/dashboard/${userId}/plugs/${deviceId}`)
+    //
+    async function openDeviceStats(deviceName: string) {
+        router.push(`/dashboard/${userId}/plugs/${deviceName}`)
     }
 
-    // TODO: Replace this code with a for loop when we're actually reading data 
-    // from the backend. Need to remove deviceId magic number redundancy
+    // TODO:  Need to remove deviceId magic number redundancy
 
     return (
         <View style={styles.container} className="justify-center items-center h-screen">
             <SharedH1 text='Plugs' />
-            <View>
-                <DevicePreview deviceImage={require('../../../../assets/images/lightning.png')} deviceName="Plug 1" deviceId={1} currUsage={10} totalUsage={30} redirectOnClick={() => openDeviceStats(1)} />
-                <DevicePreview deviceImage={require('../../../../assets/images/fan.png')} deviceName="Plug 2" deviceId={2} currUsage={5} totalUsage={30} redirectOnClick={() => openDeviceStats(2)} />
-                <DevicePreview deviceImage="" deviceName="Plug 3" deviceId={3} currUsage={15} totalUsage={30} redirectOnClick={() => openDeviceStats(3)} />
-            </View>
+            {isLoading ? (
+                <Text> Loading plug data... </Text>
 
+            ) : plugs && plugs.ok ? (
+
+                plugs.value.map(({ device_name, device_id }) => {
+                    // These two lines mainly just for test
+                    const currUsageTest = Number((Math.random() * 30).toFixed(2));
+                    if (img_i > 1) img_i = 0; else ++img_i
+
+                    return <DevicePreview key={device_id} deviceImage={img_arr[img_i]} deviceName={device_name} currUsage={currUsageTest} totalUsage={30} deviceId={device_id} redirectOnClick={() => openDeviceStats(device_name)} />
+                })
+
+            ) : (
+
+                <Text> Error loading plugs </Text>
+            )}
         </View>
     )
 }
