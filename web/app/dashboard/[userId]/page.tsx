@@ -1,15 +1,17 @@
 // web/app/dashboard/[userId]/page.tsx
 'use client'
 import { useParams } from "next/navigation"
-import { add_device } from "@/app/api_utils/api_actions";
+import { add_device, fetch_user_by_id } from "@/app/api_utils/api_actions"
 import { useRouter } from 'next/navigation'
-import { Category, BasicButton } from 'ui/components';
+import { Category, BasicButton } from 'ui/components'
 import SharedH1 from "ui/components/shared_h1"
 import AddDevice from "ui/addDevice/comp"
-import { useState } from "react";
+import DailyTarget from "ui/dailyTarget/comp"
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-	const { userId } = useParams<{ userId: string }>();
+	const { userId } = useParams<{ userId: string }>()
+	const [user, setUser] = useState<{ firstname: string; lastname: string; userId: string } | null>(null)
 	const [modalMessage, SetModalMessage] = useState<{ ok: boolean, message: string } | null>(null)
 	const router = useRouter()
 
@@ -19,11 +21,24 @@ export default function Dashboard() {
 		else SetModalMessage({ ok: true, message: 'Device added' })
 	}
 
+	async function fetchUserInfo() {
+		const res = await fetch_user_by_id({ userId })
+		if (!res.ok) {
+			SetModalMessage({ ok: false, message: res.error! })
+		} else {
+			setUser(res.value) 
+			SetModalMessage({ ok: true, message: 'User info fetched' })
+		}
+	}
+
+	useEffect(() => {
+		fetchUserInfo()
+	}, [userId])	
+
 	return (
 		<div className="flex flex-col">
 			<div className="flex flex-col">
-				<SharedH1 text="Dashboard" />
-				<h1>User: {userId}</h1>
+				<SharedH1 text={`Welcome ${user?.firstname} ${user?.lastname}`}/>
 			</div>
 
 			<div className="flex justify-center">

@@ -1,3 +1,4 @@
+// web/app/api_utils/api_actions.ts
 import { toErrorMessage } from "./helper";
 import { signUpInfo, basicCreds } from "./types";
 import { addDeviceReqs, DeviceControlReqs, UserDeviceInfo } from "ui/types";
@@ -121,6 +122,19 @@ export async function device_control(params: DeviceControlReqs) {
 	}
 }
 
-
-
-
+export async function fetch_user_by_id(params: { userId: string }): Promise<Result<{ firstname: string, lastname: string, userId: string }>> {
+	try {
+		const res = await fetch('/api/getUserById', {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({ userId: params.userId})
+		}).then(e => e.json())
+		if (!res.ok) throw new Error(res.message)
+		return { ok: true, value: res.value }
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
