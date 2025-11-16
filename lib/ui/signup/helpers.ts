@@ -44,7 +44,7 @@ function check_password_req(params: signUpInfo, confirmPass: string): string | n
 export default function basic_filter_check(onSubmit: (params: signUpInfo) => void, setBasicErr: React.Dispatch<React.SetStateAction<string | null>>, params: signUpInfo, confirmPass: string): void {
 	// Temp email check block
 	if (!temp_allow_email.includes(params.email.toLowerCase())) {
-		setBasicErr("YOU ARE NOT ALLOWED ske-daddle")
+		setBasicErr("Invalid email provided.")
 		return
 	}
 

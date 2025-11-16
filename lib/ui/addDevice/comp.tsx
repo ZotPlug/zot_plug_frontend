@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	modalCardContainer: {
-		width: '25%',
+		width: '55%',
 		height: '25%',
 		backgroundColor: 'white',
 		borderRadius: 12,

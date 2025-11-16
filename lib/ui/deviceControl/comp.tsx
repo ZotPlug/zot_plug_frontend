@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
 		padding: 10,
 		width: '100%',
 		maxWidth: 450,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
 	},
 })
 
