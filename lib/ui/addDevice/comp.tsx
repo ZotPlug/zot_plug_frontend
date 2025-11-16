@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 	},
 	mobileModalCardContainer: {
 		width: '80%',
-		height: '25%',
+		height: 200, // Needs to be hard coded to account for keyboard taking up part of the height
 		backgroundColor: 'white',
 		borderRadius: 12,
 		flexDirection: 'column',

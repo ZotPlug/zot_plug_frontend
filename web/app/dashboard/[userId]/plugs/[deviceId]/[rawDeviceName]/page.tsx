@@ -34,7 +34,7 @@ export default function DevicePage() {
     const router = useRouter()
 
     // Get device info (namely the status)
-    const { data: deviceInfo, isLoadingDeviceInfo } = useQuery({
+    const { data: deviceInfo, isLoading: isLoadingDeviceInfo } = useQuery({
         queryKey: ['deviceInfo'],
         queryFn: async () => await apiGetDeviceInfo(parseInt(deviceId))
     })
@@ -43,7 +43,7 @@ export default function DevicePage() {
     const updateTime = 1000 * 10
 
     // Get device readings
-    const { data: deviceReading, isLoadingDeviceReading } = useQuery({
+    const { data: deviceReading, isLoading: isLoadingDeviceReading } = useQuery({
         queryKey: ['deviceReadings'],
         queryFn: async () => await apiGetLatestDeviceReading(deviceName),
         refetchInterval: updateTime
@@ -58,7 +58,7 @@ export default function DevicePage() {
         return (loadingPageContent)
     }
     
-    if (deviceInfo) {
+    if (deviceInfo && deviceInfo.value) {
         const deviceName = deviceInfo.value.name
         const deviceStatus = deviceInfo.value.status
   
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     verticalChildren: {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'left',
+        alignItems: 'flex-start',
         flexDirection: 'column',
     },
     actionsContainer: {
