@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 	const { userId, deviceName } = body
 
 	try {
-		await api.fetchJSON({ endpoint: "/api/devices/addDeviceMap", method: "POST", body: { userId, name: deviceName } })
+		await api.fetchJSON({ endpoint: "/api/devices/addDeviceMap", method: "POST", body: { userId, deviceName: deviceName } })
 
 		return NextResponse.json({ ok: true, message: `Device of: ${deviceName} was mapped to User: ${userId}` })
 	} catch (err) {
