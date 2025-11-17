@@ -21,6 +21,7 @@ export default function Plugs() {
     // Nested function because router is only accessible from 
     // the top level hook function Plugs()
     function openDeviceStats(deviceId: number, deviceName: string) {
+        console.log("move to plug location")
         const path = `/dashboard/${userId}/plugs/${deviceId.toString()}/${deviceName}`
         router.push(path)
     }

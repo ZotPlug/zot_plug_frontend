@@ -27,7 +27,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 				editable={true}
 				style={styles.textInput}
 			/>
-			<View style={isMobile ? styles.row : null}>
+			<View style={isMobile ? styles.col : null}>
 				<TextInput
 					value={userInfo.firstname}
 					onChangeText={(firstname) => SetUserInfo((prev) => ({ ...prev, firstname }))}
@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
 		lineHeight: 24,
 		color: "red",
 	},
-	row: {
-		flexDirection: 'row',
+	col: {
+		flexDirection: 'column', // row doesn't work on mobile, needs to be col
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
