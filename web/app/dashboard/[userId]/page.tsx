@@ -59,13 +59,13 @@ export default function Dashboard() {
 					<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light"/>
 
 					{/* Plugs Box */}
-					<div className="bg-stone-100 border border-gray-300 rounded-x1 p-4 shadow-md">
+					<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
 						<SharedH2 text="Plugs" mode="light"/>
 						
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
 
 							{/* Left Column - My Plugs */}
-							<div className="border border-gray-300 rounded-lg p-3 bg-gray-50">	
+							<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">	
 								<SharedH3 text="My Plugs" mode="light"/>
 
 								<div className="flex flex-col gap-3 mt-2">
@@ -84,7 +84,7 @@ export default function Dashboard() {
 							</div>
 
 							{/* Embedded Right Column - My Friend's Plugs*/}
-							<div className="border border-gray-300 rounded-lg p-3 bg-gray-50">
+							<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
 								<SharedH3 text="My Friend's Plugs" mode="light"/>
 							
 								<div className="flex flex-col gap-3">
@@ -114,7 +114,7 @@ export default function Dashboard() {
 				<div className="w-full md:w-1/3 flex flex-col gap-6">
 
 					{/* Daily Target Box */}
-					<div className="bg-white p-4 rounded-x1 border border-gray-300 shadow-sm">
+					<div className="mt-10 w-full flex justify-center">
 						<DailyTarget 
 							currProgress={dailyTarget.currProgress} 
 							maxProgress={dailyTarget.maxProgress}
@@ -123,7 +123,7 @@ export default function Dashboard() {
 
 					{/* Action Buttons */}
 					<div className="flex flex-col gap-4">
-						{/* <BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} /> */}
+						<BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
 						<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
 						<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
 						<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
