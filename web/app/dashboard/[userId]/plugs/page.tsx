@@ -27,26 +27,45 @@ export default function Plugs() {
 
     // TODO: Need to remove deviceId magic number redundancy
     return (
-        <div>
-            <SharedH1 text='Plugs' />
-            {isLoading ? (
-                <div> Loading plug data... </div>
+        <div className="min-h-screen w-full bg-sky-200 p-6">
+            <div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
+                
+                <SharedH1 text='Plugs' mode='light'/>
 
-            ) : plugs && plugs.ok ? (
+                <div className="mt-6 flex flex-col gap-6">
+            
+                    {isLoading ? (
+                        <div> Loading plug data... </div>
 
-                plugs.value.map(({ device_name, device_id }) => {
-                    // These two lines mainly just for test
-                    const currUsageTest = Number((Math.random() * 30).toFixed(2));
-                    if (img_i > 1) img_i = 0; else ++img_i
+                    ) : plugs && plugs.ok ? (
 
-                    return <DevicePreview key={device_id} deviceImage={img_arr[img_i]} deviceName={device_name} currUsage={currUsageTest} totalUsage={30} deviceId={device_id} redirectOnClick={() => openDeviceStats(device_name)} />
-                })
+                        plugs.value.map(({ device_name, device_id }) => {
+                            // These two lines mainly just for test
+                            const currUsageTest = Number((Math.random() * 30).toFixed(2));
+                            if (img_i > 1) img_i = 0; else ++img_i
 
-            ) : (
+                            return (
+                                <DevicePreview 
+                                    key={device_id} 
+                                    deviceImage={img_arr[img_i]} 
+                                    deviceName={device_name} 
+                                    currUsage={currUsageTest} 
+                                    totalUsage={30} 
+                                    deviceId={device_id} 
+                                    redirectOnClick={() => openDeviceStats(device_name)} 
+                                />
+                            )
+                        })
 
-                <div> No plugs attached to your account. </div>
-            )}
-            <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`)} />
+                    ) : (
+                        <div> No plugs attached to your account. </div>
+                    )}
+                </div>
+
+                <div className="mt-6">
+                    <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`)} />
+                </div>
+            </div>        
         </div>
     )
 }
