@@ -5,6 +5,8 @@ import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/a
 import { useRouter } from 'next/navigation'
 import { Category, BasicButton } from 'ui/components'
 import SharedH1 from "ui/components/shared_h1"
+import SharedH2 from "ui/components/shared_h2"
+import SharedH3 from "ui/components/shared_h3"
 import AddDevice from "ui/addDevice/comp"
 import DailyTarget from "ui/dailyTarget/comp"
 import DevicePreview from "ui/device_preview/comp"
@@ -46,40 +48,89 @@ export default function Dashboard() {
 	}, [userId])
 
 	return (
-		<div className="flex flex-col p-4 gap-y-4">
-			{/* Two column layout: Left column for greeting and device previews. Right column for daily target and actions */}
+		<div className="min-h-screen w-full bg-sky-200 p-6">
+			{/* Main container with padding and background color */}
 
-			<div className="flex flex-col md:flex-row gap-6">
+			<div className="flex flex-col md:flex-row gap-8 w-full">
+				{/* Two column layout: Left column for greeting and device previews. Right column for daily target and actions */}
+
 				{/* Left Column */}
-				<div className="flex-1 flex flex-col gap-4">
-					<SharedH1 text={`Welcome ${user?.firstname} ${user?.lastname}`}/>
+				<div className="w-full md:w-2/3 flex flex-col gap-6">
+					<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light"/>
 
-					<div className="grid grid-cols-2 gap-4">
-						{devices.slice(0, 10).map((device) => (
-							<DevicePreview
-								key={device.device_id}
-								deviceId={device.device_id}
-								deviceName={device.device_name}
-								deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
-								currUsage={0}
-								totalUsage={0}
-								redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
-							/>
-						))}
-					</div>
+					{/* Plugs Box */}
+					<div className="bg-stone-100 border border-gray-300 rounded-x1 p-4 shadow-md">
+						<SharedH2 text="Plugs" mode="light"/>
+						
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+
+							{/* Left Column - My Plugs */}
+							<div className="border border-gray-300 rounded-lg p-3 bg-gray-50">	
+								<SharedH3 text="My Plugs" mode="light"/>
+
+								<div className="flex flex-col gap-3 mt-2">
+									{devices.slice(0, 5).map((device) => (
+										<DevicePreview
+											key={device.device_id}
+											deviceId={device.device_id}
+											deviceName={device.device_name}
+											deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
+											currUsage={0}
+											totalUsage={0}
+											redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
+										/>
+									))}
+								</div>
+							</div>
+
+							{/* Embedded Right Column - My Friend's Plugs*/}
+							<div className="border border-gray-300 rounded-lg p-3 bg-gray-50">
+								<SharedH3 text="My Friend's Plugs" mode="light"/>
+							
+								<div className="flex flex-col gap-3">
+									{devices.slice(0, 5).map((device) => (
+										<DevicePreview
+											key={device.device_id}
+											deviceId={device.device_id}
+											deviceName={device.device_name}
+											deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
+											currUsage={0}
+											totalUsage={0}
+											redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
+										/>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<div className="mt-4">
+							<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
+						</div>
+					</div>	
 				</div>
+		
 
 				{/* Right Column */}
-				<div className="flex flex-col gap-4 w-full md:w-64">
-					<DailyTarget currProgress={dailyTarget.currProgress} maxProgress={dailyTarget.maxProgress}/>
+				<div className="w-full md:w-1/3 flex flex-col gap-6">
 
-					<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
+					{/* Daily Target Box */}
+					<div className="bg-white p-4 rounded-x1 border border-gray-300 shadow-sm">
+						<DailyTarget 
+							currProgress={dailyTarget.currProgress} 
+							maxProgress={dailyTarget.maxProgress}
+						/>
+					</div>
 
-					<BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
-					<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
-					<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
-					<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
-					<BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
+					{/* Action Buttons */}
+					<div className="flex flex-col gap-4">
+						{/* <BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} /> */}
+						<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
+						<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
+						<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
+						<BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
+					</div>
+				
+					{/* Categories (Commented Out) */}
 
 					{/* <div className="flex flex-row justify-center gap-x-3">
 						<Category
