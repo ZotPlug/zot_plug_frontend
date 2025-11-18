@@ -73,8 +73,8 @@ export async function add_device(params: addDeviceReqs): Promise<Result<string>>
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
+				deviceName: params.deviceName,
 				userId: params.userId,
-				deviceName: params.deviceName
 			})
 		}).then(e => e.json())
 		if (!addDeviceRes.ok) throw new Error(addDeviceRes.message)

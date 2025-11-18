@@ -22,11 +22,9 @@ export default function PowerUsagePage() {
     // Nested function because router is only accessible from 
     // the top level hook function Plugs()
     //
-    async function openDeviceStats(deviceName: string) {
-        router.push(`/dashboard/${userId}/plugs/${deviceName}`)
+    async function openDeviceStats(deviceId: string, deviceName: string) {
+        router.push(`/dashboard/${userId}/plugs/${deviceId}/${deviceName}`)
     }
-
-    // TODO:  Need to remove deviceId magic number redundancy
 
     return (
         <View style={styles.container} className="justify-center items-center h-screen">
@@ -41,7 +39,7 @@ export default function PowerUsagePage() {
                     const currUsageTest = Number((Math.random() * 30).toFixed(2));
                     if (img_i > 1) img_i = 0; else ++img_i
 
-                    return <DevicePreview key={device_id} deviceImage={img_arr[img_i]} deviceName={device_name} currUsage={currUsageTest} totalUsage={30} deviceId={device_id} redirectOnClick={() => openDeviceStats(device_name)} />
+                    return <DevicePreview key={device_id} deviceImage={img_arr[img_i]} deviceName={device_name} currUsage={currUsageTest} totalUsage={30} deviceId={device_id} redirectOnClick={() => openDeviceStats(device_id, device_name)} />
                 })
 
             ) : (

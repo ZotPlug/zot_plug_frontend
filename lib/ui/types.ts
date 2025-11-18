@@ -13,7 +13,7 @@ export type signUpInfo = {
 }
 
 export type addDeviceReqs = {
-	userId: string,
+	userId: number,
 	deviceName: string
 }
 
@@ -91,4 +91,14 @@ export interface UserDeviceInfo {
 	role_id: number;
 	role_name: string;            // "owner", "member", etc.
 	user_device_status: string;   // "active", "pending", etc.
+}
+    
+export interface DeviceReadingData {
+    id: number;
+    device_id: number;
+    voltage: number;
+    current: number;
+    power: number;
+    cumulative_energy: number;
+    recored_at: string;
 }

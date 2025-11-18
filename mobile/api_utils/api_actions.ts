@@ -40,7 +40,7 @@ export async function add_device(params: addDeviceReqs): Promise<Result<string>>
 			method: "POST", endpoint: "/api/devices/addDeviceMap",
 			body: {
 				userId: params.userId,
-				name: params.deviceName
+				deviceName: params.deviceName
 			}
 		})
 		return { ok: true, value: `Device of: ${params.deviceName} was mapped to User: ${params.userId}` }
