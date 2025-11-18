@@ -22,7 +22,7 @@ export default function Dashboard() {
 	const router = useRouter()
 
 	async function addDevice(params: { deviceName: string }) {
-		const res = await add_device({ userId, deviceName: params.deviceName })
+		const res = await add_device({ userId: parseInt(userId), deviceName: params.deviceName })
 		if (!res.ok) SetModalMessage({ ok: false, message: res.error! })
 		else {
 			SetModalMessage({ ok: true, message: 'Device added' })

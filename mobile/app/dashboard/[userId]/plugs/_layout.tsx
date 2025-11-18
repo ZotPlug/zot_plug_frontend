@@ -9,7 +9,7 @@ export default function PowerUsageLayout() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="[deviceName]" options={{ headerShown: false }} />
+      <Stack.Screen name="[deviceId]/[rawDeviceName]" options={{ headerShown: false }} />
     </Stack>
   )
 }

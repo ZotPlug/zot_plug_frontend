@@ -20,12 +20,12 @@ export default function Plugs() {
 
     // Nested function because router is only accessible from 
     // the top level hook function Plugs()
-    function openDeviceStats(device_name: string) {
-        const path = `/dashboard/${userId}/plugs/${device_name}`
+    function openDeviceStats(deviceId: number, deviceName: string) {
+        console.log("move to plug location")
+        const path = `/dashboard/${userId}/plugs/${deviceId.toString()}/${deviceName}`
         router.push(path)
     }
 
-    // TODO: Need to remove deviceId magic number redundancy
     return (
         <div className="min-h-screen w-full bg-sky-200 p-6">
             <div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
@@ -44,18 +44,8 @@ export default function Plugs() {
                             const currUsageTest = Number((Math.random() * 30).toFixed(2));
                             if (img_i > 1) img_i = 0; else ++img_i
 
-                            return (
-                                <DevicePreview 
-                                    key={device_id} 
-                                    deviceImage={img_arr[img_i]} 
-                                    deviceName={device_name} 
-                                    currUsage={currUsageTest} 
-                                    totalUsage={30} 
-                                    deviceId={device_id} 
-                                    redirectOnClick={() => openDeviceStats(device_name)} 
-                                />
-                            )
-                        })
+                    return <DevicePreview key={device_id} deviceImage={img_arr[img_i]} deviceName={device_name} currUsage={currUsageTest} totalUsage={30} deviceId={device_id} redirectOnClick={() => openDeviceStats(device_id, device_name)} />
+                })
 
                     ) : (
                         <div> No plugs attached to your account. </div>
