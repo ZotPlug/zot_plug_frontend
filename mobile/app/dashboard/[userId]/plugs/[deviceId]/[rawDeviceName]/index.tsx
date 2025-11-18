@@ -33,8 +33,8 @@ export default function PlugUsagePage() {
         queryFn: async () => await apiGetDeviceById(parseInt(actualDeviceId))
     })
 
-    // Update readings every 10s
-    const updateTime = 1000 * 10
+    // Update readings every 5s
+    const updateTime = 1000 * 5
 
     // Get device readings
     const { data: deviceReading, isLoading: isLoadingDeviceReading } = useQuery({
@@ -56,8 +56,8 @@ export default function PlugUsagePage() {
     if (deviceInfo && deviceInfo.value) {
         const deviceStatus = deviceInfo.value.status
   
-        const currentVoltage = ((!deviceReading || !deviceReading.value) ? -1 : deviceReading.value.voltage)
-        const currentCurrent = ((!deviceReading || !deviceReading.value) ? -1 : deviceReading.value.current)
+        const currentVoltage = (!deviceReading || !deviceReading.value) ? -1 : deviceReading.value.voltage
+        const currentCurrent = (!deviceReading || !deviceReading.value) ? -1 : deviceReading.value.current
         
         const devicePageContent = 
             <View style={styles.verticalChildren}>
@@ -65,7 +65,7 @@ export default function PlugUsagePage() {
                 <SharedH4 text={`Name: ${actualDeviceName}`} />
                 <SharedH4 text={`ID: ${actualDeviceId}`} />
                 <SharedH4 text={`Status: ${deviceStatus}`} />
-                <View>
+                <View style={{width: '100%'}}>
                     <SharedH2 text='Statistics' />
                     <DeviceReadings voltage={currentVoltage} current={currentCurrent} />
                 </View>

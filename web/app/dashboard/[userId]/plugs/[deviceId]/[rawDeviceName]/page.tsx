@@ -39,8 +39,8 @@ export default function DevicePage() {
         queryFn: async () => await apiGetDeviceInfo(parseInt(deviceId))
     })
 
-    // Update readings every 10s
-    const updateTime = 1000 * 10
+    // Update readings every 5s
+    const updateTime = 1000 * 5 
 
     // Get device readings
     const { data: deviceReading, isLoading: isLoadingDeviceReading } = useQuery({

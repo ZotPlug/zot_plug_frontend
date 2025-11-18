@@ -43,8 +43,8 @@ export default function DeviceReadings({
     
     
     // TODO: Handle unit conversion in scenarios where we need mA, micro A, etc.
-    const voltageValue = `${voltage} V`
-    const currentValue = `${current} A`
+    const voltageValue = `${voltage.toFixed(2)} V`
+    const currentValue = `${current.toFixed(2)} A`
 
     const voltageSection =
         <View style={styles.centerChildren}>
