@@ -32,7 +32,6 @@ export default function DeviceReadings({
         horizontalChildren: {
             display: 'flex',
             flexDirection: 'row',
-            flex: 1
         },
         centerChildren: {
             display: 'flex',
