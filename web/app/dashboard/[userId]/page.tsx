@@ -51,12 +51,25 @@ export default function Dashboard() {
 		<div className="min-h-screen w-full bg-sky-200 p-6">
 			{/* Main container with padding and background color */}
 
+			<div className="mt-10 pb-6 flex flex-row w-full">
+				<div className="w-full flex justify-start">
+					<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light"/>
+				</div>
+
+				{/* Daily Target Box */}
+				<div className="w-full flex justify-end">
+					<DailyTarget 
+						currProgress={dailyTarget.currProgress} 
+						maxProgress={dailyTarget.maxProgress}
+					/>
+				</div>
+			</div>
+
 			<div className="flex flex-col md:flex-row gap-8 w-full">
 				{/* Two column layout: Left column for greeting and device previews. Right column for daily target and actions */}
 
 				{/* Left Column */}
 				<div className="w-full md:w-2/3 flex flex-col gap-6">
-					<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light"/>
 
 					{/* Plugs Box */}
 					<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
@@ -103,7 +116,7 @@ export default function Dashboard() {
 							</div>
 						</div>
 
-						<div className="mt-4">
+						<div className="mt-6">
 							<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
 						</div>
 					</div>	
@@ -112,14 +125,6 @@ export default function Dashboard() {
 
 				{/* Right Column */}
 				<div className="w-full md:w-1/3 flex flex-col gap-6">
-
-					{/* Daily Target Box */}
-					<div className="mt-10 w-full flex justify-center">
-						<DailyTarget 
-							currProgress={dailyTarget.currProgress} 
-							maxProgress={dailyTarget.maxProgress}
-						/>
-					</div>
 
 					{/* Action Buttons */}
 					<div className="flex flex-col gap-4">
