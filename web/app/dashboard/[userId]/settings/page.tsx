@@ -12,7 +12,6 @@ export default function Settings() {
 
 	return (
 		<div className="min-h-screen w-full bg-sky-200 p-6">
-			{/* Main container with padding and background color */}
 
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
 
@@ -24,9 +23,7 @@ export default function Settings() {
 					<div className="w-full flex justify-end">
 						<BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`) } />
 					</div>
-
 				</div>
-					{/* Settings content can be added here */}
 
 					<SharedH3 text="Settings content to come..." mode="light"/>
 				
