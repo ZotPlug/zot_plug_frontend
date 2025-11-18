@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation"
 import BasicButton from "ui/components/basic_button"
 import SharedH1 from "ui/components/shared_h1"
+import SharedH3 from "ui/components/shared_h3"
 import { useRouter } from 'next/navigation'
 
 export default function Settings() {
@@ -11,13 +12,24 @@ export default function Settings() {
 
 	return (
 		<div className="min-h-screen w-full bg-sky-200 p-6">
+			{/* Main container with padding and background color */}
+
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-				<SharedH1 text="Settings" mode="light"/>
-			
-				{/* Settings content can be added here */}
-				<div className="mt-6">
-					<BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`) } />
+
+				<div className="mt-10 pb-6 flex flex-row w-full">
+					<div className="w-full flex justify-start">
+						<SharedH1 text="Settings" mode="light"/>
+					</div>
+					
+					<div className="w-full flex justify-end">
+						<BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`) } />
+					</div>
+
 				</div>
+					{/* Settings content can be added here */}
+
+					<SharedH3 text="Settings content to come..." mode="light"/>
+				
 			</div>
 		</div>
 	)

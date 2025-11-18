@@ -51,21 +51,24 @@ export default function Dashboard() {
 		<div className="min-h-screen w-full bg-sky-200 p-6">
 			{/* Main container with padding and background color */}
 
-			<div className="mt-10 pb-6 flex flex-row w-full">
-				<div className="w-full flex justify-start">
-					<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light"/>
-				</div>
+			<div className="bg-stone-100 border border-gray-300 rounded-lg p-3 shadow-md">
+				<div className="mt-10 pb-8 flex flex-row w-full">
+					<div className="w-full flex justify-start">
+						<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light"/>
+					</div>
 
-				{/* Daily Target Box */}
-				<div className="w-full flex justify-end">
-					<DailyTarget 
-						currProgress={dailyTarget.currProgress} 
-						maxProgress={dailyTarget.maxProgress}
-					/>
+					{/* Daily Target Box */}
+					<div className="w-full flex justify-end">
+						{/* <SharedH3 text="Daily Target" mode="light"/> */}
+						<DailyTarget 
+							currProgress={dailyTarget.currProgress} 
+							maxProgress={dailyTarget.maxProgress}
+						/>
+					</div>
 				</div>
 			</div>
 
-			<div className="flex flex-col md:flex-row gap-8 w-full">
+			<div className="mt-10 flex flex-col md:flex-row gap-8 w-full">
 				{/* Two column layout: Left column for greeting and device previews. Right column for daily target and actions */}
 
 				{/* Left Column */}
