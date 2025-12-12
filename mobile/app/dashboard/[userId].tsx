@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useQuery } from '@tanstack/react-query'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { validate_jwt } from '@/api_utils/api_actions'    // removed getAllDevices import (doesn't exist)
+import DailyTarget from 'ui/dailyTarget/comp'
 import BasicButton from 'ui/components/basic_button'
 import Category from 'ui/components/category'
 import SharedH1 from "ui/components/shared_h1"
@@ -69,6 +70,7 @@ export default function Dashboard() {
       <SharedH1 text={'Dashboard'} />
       <Text> {`Elllo Ello, Unique Dash of user ${userId} `}</Text>
       {/* <BasicButton onPress={test_token} text={"Get All Devices"} /> */}
+      <DailyTarget currProgress={5} maxProgress={30} />
       <BasicButton onPress={test_val} text={"Validate Token"} />
 
       <Text>Pages</Text>

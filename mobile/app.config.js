@@ -14,9 +14,11 @@ export default {
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "bundleIdentifier": "com.anonymous.zot-plug-mobile",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.anonymous.zot_plug_mobile",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
