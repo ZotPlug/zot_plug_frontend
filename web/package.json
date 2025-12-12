@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.83.0",
+    "lucide-react": "^0.554.0",
     "api": "file:../lib/api/",
     "cookie": "^1.0.2",
     "next": "^15.5.2",
@@ -30,6 +31,5 @@
     "typescript": "^5"
   },
   "peerDependencies": {
-    "lucide-react": "*"
   }
 }

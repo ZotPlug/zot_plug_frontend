@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation"
 import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
 import { useRouter } from 'next/navigation'
-import { Category, BasicButton } from 'ui/components'
+import { BasicButton } from 'ui/components'
 import SharedH1 from "ui/components/shared_h1"
 import SharedH2 from "ui/components/shared_h2"
 import SharedH3 from "ui/components/shared_h3"
@@ -17,7 +17,7 @@ export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
 	const [user, setUser] = useState<{ firstname: string; lastname: string; userId: string } | null>(null)
 	const [devices, setDevices] = useState<UserDeviceInfo[]>([])
-	const [dailyTarget, setDailyTarget] = useState<{ currProgress: number, maxProgress: number}>({ currProgress: 350, maxProgress: 1000 })
+	const [dailyTarget] = useState<{ currProgress: number, maxProgress: number }>({ currProgress: 350, maxProgress: 1000 })
 	const [modalMessage, SetModalMessage] = useState<{ ok: boolean, message: string } | null>(null)
 	const router = useRouter()
 
@@ -33,7 +33,7 @@ export default function Dashboard() {
 	async function fetchUserInfo() {
 		const res = await fetch_user_by_id({ userId })
 		if (!res.ok) SetModalMessage({ ok: false, message: res.error! })
-		else setUser(res.value) 
+		else setUser(res.value)
 	}
 
 	async function fetchUserDevices() {
@@ -54,14 +54,14 @@ export default function Dashboard() {
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-3 shadow-md">
 				<div className="mt-10 pb-8 flex flex-row w-full">
 					<div className="w-full flex justify-start">
-						<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light"/>
+						<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" />
 					</div>
 
 					{/* Daily Target Box */}
 					<div className="w-full flex justify-end">
 						{/* <SharedH3 text="Daily Target" mode="light"/> */}
-						<DailyTarget 
-							currProgress={dailyTarget.currProgress} 
+						<DailyTarget
+							currProgress={dailyTarget.currProgress}
 							maxProgress={dailyTarget.maxProgress}
 						/>
 					</div>
@@ -76,13 +76,13 @@ export default function Dashboard() {
 
 					{/* Plugs Box */}
 					<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-						<SharedH2 text="Plugs" mode="light"/>
-						
+						<SharedH2 text="Plugs" mode="light" />
+
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
 
 							{/* Left Column - My Plugs */}
-							<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">	
-								<SharedH3 text="My Plugs" mode="light"/>
+							<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
+								<SharedH3 text="My Plugs" mode="light" />
 
 								<div className="flex flex-col gap-3 mt-2">
 									{devices.slice(0, 5).map((device) => (
@@ -101,8 +101,8 @@ export default function Dashboard() {
 
 							{/* Embedded Right Column - My Friend's Plugs*/}
 							<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
-								<SharedH3 text="My Friend's Plugs" mode="light"/>
-							
+								<SharedH3 text="My Friend's Plugs" mode="light" />
+
 								<div className="flex flex-col gap-3">
 									{devices.slice(0, 5).map((device) => (
 										<DevicePreview
@@ -122,9 +122,9 @@ export default function Dashboard() {
 						<div className="mt-6">
 							<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
 						</div>
-					</div>	
+					</div>
 				</div>
-		
+
 
 				{/* Right Column */}
 				<div className="w-full md:w-1/3 flex flex-col gap-6">
@@ -137,7 +137,7 @@ export default function Dashboard() {
 						<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
 						<BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
 					</div>
-				
+
 					{/* Categories (Commented Out) */}
 
 					{/* <div className="flex flex-row justify-center gap-x-3">
