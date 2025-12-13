@@ -5,7 +5,10 @@ export default {
     "name": "zot_plug_mobile",
     "slug": "zot_plug_mobile",
     "extra": {
-      "API_URL": process.env.API_URL
+      "API_URL": process.env.API_URL,
+      "eas": {
+        "projectId": "0d999013-4fb4-4dc8-b424-10364bdefd0e"
+      }
     },
     "version": "1.0.0",
     "orientation": "portrait",
