@@ -1,0 +1,54 @@
+name: CI/CD Build Steps
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  ssh:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: zotplug
+      SA_EMAIL: gha-deployer@zotplug.iam.gserviceaccount.com
+      WIF_PROVIDER: projects/1090148901792/locations/global/workloadIdentityPools/github/providers/zotplug-combined
+      INSTANCE: instance-20250730-224836
+      ZONE: us-central1-c
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PAT }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Compile Production Build
+        run: npm ci; npm run build
+
+      - name: Auth to GCP (WIF)
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SA_EMAIL }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: SSH and run command
+        run: |
+          gcloud compute ssh "${INSTANCE}" \
+            --zone="${ZONE}" \
+            --command="whoami && hostname && docker --version"
+        
