@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { fetch_test } from './api_utils/api_actions'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useHtmlContext } from 'next/dist/shared/lib/html-context.shared-runtime'
 
 export default function Home() {
   const router = useRouter()
@@ -25,7 +26,6 @@ export default function Home() {
   return (
     <>
       {/* Tailwind in-line styling */}
-      <div className="bg-blue w-full h-10"> Rando Addition for demo </div>
       <div className="bg-red-500 w-full h-10"> test test</div>
       { /* Shared UI comp, check proj_root/ui to check how this works */}
       <div className="bg-green-500 w-full h-10">
