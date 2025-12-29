@@ -30,9 +30,6 @@ jobs:
       - name: Compile production build
         run: docker build -t zotpluguci/zot_plug_frontend:alpha .
 
-      - name: Push production build to Docker Hub
-        working-dir
-
       - name: Auth to GCP (WIF)
         uses: google-github-actions/auth@v2
         with:
