@@ -35,6 +35,7 @@ jobs:
           cache-dependency-path: web/package-lock.json
 
       - name: Compile Production Build
+        working-directory: web
         run: npm ci; npm run build
 
       - name: Auth to GCP (WIF)
