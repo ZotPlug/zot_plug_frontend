@@ -2,7 +2,7 @@ name: CI/CD Build Steps
 
 on:
   push:
-    branches: [ main ]
+    branches: [ CI/CD_Pipeline ]
 
 permissions:
   contents: read
