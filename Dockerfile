@@ -7,7 +7,7 @@ WORKDIR /app_root/web
 COPY ./web/package*.json ./web/next.config.ts ./
 
 # Install only production dependencies
-RUN npm install --omit=dev
+RUN npm ci
 
 # Copy source files (Next.js project)
 COPY ./web ./
