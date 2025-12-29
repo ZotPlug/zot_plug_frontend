@@ -48,5 +48,5 @@ jobs:
         run: |
           gcloud compute ssh "${INSTANCE}" \
             --zone="${ZONE}" \
-            --command="whoami && hostname && docker --version"
+            --command="sudo docker compose --profile prod pull frontend && sudo docker compose --profile prod stop frontend && sudo docker compose --profile prod rm -f frontend && sudo docker --profile prod up -d frontend"
         
