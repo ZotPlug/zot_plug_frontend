@@ -27,8 +27,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PAT }}
 
-      - name: Compile production build
-        run: docker build -t zotpluguci/zot_plug_frontend:alpha .
+      - name: Build and push prod image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: zotpluguci/zot_plug_frontend:alpha
 
       - name: Auth to GCP (WIF)
         uses: google-github-actions/auth@v2
