@@ -17,6 +17,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-native-web": "^0.20.0",
+    "typescript": "^5",
     "ui": "file:../lib/ui"
   },
   "devDependencies": {
