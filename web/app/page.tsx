@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query'
 import { fetch_test } from './api_utils/api_actions'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useHtmlContext } from 'next/dist/shared/lib/html-context.shared-runtime'
 
 export default function Home() {
   const router = useRouter()
