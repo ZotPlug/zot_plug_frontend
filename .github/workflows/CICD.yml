@@ -44,9 +44,16 @@ jobs:
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: SSH and run command
+      - name: SSH into VM & Upload new image
         run: |
           gcloud compute ssh "${INSTANCE}" \
             --zone="${ZONE}" \
-            --command="sudo docker compose --profile prod pull frontend && sudo docker compose --profile prod stop frontend && sudo docker compose --profile prod rm -f frontend && sudo docker --profile prod up -d frontend"
-        
+            --quiet \
+            --command="\
+              set -e; \
+              sudo docker compose --profile prod pull frontend && \
+              sudo docker compose --profile prod stop frontend && \
+              sudo docker compose --profile prod rm -f frontend && \
+              sudo docker compose --profile prod up -d frontend \
+            "
+
