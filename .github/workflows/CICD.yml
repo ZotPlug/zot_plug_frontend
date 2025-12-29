@@ -51,6 +51,7 @@ jobs:
             --quiet \
             --command="\
               set -e; \
+              cd /home/zot_plug_service_acc/zot_plug_platform/infra; \
               sudo docker compose --profile prod pull frontend && \
               sudo docker compose --profile prod stop frontend && \
               sudo docker compose --profile prod rm -f frontend && \
