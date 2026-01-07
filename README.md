@@ -45,7 +45,7 @@ Setting up the project is a two step process because our frontend has both a Nex
 
 #### Setting up Web
 
-Navigate to the appropriate directory, install the `npm` packages, and run the application.
+Navigate to the appropriate directory and install the `npm` packages.
 
 ```bash
 cd web
@@ -72,7 +72,7 @@ After installing the tools, copy over the `.env` file in the `./mobile` director
 API_URL=http://YOUR_LOCAL_IP:4000
 ```
 
-Finally, while still in the `./mobile` directory, install the `npm` packages and start the application.
+Finally, install the `npm` packages while still in the `./mobile` directory.
 
 ```bash
 cd mobile
