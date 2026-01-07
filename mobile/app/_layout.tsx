@@ -14,7 +14,6 @@ export default function RootLayout() {
   });
 
   if (!loaded) {
-    // Async font loading only occurs in development.
     return null;
   }
 
@@ -27,7 +26,7 @@ export default function RootLayout() {
           <Stack.Screen name="dashboard/[userId]" options={{ headerShown: true }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
-          
+
           <Stack.Screen name="dashboard/[userId]/plugs" options={{ headerShown: true }} />
           <Stack.Screen name="dashboard/[userId]/power_usage" options={{ headerShown: true }} />
           <Stack.Screen name="dashboard/[userId]/rewards" options={{ headerShown: true }} />

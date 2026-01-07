@@ -1,0 +1,60 @@
+name: CI/CD Build Steps
+
+on:
+  push:
+    branches: [ main ,CI/CD_Pipeline ]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  Build-and-Deploy:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: zotplug
+      SA_EMAIL: gha-deployer@zotplug.iam.gserviceaccount.com
+      WIF_PROVIDER: projects/1090148901792/locations/global/workloadIdentityPools/github/providers/zotplug-combined
+      INSTANCE: instance-20250730-224836
+      ZONE: us-central1-c
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PAT }}
+
+      - name: Build and push prod image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: zotpluguci/zot_plug_frontend:alpha
+
+      - name: Auth to GCP (WIF)
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SA_EMAIL }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: SSH into VM & Upload new image
+        run: |
+          gcloud compute ssh "${INSTANCE}" \
+            --zone="${ZONE}" \
+            --quiet \
+            --command="\
+              set -e; \
+              cd /home/zot_plug_service_acc/zot_plug_platform/infra; \
+              sudo docker compose --profile prod pull frontend && \
+              sudo docker compose --profile prod stop frontend && \
+              sudo docker compose --profile prod rm -f frontend && \
+              sudo docker compose --profile prod up -d frontend \
+            "
+

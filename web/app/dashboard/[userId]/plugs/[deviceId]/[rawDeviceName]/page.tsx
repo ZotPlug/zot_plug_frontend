@@ -13,7 +13,6 @@ import SharedH2 from "ui/components/shared_h2"
 import SharedH4 from "ui/components/shared_h4"
 import SharedH5 from "ui/components/shared_h5"
 import { StyleSheet } from "react-native"
-import React, { useState, useEffect, useRef} from 'react'
 
 async function sendCommand(params: DeviceControlReqs) {
     const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
@@ -23,14 +22,14 @@ async function sendCommand(params: DeviceControlReqs) {
 export default function DevicePage() {
     // Device name is needed for mqtt to send cmd's to the proper device. I.e: Topic: {deviceName}/cmd/relay/on
     const { userId, deviceId, rawDeviceName } = useParams<{ userId: string, deviceId: string, rawDeviceName: string }>();
-    
+
     // We need to keep track of the device ID to get the current status (online/offline)
     // And we need the device name for everything else (because of how the API 
     // is setup).
-    
+
     // First have to decode the name to account for stuff like spaces in the URL
     const deviceName = decodeURIComponent(rawDeviceName)
-    
+
     const router = useRouter()
 
     // Get device info (namely the status)
@@ -43,7 +42,7 @@ export default function DevicePage() {
     const updateTime = 1000 * 5 
 
     // Get device readings
-    const { data: deviceReading, isLoading: isLoadingDeviceReading } = useQuery({
+    const { data: deviceReading } = useQuery({
         queryKey: ['deviceReadings'],
         queryFn: async () => await apiGetLatestDeviceReading(deviceName),
         refetchInterval: updateTime
@@ -57,15 +56,14 @@ export default function DevicePage() {
     if (isLoadingDeviceInfo) {
         return (loadingPageContent)
     }
-    
-    if (deviceInfo && deviceInfo.value) {
-        const deviceName = deviceInfo.value.name
-        const deviceStatus = deviceInfo.value.status
-  
-        const currentVoltage = ((!deviceReading || !deviceReading.value) ? -1 : deviceReading.value.voltage)
-        const currentCurrent = ((!deviceReading || !deviceReading.value) ? -1 : deviceReading.value.current)
-        
-        const devicePageContent = 
+
+    if (deviceInfo?.ok) {
+        const deviceName = deviceInfo.value.name;
+        const deviceStatus = deviceInfo.value.status;
+        const currentVoltage = deviceReading?.ok ? deviceReading.value.voltage : -1;
+        const currentCurrent = deviceReading?.ok ? deviceReading.value.current : -1;
+
+        const devicePageContent =
             <div style={styles.verticalChildren}>
                 <SharedH1 text="Device Details" />
                 <SharedH4 text={`Name: ${deviceName}`} />
@@ -81,7 +79,7 @@ export default function DevicePage() {
                 </div>
                 <div style={styles.actionsContainer}>
                     <SharedH2 text='Actions' />
-                    <DeviceControl deviceName={deviceId} deviceEndpointFn={sendCommand} />
+                    <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
                 </div>
                 <div>
                     <SharedH2 text='Users' />

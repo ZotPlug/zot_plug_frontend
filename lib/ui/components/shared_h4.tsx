@@ -5,6 +5,11 @@ export default function SharedH4({ text, mode }: sharedTextProps) {
     const mobileFontSize = 20
 
     return (
-        <SharedText text={text} webFontSize={webFontSize} mobileFontSize={mobileFontSize} modeOverride={mode} />
+        <SharedText 
+            text={text} 
+            webFontSize={webFontSize} 
+            mobileFontSize={mobileFontSize} 
+            modeOverride={mode}
+        />
     )
 }

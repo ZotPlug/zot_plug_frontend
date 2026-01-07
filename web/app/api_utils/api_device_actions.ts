@@ -1,8 +1,8 @@
 import { toErrorMessage } from "./helper";
-import { DeviceReadingData, UserDeviceInfo } from "ui/types";
+import { DeviceReadingData, getDeviceByIdRes } from "ui/types";
 type Result<T> = { ok: true; value: T } | { ok: false, error: string }
 
-export async function apiGetDeviceInfo(deviceId: number): Promise<Result<UserDeviceInfo>> {
+export async function apiGetDeviceInfo(deviceId: number): Promise<Result<getDeviceByIdRes>> {
 	try {
 		const res = await fetch('/api/frontendDevices/getDeviceById', {
 			method: "POST",
@@ -11,7 +11,7 @@ export async function apiGetDeviceInfo(deviceId: number): Promise<Result<UserDev
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-                deviceId: deviceId
+				deviceId: deviceId
 			})
 		}).then(e => e.json())
 		if (!res.ok) throw new Error(res.message)
@@ -30,7 +30,7 @@ export async function apiGetLatestDeviceReading(deviceName: string): Promise<Res
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-                deviceName: deviceName
+				deviceName: deviceName
 			})
 		}).then(e => e.json())
 		if (!res.ok) throw new Error(res.message)

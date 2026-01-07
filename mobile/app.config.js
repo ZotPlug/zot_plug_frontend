@@ -5,7 +5,10 @@ export default {
     "name": "zot_plug_mobile",
     "slug": "zot_plug_mobile",
     "extra": {
-      "API_URL": process.env.API_URL
+      "API_URL": process.env.API_URL,
+      "eas": {
+        "projectId": "0d999013-4fb4-4dc8-b424-10364bdefd0e"
+      }
     },
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,9 +17,11 @@ export default {
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "bundleIdentifier": "com.anonymous.zot-plug-mobile",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.anonymous.zot_plug_mobile",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -33,10 +38,18 @@ export default {
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          image: "./assets/images/splash-icon.png",
+          imageWidth: 200,
+          resizeMode: "contain",
+          backgroundColor: "#ffffff"
+        }
+      ],
+      [
+        "react-native-ble-plx",
+        {
+          isBackgroundEnabled: true,
+          modes: ["peripheral", "central"],
+          bluetoothAlwaysPermission: "Allow $(PRODUCT_NAME) to connect to bluetooth devices"
         }
       ]
     ],

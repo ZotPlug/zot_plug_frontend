@@ -10,13 +10,14 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.83.0",
+    "lucide-react": "^0.554.0",
     "api": "file:../lib/api/",
     "cookie": "^1.0.2",
-    "lucide-react": "^0.544.0",
     "next": "^15.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-native-web": "^0.20.0",
+    "typescript": "^5",
     "ui": "file:../lib/ui"
   },
   "devDependencies": {
@@ -29,5 +30,7 @@
     "eslint-config-next": "15.3.5",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "peerDependencies": {
   }
 }
