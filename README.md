@@ -63,8 +63,6 @@ At this point in time, we have only tested the physical app on Android for devel
 2. Physical approach (only supported for Android):
     - [Expo Go](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US)
 
-**TODO: Update this to account for the custom expo SDK.**
-
 After installing the tools, copy over the `.env` file in the `./mobile` directory.
 
 ```bash
@@ -72,12 +70,15 @@ After installing the tools, copy over the `.env` file in the `./mobile` director
 API_URL=http://YOUR_LOCAL_IP:4000
 ```
 
-Finally, install the `npm` packages while still in the `./mobile` directory.
+Finally, install the `npm` packages while still in the `./mobile` directory and pre-build our custom expo binary.
 
 ```bash
 cd mobile
 npm install
+npx expo prebuild
 ```
+
+> If you encounter issues or need more detailed build steps, refer to this doc [here](https://docs.google.com/document/d/1Ok71Eo3IQ8MtZss1i8DHZ6shIxA9YZ1eSMC_2usWRIw/edit?usp=sharing).
 
 ### Development Workflow
 
