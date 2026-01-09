@@ -2,7 +2,7 @@ import { Text, View, StyleSheet } from "react-native"
 import { Link, useLocalSearchParams, useRouter } from "expo-router"
 import { useQuery } from '@tanstack/react-query'
 import SharedH1 from 'ui/components/shared_h1'
-import DevicePreview from 'ui/device_preview/comp'
+import DevicePreview from 'ui/devicePreview/comp'
 import { get_all_devices_by_userId } from "@/api_utils/api_actions"
 
 

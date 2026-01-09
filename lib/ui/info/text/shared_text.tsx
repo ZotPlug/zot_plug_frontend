@@ -36,7 +36,8 @@ export default function SharedText({ text, webFontSize, mobileFontSize, modeOver
 
     const colorScheme = useColorScheme()
 
-    const useDarkMode = (modeOverride === "light") ? false : (modeOverride === "dark") || (colorScheme === "dark")
+    //const useDarkMode = (modeOverride === "light") ? false : (modeOverride === "dark") || (colorScheme === "dark")
+    const useDarkMode = false
 
     return (
         <Text style={useDarkMode ? styles.textDark : styles.textLight}>

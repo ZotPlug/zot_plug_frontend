@@ -9,7 +9,7 @@ import SharedH2 from "ui/components/shared_h2"
 import SharedH3 from "ui/components/shared_h3"
 import AddDevice from "ui/addDevice/comp"
 import DailyTarget from "ui/dailyTarget/comp"
-import DevicePreview from "ui/device_preview/comp"
+import DevicePreview from "ui/devicePreview/comp"
 import { useEffect, useState } from "react";
 import { UserDeviceInfo } from "ui/types"
 
