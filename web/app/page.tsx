@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { useResponsiveLayout, DeviceType } from './window_utils'
 import Button_1 from 'ui/buttons/button_1'
 import Shared_H1 from 'ui/info/text/shared_h1'
+import Image from 'next/image'
 
 export default function Home() {
   const router = useRouter()
@@ -25,24 +26,45 @@ export default function Home() {
   //  }
   //}, [isLoading, test_data])
 
-  //const layout: DeviceType = useResponsiveLayout()
+  // TODO: make this a component and pass in the device type to it
+  const layout: DeviceType = useResponsiveLayout()
 
-  //switch (layout) {
-  //  case DeviceType.Mobile:
-  //  case DeviceType.Tablet:
-  //  case DeviceType.Desktop:
-  //}
+  let logoSize: number
+  switch (layout) {
+    case DeviceType.Mobile:
+        logoSize = 200
+        break
+    case DeviceType.Tablet:
+        logoSize = 280
+        break
+    case DeviceType.Desktop:
+        logoSize = 280
+        break
+  }
 
   return (
     <>
         <div className="bg-gradient-to-br from-[#EAF6FF] to-[#DDE2FA] min-h-screen w-screen">
-            <Shared_H1 text="Welcome to"/>
-            <div>Landing Page</div>
-            <Button_1 text="Login"/>
-            <Button_1 text="Sign Up"/>
+            <div className="flex justify-center flex-col items-center pt-30">
+                <Shared_H1 text="Welcome to"/>
+                <div className="pt-5"></div>
+                <Image
+                    src='/images/landing_page/landing_page_logo.svg' 
+                    width={logoSize} 
+                    height={logoSize} 
+                    objectFit='contain'
+                    alt="Zotplug Logo"/>
+                <div className="pt-10"></div>
+                <div className={layout === DeviceType.Mobile ? "flex flex-col" : "flex"}>
+                    <Button_1 text="Login"/>
+                    <Button_1 text="Sign Up"/>
+                </div>
+            </div>
         </div>
     </>
   )
+
+
 
   //return (
   //  <>

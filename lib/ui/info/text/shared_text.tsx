@@ -1,4 +1,5 @@
 import { Text, Platform, StyleSheet, useColorScheme } from "react-native"
+import { Colors } from "../../colors"
 
 // TODO: Add support for different font sizes when we add tablet and desktop 
 // views.
@@ -23,9 +24,10 @@ export default function SharedText({ text, webFontSize, mobileFontSize, modeOver
 
     const styles = StyleSheet.create({
         textLight: {
-            color: 'black',
-            fontWeight: 'bold',
-            fontSize: fontSize
+            color: Colors.S1,
+            fontWeight: 'regular',
+            fontSize: fontSize,
+            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
         },
         textDark: {
             color: 'white',
