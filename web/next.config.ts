@@ -8,6 +8,7 @@ const nextConfig = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       'react-native': require.resolve('react-native-web'),
+      'react-native-linear-gradient': require.resolve('react-native-web-linear-gradient'),
     };
 
     // Preserve default module resolution AND add web/node_modules explicitly

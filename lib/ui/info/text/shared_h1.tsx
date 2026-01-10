@@ -1,6 +1,6 @@
 import SharedText, { sharedTextProps } from "./shared_text"
 
-export default function SharedH1({ text, mode }: sharedTextProps) {
+export default function SharedH1({ text, mode, center }: sharedTextProps) {
     const webFontSize = 45
     const mobileFontSize = 40
 
@@ -10,6 +10,7 @@ export default function SharedH1({ text, mode }: sharedTextProps) {
             webFontSize={webFontSize} 
             mobileFontSize={mobileFontSize} 
             modeOverride={mode}
+            center={center}
         />
     )
 }

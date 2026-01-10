@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { SignUpCompParams, signUpInfo } from '../types'
 import { TextInput, View, Text, StyleSheet, useWindowDimensions } from 'react-native'
 import basic_filter_check from './helpers'
-import BasicButton from '../components/basic_button'
+import BasicButton from '../buttons/basic_button'
 
 function submitOnEnter(event: Event, onSubmit: (params: signUpInfo) => Promise<void>, setErrorText: string, params: signUpInfo) {
 	if (event.key === "Enter" || event.key === "NumpadEnter") {
@@ -27,7 +27,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 				editable={true}
 				style={styles.textInput}
 			/>
-			<View style={isMobile ? styles.col : null}>
+			<View style={isMobile ? styles.col : styles.row}>
 				<TextInput
 					value={userInfo.firstname}
 					onChangeText={(firstname) => SetUserInfo((prev) => ({ ...prev, firstname }))}
@@ -95,6 +95,11 @@ const styles = StyleSheet.create({
 	},
 	col: {
 		flexDirection: 'column', // row doesn't work on mobile, needs to be col
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
+	row: {
+		flexDirection: 'row', // row doesn't work on mobile, needs to be col
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},

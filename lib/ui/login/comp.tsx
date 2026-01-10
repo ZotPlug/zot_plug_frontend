@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { TextInput, View, Text, StyleSheet } from 'react-native'
 import { basicCreds, LoginCompParams } from '../types'
-import BasicButton from '../components/basic_button'
+import BasicButton from '../buttons/basic_button'
 
 function basic_filter_check(onSubmit: (params: basicCreds) => void, setBasicErr: React.Dispatch<React.SetStateAction<string | null>>, email: string, pass: string) {
 	if (email.length === 0) setBasicErr("Email is empty")
