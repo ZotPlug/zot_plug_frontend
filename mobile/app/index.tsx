@@ -23,7 +23,9 @@ export default function Home() {
   return (
     <Welcome 
         onLogin={() => router.push('/auth?mode=login')}
-        onSignUp={() => router.push('/auth?mode=signup')}/>
+        onSignUp={() => router.push('/auth?mode=signup')}
+        logoPath={require('../assets/images/landing_page_logo.png')}/>
+
   )
 
   //return (
