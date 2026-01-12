@@ -4,9 +4,9 @@ import { useParams } from "next/navigation"
 import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
 import { useRouter } from 'next/navigation'
 import { BasicButton } from 'ui/components'
-import SharedH1 from "ui/components/shared_h1"
-import SharedH2 from "ui/components/shared_h2"
-import SharedH3 from "ui/components/shared_h3"
+import SharedH1 from "ui/info/text/shared_h1"
+import SharedH2 from "ui/info/text/shared_h2"
+import SharedH3 from "ui/info/text/shared_h3"
 import AddDevice from "ui/addDevice/comp"
 import DailyTarget from "ui/dailyTarget/comp"
 import DevicePreview from "ui/devicePreview/comp"

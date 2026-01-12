@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native"
 import { DeviceControlProps } from "../types"
-import BasicButton from "../components/basic_button"
+import BasicButton from "../buttons/basic_button"
 
 const defaultMqttParams = {
 	payload: { message: "Default payload message" },

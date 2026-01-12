@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
-import {Platform, View, Image as RNImage, StyleSheet} from 'react-native'
+import {Platform, View, Image as RNImage, StyleSheet, Text} from 'react-native'
+//import { SvgUri } from 'react-native-svg'
+import LogoSvg from 'assets/images/landing_page/landing_page_logo.svg'
 import { DeviceType } from "../types"
 import Shared_H1 from "../info/text/shared_h1"
 import Button_1 from '../buttons/button_1'
@@ -27,24 +28,48 @@ export default function Welcome({ onLogin, onSignUp }: Welcome) {
             break
     }
 
+
     const logoPath = '/images/landing_page/landing_page_logo.svg'
 
-    const logoImage = (Platform.OS === 'web' ? (
+    let logoImage
+    if (Platform.OS === 'web') {
+        logoImage = 
             <img 
-                src={logoPath}
+                src={'/images/landing_page/landing_page_logo.svg'}
                 width={logoSize}
                 height={logoSize}
                 style={styles.webImage}
                 alt={"Zotplug Logo"} />
-        ) : (
-            <RNImage 
-                source={logoPath as any}
+    } else {
+        //const {uri, width, height} = RNImage.resolveAssetSource(require('../assets/images/landing_page/landing_page_logo.svg'))
+        //const {uri, width, height} = RNImage.resolveAssetSource(require('../../../mobile/assets/images/landing_page/landing_page_logo.svg'))
+        logoImage =
+            <LogoSvg
                 width={logoSize}
                 height={logoSize}
-                style={[styles.mobileImage]} 
-                resizeMode='contain'
             />
-        ))
+        //    <SvgUri
+        //        width={logoSize}
+        //        height={logoSize}
+        //        uri={require(logoPath).default.src}
+        //    />
+    }
+
+    const rnLogoPath = { uri: logoPath }
+    //const logoImage = (Platform.OS === 'web' ? (
+    //        <img 
+    //            src={logoPath}
+    //            width={logoSize}
+    //            height={logoSize}
+    //            style={styles.webImage}
+    //            alt={"Zotplug Logo"} />
+    //    ) : (
+    //        <SvgUri 
+    //            width={logoSize}
+    //            height={logoSize}
+    //            uri={'assets/images/landing_page/landing_page_logo.svg'}
+    //        />
+    //    ))
 
     return (
         <>
@@ -71,27 +96,40 @@ const styles = StyleSheet.create({
     container: {
         height: '100dvh',
         boxSizing: 'border-box',
+        flex: 1,
     },
     webImage: {
+        borderWidth: 2,
+        borderColor: 'blue',
+        borderStyle: 'solid',
         objectFit: 'contain',
+        height: 200,
+        width: 200,
+        flex: 1
     },
     mobileImage: {
+        borderWidth: 2,
+        borderColor: 'blue',
+        borderStyle: 'solid',
+        height: 200,
+        width: 200,
+        flex: 1
     },
     centerChildren: {
         alignItems: 'center',
-        marginTop: '110px',
-        flex: 1,
+        marginTop: 110,
         flexDirection: 'column',
     },
     logoSpacer: {
-        margin: '15px'
+        margin: 15
     },
     logoButtonsSpacer: {
-        margin: '30px'
+        margin: 30
     },
     buttonsAlignVertical: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width: '100%',
     },
     buttonsAlignHorizontal: {
         width: '100%',

@@ -5,13 +5,13 @@ import { device_control } from "@/app/api_utils/api_actions";
 import { apiGetDeviceInfo, apiGetLatestDeviceReading } from "@/app/api_utils/api_device_actions";
 import DeviceControl from "ui/deviceControl/comp"
 import { DeviceControlReqs } from "ui/types";
-import BasicButton from "ui/components/basic_button"
+import BasicButton from "ui/buttons/basic_button"
 import { useRouter } from 'next/navigation'
 import DeviceReadings from "ui/deviceReadings/comp"
-import SharedH1 from "ui/components/shared_h1"
-import SharedH2 from "ui/components/shared_h2"
-import SharedH4 from "ui/components/shared_h4"
-import SharedH5 from "ui/components/shared_h5"
+import SharedH1 from "ui/info/text/shared_h1"
+import SharedH2 from "ui/info/text/shared_h2"
+import SharedH4 from "ui/info/text/shared_h4"
+import SharedH5 from "ui/info/text/shared_h5"
 import { StyleSheet } from "react-native"
 
 async function sendCommand(params: DeviceControlReqs) {

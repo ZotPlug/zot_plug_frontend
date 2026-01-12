@@ -1,5 +1,7 @@
 import { Text, Platform, StyleSheet, useColorScheme } from "react-native"
 import { Colors } from "../../colors"
+import { DeviceType } from "../../types"
+import { useResponsiveLayout } from "../../window_utils"
 
 // TODO: Add support for different font sizes when we add tablet and desktop 
 // views.
@@ -21,8 +23,19 @@ export type sharedTextProps = {
 // logic for changing the color based on the color scheme.
 // Not intended for external use. Use SharedH1, SharedH2, etc.
 export default function SharedText({ text, webFontSize, mobileFontSize, modeOverride, center }: internalSharedTextProps) {
-    const webVersion = (Platform.OS === 'web')
-    const fontSize = (webVersion ? webFontSize : mobileFontSize)
+    const layout: DeviceType = useResponsiveLayout()
+    let fontSize
+    switch (layout) {
+        case DeviceType.Desktop:
+            fontSize = webFontSize
+            break
+        case DeviceType.Tablet:
+            fontSize = webFontSize
+            break
+        case DeviceType.Mobile:
+            fontSize = mobileFontSize
+            break;
+    }
 
     const textAlignment = (center ? 'center' : 'start')
 

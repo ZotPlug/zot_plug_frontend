@@ -7,10 +7,10 @@ import { device_control } from "@/api_utils/api_actions"
 import { DeviceControlReqs } from "ui"
 import { apiGetDeviceById, apiGetLatestDeviceReading } from "@/api_utils/api_device_actions"
 
-import SharedH1 from 'ui/components/shared_h1'
-import SharedH2 from 'ui/components/shared_h2'
-import SharedH4 from 'ui/components/shared_h4'
-import SharedH5 from 'ui/components/shared_h5'
+import SharedH1 from 'ui/info/text/shared_h1'
+import SharedH2 from 'ui/info/text/shared_h2'
+import SharedH4 from 'ui/info/text/shared_h4'
+import SharedH5 from 'ui/info/text/shared_h5'
 
 async function sendCommand(params: DeviceControlReqs) {
     const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })

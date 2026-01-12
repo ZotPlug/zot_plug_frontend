@@ -21,7 +21,3 @@ config.resolver = {
 
 // IMPORTANT: export ONLY the wrapped config
 module.exports = withNativeWind(config, { input: './global.css' });
-
-
-
-

@@ -1,10 +1,10 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from "next/navigation"
-import BasicButton from "ui/components/basic_button"
-import SharedH1 from "ui/components/shared_h1"
-import SharedH2 from "ui/components/shared_h2"
-import SharedH3 from 'ui/components/shared_h3'
+import BasicButton from "ui/buttons/basic_button"
+import SharedH1 from "ui/info/text/shared_h1"
+import SharedH2 from "ui/info/text/shared_h2"
+import SharedH3 from 'ui/info/text/shared_h3'
 import { useRouter } from 'next/navigation'
 import DevicePreview from "ui/devicePreview/comp"
 import { get_all_devices_by_userId } from '@/app/api_utils/api_actions'

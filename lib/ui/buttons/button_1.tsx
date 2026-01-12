@@ -18,6 +18,7 @@ export default function Button_1({ onPress, text, style }: Button_1) {
 
     const layout: DeviceType = useResponsiveLayout()
 
+    const height = 50
     const width = (layout === DeviceType.Mobile ? '100%' : '40%')
     const maxWidth = (layout === DeviceType.Mobile ? 270 : 350)
 
@@ -29,8 +30,12 @@ export default function Button_1({ onPress, text, style }: Button_1) {
             margin: 20,
             borderRadius: 10,
             width: width,
+            height: height,
             maxWidth: maxWidth,
+            display: 'flex',
+            justifyContent: 'center',
             alignSelf: 'center',
+            alignItems: 'center',
             boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
         },
         buttonHover: {
@@ -39,8 +44,12 @@ export default function Button_1({ onPress, text, style }: Button_1) {
             margin: 20,
             borderRadius: 10,
             width: width,
+            height: height,
             maxWidth: maxWidth,
+            display: 'flex',
+            justifyContent: 'center',
             alignSelf: 'center',
+            alignItems: 'center',
             boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
         },
         text: {
