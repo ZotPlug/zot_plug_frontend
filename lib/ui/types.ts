@@ -30,8 +30,12 @@ export type basicCreds = { email: string, password: string }
 
 export type LoginCompParams = {
 	onSubmit: (params: basicCreds) => void
+	onBack: () => unknown | Promise<unknown>,
 	errorText: string | null
-	setErrorText: React.Dispatch<React.SetStateAction<string | null>>
+	setErrorText: React.Dispatch<React.SetStateAction<string | null>>,
+    backIconPath: string, 
+    backIconHoverPath: string, 
+    headerIconPath: string
 }
 
 export type DeviceControlProps = {
@@ -41,9 +45,11 @@ export type DeviceControlProps = {
 
 export type SignUpCompParams = {
 	onSubmit: (params: signUpInfo) => Promise<void>
+	onBack: () => unknown | Promise<unknown>,
 	errorText: string | null
 	setErrorText: React.Dispatch<React.SetStateAction<string | null>>,
     backIconPath: string, 
+    backIconHoverPath: string, 
     headerIconPath: string
 }
 

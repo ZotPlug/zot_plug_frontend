@@ -24,6 +24,7 @@ export default function LoginPage() {
   }
 
   const backIconPath = require('../../assets/images/back.png')
+  const backIconHoverPath = require('../../assets/images/back_hover.png')
   const headerIconPath = require('../../assets/images/plug_icon.png')
 
   return (

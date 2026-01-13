@@ -53,7 +53,7 @@ export default function Welcome({ onLogin, onSignUp, logoPath }: Welcome) {
                 colors={[Colors.BGrad1, Colors.BGrad2]}
                 style={styles.container}>
                 <View style={styles.centerChildren}>
-                    <Shared_H1 text="Welcome to" center={true}/>
+                    <Shared_H1 text="Welcome to"/>
                     <View style={styles.logoSpacer}></View>
                     {logoImage}
                     <View style={styles.logoButtonsSpacer}></View>

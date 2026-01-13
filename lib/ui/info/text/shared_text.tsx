@@ -10,19 +10,17 @@ export type internalSharedTextProps = {
     webFontSize: number,
     mobileFontSize: number,
     modeOverride?: string,
-    center: boolean
 }
 
 export type sharedTextProps = {
     text: string,
     mode?: string,
-    center: boolean
 }
 
 // This is a shared header text component whose sizing can be specified and has
 // logic for changing the color based on the color scheme.
 // Not intended for external use. Use SharedH1, SharedH2, etc.
-export default function SharedText({ text, webFontSize, mobileFontSize, modeOverride, center }: internalSharedTextProps) {
+export default function SharedText({ text, webFontSize, mobileFontSize, modeOverride}: internalSharedTextProps) {
     const layout: DeviceType = useResponsiveLayout()
     let fontSize
     switch (layout) {
@@ -37,15 +35,12 @@ export default function SharedText({ text, webFontSize, mobileFontSize, modeOver
             break;
     }
 
-    const textAlignment = (center ? 'center' : 'start')
-
     const styles = StyleSheet.create({
         textLight: {
             color: Colors.S1,
             fontWeight: 'regular',
             fontSize: fontSize,
             textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            textAlign: textAlignment
         },
         textDark: {
             color: 'white',

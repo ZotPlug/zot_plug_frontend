@@ -29,6 +29,7 @@ export default function AuthContent() {
   }
 
   const backIconPath = '/images/back.svg'
+  const backIconHoverPath = '/images/back_hover.svg'
   const headerIconPath = '/images/plug_icon.svg'
 
   return (
@@ -42,12 +43,25 @@ export default function AuthContent() {
 
         {mode === 'login' ? (
             <>
-            <LoginComp onSubmit={try_login} errorText={error} setErrorText={setError} />
-            <a href="/auth?mode=signup"><h5 className="text-blue-500">sign up</h5></a>
+            <LoginComp 
+                onSubmit={try_login} 
+                onBack={() => router.back()}
+                errorText={error} 
+                setErrorText={setError} 
+                backIconPath={backIconPath} 
+                backIconHoverPath={backIconHoverPath} 
+                headerIconPath={headerIconPath}/>
             </>
         ) : (
             <>
-            <SignUpComp onSubmit={try_signup} errorText={error} setErrorText={setError} backIconPath={backIconPath} headerIconPath={headerIconPath} />
+            <SignUpComp 
+                onSubmit={try_signup} 
+                onBack={() => router.back()}
+                errorText={error} 
+                setErrorText={setError} 
+                backIconPath={backIconPath} 
+                backIconHoverPath={backIconHoverPath} 
+                headerIconPath={headerIconPath} />
             </>
         )}
         </div>
