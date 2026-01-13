@@ -23,6 +23,9 @@ export default function LoginPage() {
     else setError(res.error)
   }
 
+  const backIconPath = require('../../assets/images/back.png')
+  const headerIconPath = require('../../assets/images/plug_icon.png')
+
   return (
     <KeyboardAvoidingView behavior="padding" enabled className="justify-center items-center min-h-screen">
       {mode === 'login' ? (
@@ -33,7 +36,7 @@ export default function LoginPage() {
 
       ) : (
         <>
-          <SignUpComp onSubmit={try_signup} errorText={error} setErrorText={setError} />
+          <SignUpComp onSubmit={try_signup} errorText={error} setErrorText={setError} backIconPath={backIconPath} headerIconPath={headerIconPath} />
           <Link className="pt-2" href={{ pathname: "/auth", params: { mode: "login" } }}>Log In</Link>
         </>
       )}

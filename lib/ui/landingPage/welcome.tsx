@@ -55,7 +55,7 @@ export default function Welcome({ onLogin, onSignUp, logoPath }: Welcome) {
                     <Shared_H1 text="Welcome to" center={true}/>
                     <View style={styles.logoSpacer}></View>
                     {logoImage}
-                    <View style={layout === DeviceType.Mobile ? styles.mobileLogoButtonsSpacer : styles.webLogoButtonsSpacer}></View>
+                    <View style={styles.logoButtonsSpacer}></View>
                     <View style={layout === DeviceType.Mobile ? styles.buttonsAlignVertical : styles.buttonsAlignHorizontal}>
                         <Button_1 text="Login" onPress={onLogin}/>
                         <Button_1 text="Sign Up" onPress={onSignUp}/>
@@ -91,11 +91,8 @@ const styles = StyleSheet.create({
     logoSpacer: {
         margin: 15
     },
-    webLogoButtonsSpacer: {
+    logoButtonsSpacer: {
         margin: 30
-    },
-    mobileLogoButtonsSpacer: {
-        margin: 100
     },
     buttonsAlignVertical: {
         display: 'flex',

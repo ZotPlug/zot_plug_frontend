@@ -3,6 +3,7 @@ import { SignUpCompParams, signUpInfo } from '../types'
 import { TextInput, View, Text, StyleSheet, useWindowDimensions } from 'react-native'
 import basic_filter_check from './helpers'
 import BasicButton from '../buttons/basic_button'
+import Header1 from '../headers/header1'
 
 function submitOnEnter(event: Event, onSubmit: (params: signUpInfo) => Promise<void>, setErrorText: string, params: signUpInfo) {
 	if (event.key === "Enter" || event.key === "NumpadEnter") {
@@ -11,13 +12,18 @@ function submitOnEnter(event: Event, onSubmit: (params: signUpInfo) => Promise<v
 	}
 }
 
-export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUpCompParams) {
+export default function SignUpComp({ onSubmit, errorText, setErrorText, backIconPath, headerIconPath }: SignUpCompParams) {
 	const [userInfo, SetUserInfo] = useState({ firstname: "", lastname: "", username: "", email: "", password: "", confirm: "" })
 	const { width, height } = useWindowDimensions()
 	const isMobile = width <= 480
 
 	return (
 		<View style={styles.container}>
+            <Header1 
+                title={"Sign Up"}
+                backIcon={backIconPath}
+                headerIcon={headerIconPath}
+            />
 			<TextInput
 				value={userInfo.username}
 				onChangeText={(username) => SetUserInfo((prev) => ({ ...prev, username }))}
@@ -27,7 +33,7 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 				editable={true}
 				style={styles.textInput}
 			/>
-			<View style={isMobile ? styles.col : styles.row}>
+			<View style={styles.col}>
 				<TextInput
 					value={userInfo.firstname}
 					onChangeText={(firstname) => SetUserInfo((prev) => ({ ...prev, firstname }))}
@@ -80,11 +86,10 @@ export default function SignUpComp({ onSubmit, errorText, setErrorText }: SignUp
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 16,
-		backgroundColor: undefined,
-		borderRadius: 8,
+		paddingLeft: 16,
+		paddingRight: 16,
 		width: '100%',
-		maxWidth: 400,
+		maxWidth: 500,
 		alignSelf: 'center',
 	},
 	text: {
@@ -95,11 +100,6 @@ const styles = StyleSheet.create({
 	},
 	col: {
 		flexDirection: 'column', // row doesn't work on mobile, needs to be col
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-	row: {
-		flexDirection: 'row', // row doesn't work on mobile, needs to be col
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},

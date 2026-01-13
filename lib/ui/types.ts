@@ -42,7 +42,9 @@ export type DeviceControlProps = {
 export type SignUpCompParams = {
 	onSubmit: (params: signUpInfo) => Promise<void>
 	errorText: string | null
-	setErrorText: React.Dispatch<React.SetStateAction<string | null>>
+	setErrorText: React.Dispatch<React.SetStateAction<string | null>>,
+    backIconPath: string, 
+    headerIconPath: string
 }
 
 export type progressBarProps = {
