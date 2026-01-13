@@ -16,5 +16,8 @@ export const Colors = {
     A2: '#A3C4BC',
     R1: '#680F0F',
     R2: '#AE1A1A',
-    R3: '#EFD1D1'
+    R3: '#EFD1D1',
+
+    BGrad1: '#EAF6FF',
+    BGrad2: '#DDE2FA',
 }

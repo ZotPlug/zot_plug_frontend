@@ -19,15 +19,16 @@ export default function Button_1({ onPress, text, style }: Button_1) {
     const layout: DeviceType = useResponsiveLayout()
 
     const height = 50
-    const width = (layout === DeviceType.Mobile ? '100%' : '40%')
-    const maxWidth = (layout === DeviceType.Mobile ? 270 : 350)
+    // We use viewport width on desktop so it still takes up 40% in scenarios 
+    // where the parent doesn't take up the whole screen width
+    const width = (layout === DeviceType.Mobile ? '100%' : '40vw')
+    const maxWidth = (layout === DeviceType.Mobile ? 270 : 300)
 
     // TODO: find a way to do this without css duplication
     const styles = StyleSheet.create({
         button: {
             backgroundColor: Colors.S1,
             padding: 8,
-            margin: 20,
             borderRadius: 10,
             width: width,
             height: height,
@@ -41,7 +42,6 @@ export default function Button_1({ onPress, text, style }: Button_1) {
         buttonHover: {
             backgroundColor: Colors.P3,
             padding: 8,
-            margin: 20,
             borderRadius: 10,
             width: width,
             height: height,

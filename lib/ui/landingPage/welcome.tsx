@@ -4,6 +4,7 @@ import Shared_H1 from "../info/text/shared_h1"
 import Button_1 from '../buttons/button_1'
 import { useResponsiveLayout } from "../window_utils"
 import LinearGradient from 'react-native-linear-gradient'
+import { Colors } from '../colors'
 
 type Welcome = {
 	onLogin?: () => unknown | Promise<unknown>,
@@ -49,7 +50,7 @@ export default function Welcome({ onLogin, onSignUp, logoPath }: Welcome) {
         <>
             <LinearGradient start={{x: 0, y: 0}} 
                 end={{x: 1, y: 1}} 
-                colors={['#EAF6FF', '#DDE2FA']}
+                colors={[Colors.BGrad1, Colors.BGrad2]}
                 style={styles.container}>
                 <View style={styles.centerChildren}>
                     <Shared_H1 text="Welcome to" center={true}/>
@@ -98,10 +99,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
+        gap: 20,
     },
     buttonsAlignHorizontal: {
         width: '100%',
         display: 'flex',
+        gap: 20,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'

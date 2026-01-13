@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { signUpInfo, basicCreds } from '@/app/api_utils/types';
 import LoginComp from 'ui/login/comp'
 import SignUpComp from 'ui/signup/comp'
+import { Colors } from 'ui/colors'
 
 export default function AuthContent() {
 
@@ -33,7 +34,8 @@ export default function AuthContent() {
   return (
     <LinearGradient start={{x: 0, y: 0}} 
         end={{x: 1, y: 1}} 
-        colors={['#EAF6FF', '#DDE2FA']}>
+        colors={[Colors.BGrad1, Colors.BGrad2]}
+        style={styles.gradient}>
 
         <div className="flex flex-col justify-center items-center h-screen"
             style={styles.container}>
@@ -46,7 +48,6 @@ export default function AuthContent() {
         ) : (
             <>
             <SignUpComp onSubmit={try_signup} errorText={error} setErrorText={setError} backIconPath={backIconPath} headerIconPath={headerIconPath} />
-            <a href="/auth?mode=login"><h5 className="text-blue-500">login</h5></a>
             </>
         )}
         </div>
@@ -55,12 +56,16 @@ export default function AuthContent() {
 }
 
 const styles = StyleSheet.create({
+	gradient: {
+        height: '100dvh',
+	},
 	container: {
         marginTop: 55,
 		padding: 16,
 		width: '100%',
 		alignSelf: 'center',
         alignItems: 'center',
+        flex: 1
 	},
 	text: {
 		textAlign: 'center',

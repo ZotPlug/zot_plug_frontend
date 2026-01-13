@@ -32,8 +32,8 @@ export default function Header1({ onBack, title, backIcon, headerIcon }: Header1
                         imagePath={headerIcon}
                         style={styles.iconStyle}
                         mobileWidth={123} mobileHeight={100} 
-                        tabletWidth={267} tabletHeight={217} 
-                        desktopWidth={267} desktopHeight={217} />
+                        tabletWidth={200} tabletHeight={120} 
+                        desktopWidth={200} desktopHeight={120} />
                     <Shared_H1 text={title} center={true}/>
                 </View>
             </View>
