@@ -55,7 +55,7 @@ export default function Welcome({ onLogin, onSignUp, logoPath }: Welcome) {
                     <Shared_H1 text="Welcome to" center={true}/>
                     <View style={styles.logoSpacer}></View>
                     {logoImage}
-                    <View style={styles.logoButtonsSpacer}></View>
+                    <View style={layout === DeviceType.Mobile ? styles.mobileLogoButtonsSpacer : styles.webLogoButtonsSpacer}></View>
                     <View style={layout === DeviceType.Mobile ? styles.buttonsAlignVertical : styles.buttonsAlignHorizontal}>
                         <Button_1 text="Login" onPress={onLogin}/>
                         <Button_1 text="Sign Up" onPress={onSignUp}/>
@@ -73,17 +73,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     webImage: {
-        borderWidth: 2,
-        borderColor: 'blue',
-        borderStyle: 'solid',
         objectFit: 'contain',
         height: 200,
         width: 200,
     },
     mobileImage: {
-        borderWidth: 2,
-        borderColor: 'blue',
-        borderStyle: 'solid',
         height: '100%',
         width: '100%',
         maxWidth: 200,
@@ -97,8 +91,11 @@ const styles = StyleSheet.create({
     logoSpacer: {
         margin: 15
     },
-    logoButtonsSpacer: {
+    webLogoButtonsSpacer: {
         margin: 30
+    },
+    mobileLogoButtonsSpacer: {
+        margin: 100
     },
     buttonsAlignVertical: {
         display: 'flex',
