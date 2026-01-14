@@ -1,6 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import Welcome from 'ui/landingPage/welcome'
+import { imagePaths } from './imagePaths'
 
 export default function Home() {
     const router = useRouter()
@@ -9,6 +10,6 @@ export default function Home() {
         <Welcome 
             onLogin={() => router.push('/auth?mode=login')}
             onSignUp={() => router.push('/auth?mode=signup')}
-            logoPath='/images/landing_page_logo.svg'/>
+            imagePaths={imagePaths}/>
   )
 }

@@ -20,7 +20,7 @@ function submitOnEnter(event: Event, onSubmit: (params: basicCreds) => void, set
 	}
 }
 
-export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, backIconPath, backIconHoverPath, headerIconPath }: LoginCompParams) {
+export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, imagePaths }: LoginCompParams) {
 	const [email, setEmail] = useState("")
 	const [pass, setPass] = useState("")
 
@@ -30,10 +30,9 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, b
 		<View style={styles.container}>
             <Header1
                 title={"Login"}
-                backIcon={backIconPath}
-                backIconHover={backIconHoverPath}
-                headerIcon={headerIconPath}
+                headerIcon={imagePaths["header_plug"]}
                 onBack={onBack}
+                imagePaths={imagePaths}
             />
             <View style={styles.form}>
                 <Text style={styles.entryFieldHeader}>Email</Text>

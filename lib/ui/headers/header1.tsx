@@ -6,15 +6,14 @@ import PlatformImage from '../info/platform_image'
 type Header1 = {
 	onBack?: () => unknown | Promise<unknown>,
     title: string, 
-    backIcon: string,
-    backIconHover: string,
-    headerIcon: string
+    headerIcon: string,
+    imagePaths: {[key: string] : string}
 }
 
 /**
  * A header icon with a logo, a back button, and a title.
  */
-export default function Header1({ onBack, title, backIcon, backIconHover, headerIcon }: Header1) {
+export default function Header1({ onBack, title, headerIcon, imagePaths}: Header1) {
 
     const [hover, setHover] = useState(false)
 
@@ -40,13 +39,13 @@ export default function Header1({ onBack, title, backIcon, backIconHover, header
                     >
                     {hover ? 
                         <PlatformImage 
-                            imagePath={backIconHover}
+                            imagePath={imagePaths["header_backHover"]}
                             mobileWidth={48} mobileHeight={48} 
                             tabletWidth={64} tabletHeight={64} 
                             desktopWidth={64} desktopHeight={64} />
                      : 
                         <PlatformImage 
-                            imagePath={backIcon}
+                            imagePath={imagePaths["header_back"]}
                             mobileWidth={48} mobileHeight={48} 
                             tabletWidth={64} tabletHeight={64} 
                             desktopWidth={64} desktopHeight={64} />

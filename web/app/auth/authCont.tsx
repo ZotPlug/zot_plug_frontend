@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { signUpInfo, basicCreds } from '@/app/api_utils/types';
 import LoginComp from 'ui/login/comp'
 import SignUpComp from 'ui/signup/comp'
+import { imagePaths } from '../imagePaths'
 import { Colors } from 'ui/colors'
 
 export default function AuthContent() {
@@ -48,9 +49,7 @@ export default function AuthContent() {
                 onBack={() => router.back()}
                 errorText={error} 
                 setErrorText={setError} 
-                backIconPath={backIconPath} 
-                backIconHoverPath={backIconHoverPath} 
-                headerIconPath={headerIconPath}/>
+                imagePaths={imagePaths}/>
             </>
         ) : (
             <>
@@ -59,9 +58,7 @@ export default function AuthContent() {
                 onBack={() => router.back()}
                 errorText={error} 
                 setErrorText={setError} 
-                backIconPath={backIconPath} 
-                backIconHoverPath={backIconHoverPath} 
-                headerIconPath={headerIconPath} />
+                imagePaths={imagePaths} />
             </>
         )}
         </div>

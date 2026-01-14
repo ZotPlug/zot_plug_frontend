@@ -33,9 +33,7 @@ export type LoginCompParams = {
 	onBack: () => unknown | Promise<unknown>,
 	errorText: string | null
 	setErrorText: React.Dispatch<React.SetStateAction<string | null>>,
-    backIconPath: string, 
-    backIconHoverPath: string, 
-    headerIconPath: string
+    imagePaths: {[key: string] : string}
 }
 
 export type DeviceControlProps = {
@@ -48,9 +46,7 @@ export type SignUpCompParams = {
 	onBack: () => unknown | Promise<unknown>,
 	errorText: string | null
 	setErrorText: React.Dispatch<React.SetStateAction<string | null>>,
-    backIconPath: string, 
-    backIconHoverPath: string, 
-    headerIconPath: string
+    imagePaths: {[key: string] : string}
 }
 
 export type progressBarProps = {

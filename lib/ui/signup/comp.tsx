@@ -15,7 +15,7 @@ function submitOnEnter(event: Event, onSubmit: (params: signUpInfo) => Promise<v
 	}
 }
 
-export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, backIconPath, backIconHoverPath, headerIconPath }: SignUpCompParams) {
+export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, backIconPath, backIconHoverPath, headerIconPath, imagePaths }: SignUpCompParams) {
 	const [userInfo, SetUserInfo] = useState({ firstname: "", lastname: "", username: "", email: "", password: "", confirm: "" })
     const layout: DeviceType = useResponsiveLayout()
 
@@ -23,10 +23,9 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
 		<View style={styles.container}>
             <Header1 
                 title={"Sign Up"}
-                backIcon={backIconPath}
-                backIconHover={backIconHoverPath}
-                headerIcon={headerIconPath}
+                headerIcon={imagePaths["header_plug"]}
                 onBack={onBack}
+                imagePaths={imagePaths}
             />
             <View style={styles.form}>
                 <Text style={styles.entryFieldHeader}>Username</Text>

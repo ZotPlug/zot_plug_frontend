@@ -9,10 +9,10 @@ import { Colors } from '../colors'
 type Welcome = {
 	onLogin?: () => unknown | Promise<unknown>,
 	onSignUp?: () => unknown | Promise<unknown>,
-    logoPath: string, 
+    imagePaths: {[key: string] : string}
 }
 
-export default function Welcome({ onLogin, onSignUp, logoPath }: Welcome) {
+export default function Welcome({ onLogin, onSignUp, imagePaths }: Welcome) {
     const layout: DeviceType = useResponsiveLayout()
 
     let logoSize = 200
@@ -32,7 +32,7 @@ export default function Welcome({ onLogin, onSignUp, logoPath }: Welcome) {
     if (Platform.OS === 'web') {
         logoImage = 
             <img 
-                src={logoPath}
+                src={imagePaths["welcome_logo"]}
                 width={logoSize}
                 height={logoSize}
                 style={styles.webImage}
@@ -40,7 +40,7 @@ export default function Welcome({ onLogin, onSignUp, logoPath }: Welcome) {
     } else {
         logoImage =
             <RNImage 
-                source={logoPath}
+                source={imagePaths["welcome_logo"]}
                 style={[styles.mobileImage]} 
                 resizeMode="contain"
             />
