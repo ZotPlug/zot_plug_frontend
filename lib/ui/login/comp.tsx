@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { TextInput, View, Text, StyleSheet } from 'react-native'
 import { basicCreds, DeviceType, LoginCompParams } from '../types'
-import BasicButton from '../buttons/basic_button'
 import { useResponsiveLayout } from '../window_utils'
 import Header1 from '../headers/header1'
 import { Colors } from '../colors'
@@ -57,7 +56,7 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, i
 			{errorText ? <Text style={styles.text}>{errorText}</Text> : null}
 
             <Button_1 text="Login" onPress={() => basic_filter_check(onSubmit, setErrorText, email, pass,)}/>
-		</View>
+        </View>
 	)
 }
 
@@ -68,6 +67,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		maxWidth: 500,
 		alignSelf: 'center',
+        flex: 1
 	},
     form: {
         borderWidth: 3,

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { DeviceType, SignUpCompParams, signUpInfo } from '../types'
-import { TextInput, View, Text, StyleSheet, useWindowDimensions } from 'react-native'
+import { TextInput, View, Text, StyleSheet } from 'react-native'
 import basic_filter_check from './helpers'
-import BasicButton from '../buttons/basic_button'
 import Header1 from '../headers/header1'
 import { Colors } from '../colors'
 import Button_1 from '../buttons/button_1'
@@ -15,7 +14,7 @@ function submitOnEnter(event: Event, onSubmit: (params: signUpInfo) => Promise<v
 	}
 }
 
-export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, backIconPath, backIconHoverPath, headerIconPath, imagePaths }: SignUpCompParams) {
+export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, imagePaths }: SignUpCompParams) {
 	const [userInfo, SetUserInfo] = useState({ firstname: "", lastname: "", username: "", email: "", password: "", confirm: "" })
     const layout: DeviceType = useResponsiveLayout()
 
@@ -96,7 +95,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
             <Button_1 text="Sign Up" onPress={() => basic_filter_check(onSubmit, setErrorText, {
 				firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password
 			}, userInfo.confirm)}/>
-		</View>
+        </View>
 	)
 }
 
@@ -107,6 +106,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		maxWidth: 500,
 		alignSelf: 'center',
+        flex: 1
 	},
     form: {
         borderWidth: 3,
@@ -121,7 +121,8 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
         width: '100%',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        //flex: 1,
     },
 	text: {
 		textAlign: 'center',
@@ -135,13 +136,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 	col: {
-        flex: 1,
         flexDirection: 'column',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
 	row: {
-        flex: 1,
         flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
@@ -157,9 +156,9 @@ const styles = StyleSheet.create({
         outlineStyle: 'none'
 	},
     nameRow: {
-        width: '48%'
+        width: '48%',
     },
     nameCol: {
-        width: '100%'
+        width: '100%',
     }
 })

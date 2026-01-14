@@ -5,3 +5,5 @@ export const imagePaths = {
     header_backHover: require('../assets/images/back_hover.png'),
     header_plug: require('../assets/images/plug_icon.png'),
 }
+
+export default imagePaths

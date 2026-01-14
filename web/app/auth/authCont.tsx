@@ -29,10 +29,6 @@ export default function AuthContent() {
     else setError(res.error)
   }
 
-  const backIconPath = '/images/back.svg'
-  const backIconHoverPath = '/images/back_hover.svg'
-  const headerIconPath = '/images/plug_icon.svg'
-
   return (
     <LinearGradient start={{x: 0, y: 0}} 
         end={{x: 1, y: 1}} 

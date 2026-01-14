@@ -5,7 +5,6 @@ import { imagePaths } from './imagePaths'
 export default function Home() {
   const router = useRouter()
 
-  
   return (
     <Welcome 
         onLogin={() => router.push('/auth?mode=login')}

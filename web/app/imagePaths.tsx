@@ -5,3 +5,5 @@ export const imagePaths = {
     header_backHover: '/images/back_hover.svg',
     header_plug: '/images/plug_icon.svg',
 }
+
+export default imagePaths
