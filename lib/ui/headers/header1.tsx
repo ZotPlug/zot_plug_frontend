@@ -25,7 +25,6 @@ export default function Header1({ onBack, title, headerIcon, imagePaths}: Header
                 <View style={styles.centerChildren}>
                     <PlatformImage 
                         imagePath={headerIcon}
-                        style={styles.iconStyle}
                         mobileWidth={123} mobileHeight={100} 
                         tabletWidth={200} tabletHeight={120} 
                         desktopWidth={200} desktopHeight={120} />
@@ -69,10 +68,6 @@ const styles = StyleSheet.create({
         objectFit: 'contain',
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         borderRadius: 50,
-    },
-    iconStyle: {
-        objectFit: 'contain',
-        objectPosition: 'top',
     },
 })
 
