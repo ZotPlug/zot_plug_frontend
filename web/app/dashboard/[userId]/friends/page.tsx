@@ -1,9 +1,9 @@
 'use client'
 import { useParams } from "next/navigation"
-import BasicButton from "ui/components/basic_button"
+import BasicButton from "ui/buttons/basic_button"
 import { useRouter } from 'next/navigation'
-import SharedH1 from "ui/components/shared_h1"
-import SharedH2 from "ui/components/shared_h2"
+import SharedH1 from "ui/info/text/shared_h1"
+import SharedH2 from "ui/info/text/shared_h2"
 
 export default function Friends() {
 	const { userId } = useParams<{ userId: string }>();

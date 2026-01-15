@@ -6,9 +6,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { validate_jwt } from '@/api_utils/api_actions'    // removed getAllDevices import (doesn't exist)
 import DailyTarget from 'ui/dailyTarget/comp'
-import BasicButton from 'ui/components/basic_button'
+import BasicButton from 'ui/buttons/basic_button'
 import Category from 'ui/components/category'
-import SharedH1 from "ui/components/shared_h1"
+import SharedH1 from "ui/info/text/shared_h1"
 import AddDevice from "ui/addDevice/comp"
 
 export default function Dashboard() {

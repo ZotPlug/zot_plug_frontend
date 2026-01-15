@@ -1,11 +1,11 @@
 import React from "react"
 import { Platform, Text, View, Image as RNImage, Pressable, StyleSheet, useColorScheme } from "react-native"
 import { deviceReadingsProps } from "../types"
-import SharedH2 from "../components/shared_h2"
-import SharedH3 from "../components/shared_h3"
-import SharedH4 from "../components/shared_h4"
-import SharedH5 from "../components/shared_h5"
-import SharedHr from "../components/shared_hr"
+import SharedH2 from "../info/text/shared_h2"
+import SharedH3 from "../info/text/shared_h3"
+import SharedH4 from "../info/text/shared_h4"
+import SharedH5 from "../info/text/shared_h5"
+import SharedHr from "../info/text/shared_hr"
 
 export default function DeviceReadings({ 
     voltage, 
@@ -43,8 +43,8 @@ export default function DeviceReadings({
     
     
     // TODO: Handle unit conversion in scenarios where we need mA, micro A, etc.
-    const voltageValue = `${voltage} V`
-    const currentValue = `${current} A`
+    const voltageValue = `${voltage.toFixed(2)} V`
+    const currentValue = `${current.toFixed(2)} A`
 
     const voltageSection =
         <View style={styles.centerChildren}>

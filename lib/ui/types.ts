@@ -30,8 +30,10 @@ export type basicCreds = { email: string, password: string }
 
 export type LoginCompParams = {
 	onSubmit: (params: basicCreds) => void
+	onBack: () => unknown | Promise<unknown>,
 	errorText: string | null
-	setErrorText: React.Dispatch<React.SetStateAction<string | null>>
+	setErrorText: React.Dispatch<React.SetStateAction<string | null>>,
+    imagePaths: {[key: string] : string}
 }
 
 export type DeviceControlProps = {
@@ -41,8 +43,10 @@ export type DeviceControlProps = {
 
 export type SignUpCompParams = {
 	onSubmit: (params: signUpInfo) => Promise<void>
+	onBack: () => unknown | Promise<unknown>,
 	errorText: string | null
-	setErrorText: React.Dispatch<React.SetStateAction<string | null>>
+	setErrorText: React.Dispatch<React.SetStateAction<string | null>>,
+    imagePaths: {[key: string] : string}
 }
 
 export type progressBarProps = {
@@ -107,4 +111,10 @@ export type getDeviceByIdRes = {
 	id: number,
 	name: string,
 	status: string
+}
+
+export enum DeviceType {
+    Mobile,
+    Tablet,
+    Desktop
 }

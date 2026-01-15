@@ -1,10 +1,13 @@
-import { KeyboardAvoidingView, Text, View } from "react-native"
+import { KeyboardAvoidingView, View, StyleSheet, ScrollView } from "react-native"
 import { login_user, signup_user } from "@/api_utils/api_actions"
+import LinearGradient from 'react-native-linear-gradient'
 import { signUpInfo, basicCreds } from "@/api_utils/types"
 import { Link, useLocalSearchParams, useRouter } from "expo-router"
 import { useState } from "react"
 import LoginComp from 'ui/login/comp'
 import SignUpComp from 'ui/signup/comp'
+import { imagePaths } from "../imagePaths"
+import { Colors } from 'ui/colors'
 
 export default function LoginPage() {
   const { mode } = useLocalSearchParams<{ mode: string }>()
@@ -24,19 +27,84 @@ export default function LoginPage() {
   }
 
   return (
-    <KeyboardAvoidingView behavior="padding" enabled className="justify-center items-center min-h-screen">
-      {mode === 'login' ? (
-        <>
-          <LoginComp onSubmit={try_login} errorText={error} setErrorText={setError} />
-          <Link className="pt-2" href={{ pathname: "/auth", params: { mode: "signup" } }}>Sign Up</Link>
-        </>
+    <LinearGradient start={{x: 0, y: 0}} 
+        end={{x: 1, y: 1}} 
+        colors={[Colors.BGrad1, Colors.BGrad2]}
+        style={styles.gradient}>
 
-      ) : (
-        <>
-          <SignUpComp onSubmit={try_signup} errorText={error} setErrorText={setError} />
-          <Link className="pt-2" href={{ pathname: "/auth", params: { mode: "login" } }}>Log In</Link>
-        </>
-      )}
-    </KeyboardAvoidingView>
+        <KeyboardAvoidingView 
+            behavior="height"
+            enabled 
+            style={styles.container}>
+            <ScrollView style={styles.scrollContainer}>
+
+            {mode === 'login' ? (
+                <>
+                <LoginComp 
+                    onSubmit={try_login} 
+                    onBack={() => router.back()}
+                    errorText={error} 
+                    setErrorText={setError}
+                    imagePaths={imagePaths} />
+                </>
+
+            ) : (
+                <>
+                <SignUpComp 
+                    onSubmit={try_signup} 
+                    onBack={() => router.back()}
+                    errorText={error} 
+                    setErrorText={setError} 
+                    imagePaths={imagePaths} />
+                </>
+            )}
+            </ScrollView>
+        </KeyboardAvoidingView>
+    </LinearGradient>
   )
 }
+
+const styles = StyleSheet.create({
+	gradient: {
+        flex: 1
+	},
+	container: {
+		width: '100%',
+		alignSelf: 'center',
+        alignItems: 'center',
+        height: '100%',
+        flex: 1,
+        marginTop: 55,
+	},
+	scrollContainer: {
+		padding: 16,
+		width: '100%',
+		alignSelf: 'center',
+        height: '100%',
+        flex: 1
+	},
+	text: {
+		textAlign: 'center',
+		fontSize: 12,
+		lineHeight: 24,
+		color: "red",
+	},
+	col: {
+		flexDirection: 'column', // row doesn't work on mobile, needs to be col
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
+	textInput: {
+		padding: 16,
+		backgroundColor: 'white',
+		color: 'black',
+		borderRadius: 8,
+		width: '100%',
+		marginVertical: 8,
+	},
+	button: {
+		borderRadius: 8,
+		width: '100%',
+		marginVertical: 8,
+	},
+})

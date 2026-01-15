@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, Modal, StyleSheet, TextInput, useWindowDimensions } from 'react-native';
-import { BasicButton } from "../components";
-import SharedH4 from "../components/shared_h4";
+import BasicButton from "../buttons/basic_button";
+import SharedH4 from "../info/text/shared_h4";
 import { AddDeviceCompParams } from "../types";
 
 export default function AddDevice({ onSubmit, modalMessage, SetModalMesage }: AddDeviceCompParams) {
