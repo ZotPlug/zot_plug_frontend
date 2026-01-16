@@ -5,8 +5,7 @@ const api = createApiClient({ device: "web" })
 // change the res type of the req
 
 export async function POST(req: NextRequest) {
-	const { searchParams } = new URL(req.url)
-	const userId = searchParams.get("userId")
+	const { userId } = await req.json()
 	if (!userId) {
 		return NextResponse.json({ ok: false, message: "Missing userId" })
 	}

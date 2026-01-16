@@ -5,11 +5,9 @@ const api = createApiClient({ device: "web" })
 // change the res type of the req
 
 export async function POST(req: NextRequest) {
-	const { searchParams } = new URL(req.url)
-	const deviceId = searchParams.get("deviceId")
-	const deviceName = searchParams.get("deviceName")
+	const { deviceId, deviceName } = await req.json()
 
-	if (!deviceId || !deviceName) {
+	if (!deviceId && !deviceName) {
 		return NextResponse.json({ ok: false, message: "Missing deviceId or deviceName" })
 	}
 
