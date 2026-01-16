@@ -5,13 +5,12 @@ const api = createApiClient({ device: "web" })
 // change the res type of the req
 
 export async function POST(req: NextRequest) {
-	const { deviceId, deviceName } = await req.json()
-
-	if (!deviceId && !deviceName) {
+	const body: { deviceId?: string; deviceName?: string } = await req.json()
+	if (!body.deviceId && !body.deviceName) {
 		return NextResponse.json({ ok: false, message: "Missing deviceId or deviceName" })
 	}
 
-	const query = deviceId ? `deviceId=${deviceId}` : `deviceName=${deviceName}`
+	const query = body.deviceId ? `deviceId=${body.deviceId}` : `deviceName=${body.deviceName}`
 
 	try {
 		const res = await api.fetchJSON({ endpoint: `/api/devices/getLatestReadings?${query}`, method: "GET" })

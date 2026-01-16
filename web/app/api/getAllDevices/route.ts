@@ -5,13 +5,13 @@ const api = createApiClient({ device: "web" })
 // change the res type of the req
 
 export async function POST(req: NextRequest) {
-	const { userId } = await req.json()
-	if (!userId) {
+	const body: { userId: string } = await req.json()
+	if (!body.userId) {
 		return NextResponse.json({ ok: false, message: "Missing userId" })
 	}
 
 	try {
-		const res = await api.fetchJSON({ endpoint: `/api/devices/getAllDevicesByUserId?userId=${userId}`, method: "GET" })
+		const res = await api.fetchJSON({ endpoint: `/api/devices/getAllDevicesByUserId?userId=${body.userId}`, method: "GET" })
 
 		return NextResponse.json({ ok: true, value: res })
 	} catch (err) {
