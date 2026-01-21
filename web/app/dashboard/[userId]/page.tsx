@@ -62,79 +62,57 @@ export default function Dashboard() {
 
 			<div className="min-h-screen w-full px-6 pt-16">
 
-				{/* Header Section */}
-				<div className="w-full flex justify-between items-center mb-8">
-					<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" />
-					<DailyTarget
-						currProgress={dailyTarget.currProgress}
-						maxProgress={dailyTarget.maxProgress}
-					/>
-				</div>
-
-				{/* Main Content Section */}
 				<div className="flex flex-col md:flex-row gap-8 w-full">
 
-					{/* Left Column */}
-					<div className="w-full md:w-2/3 flex flex-col gap-6">
-						{/* Plugs Box */}
-						<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-							<SharedH2 text="Plugs" mode="light" />
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-								{/* Left Column - My Plugs */}
-								<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
-									<SharedH3 text="My Plugs" mode="light" />
-									<div className="flex flex-col gap-3 mt-2">
-										{devices.slice(0, 5).map((device) => (
-											<DevicePreview
-												key={device.device_id}
-												deviceId={device.device_id}
-												deviceName={device.device_name}
-												deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
-												currUsage={0}
-												totalUsage={0}
-												redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
-											/>
-										))}
-									</div>
-								</div>
-								{/* Embedded Right Column - My Friend's Plugs*/}
-								<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
-									<SharedH3 text="My Friend's Plugs" mode="light" />
-									<div className="flex flex-col gap-3">
-										{devices.slice(0, 5).map((device) => (
-											<DevicePreview
-												key={device.device_id}
-												deviceId={device.device_id}
-												deviceName={device.device_name}	
-												deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
-												currUsage={0}
-												totalUsage={0}
-												redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
-											/>
-										))}
-									</div>
-								</div>
+					{/* Left Column - Navigation Bar */}
+					<div className="w-full md:w-1/4 flex flex-col gap-6">
+						<DailyTarget
+							currProgress={dailyTarget.currProgress}
+							maxProgress={dailyTarget.maxProgress}
+						/>
+						<BasicButton text='Dashboard' onPress={() => router.push(`/dashboard/${userId}`)} />
+						<BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
+						<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
+						<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
+						<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
+						<BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
+					</div>
+
+					{/* Right Column - Main Dashboard Content */}
+					<div className="w-full md:w-3/4 flex flex-col gap-6">
+						{/* Header Section */}
+						<div className="w-full flex justify-between items-center mb-8">
+							<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" />
+
+						</div>
+
+						{/* Daily, Weekly, and Monthly Usage */}
+
+						{/* Quick Summary Box */}
+
+						{/* My Plugs Box */}
+						<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
+							<SharedH3 text="Most Used Devices" mode="light" />
+							<div className="flex flex-col gap-3 mt-2">
+								{devices.slice(0, 5).map((device) => (
+									<DevicePreview
+										key={device.device_id}
+										deviceId={device.device_id}
+										deviceName={device.device_name}
+										deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
+										currUsage={0}
+										totalUsage={0}
+										redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
+									/>
+								))}
 							</div>
-						
+
 							<div className="mt-6">
 								<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
 							</div>
 						</div>
-					</div>
-
-					{/* Right Column */}
-					<div className="w-full md:w-1/3 flex flex-col gap-6">
-						{/* Action Buttons */}
-						<div className="flex flex-col gap-4">
-							<BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
-							<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
-							<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
-							<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
-							<BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
 						</div>
 					</div>
-				</div>
-
 			</div>
 		</LinearGradient>
 	)
