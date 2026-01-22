@@ -1,35 +1,46 @@
 import { Text, View, StyleSheet } from "react-native"
 import ProgressBar from "../components/progress_bar"
-import Icon from "../icons/Icon"
 import { dailyTargetProps } from "../types"
+import { Colors } from "../colors"
+import PlatformImage from "../info/platform_image"
 
-export default function DailyTarget({ currProgress, maxProgress }: dailyTargetProps) {
+export default function DailyTarget({ currProgress, maxProgress, imagePaths }: dailyTargetProps) {
 	return (
-		<View style={styles.container}>
-			<View style={styles.row}>
-				<View>
-					<Text style={styles.header}> Daily Target </Text>
-					<Text style={styles.display_text}>{`${currProgress}W of ${maxProgress}W`}</Text>
-				</View>
-				<View style={styles.icon_wrapper}>
-					<Icon name="leaf" size={28} color="darkgreen" />
-				</View>
+		<View style={styles.outerContainer}>
+            <View style={styles.innerContainer}>
+                <View style={styles.row}>
+                    <View>
+                        <Text style={styles.header}>Daily Target</Text>
+                        <Text style={styles.display_text}>{`${currProgress}W of ${maxProgress}W`}</Text>
+                    </View>
+                    <PlatformImage
+                        imagePath={imagePaths["energy_leaf"]}
+                        width={32} height={32}
+                        style={styles.icon}/>
 
-			</View>
-			<ProgressBar height={25} currProgress={currProgress} maxProgress={maxProgress} />
+                </View>
+                <ProgressBar height={25} currProgress={currProgress} maxProgress={maxProgress} />
+            </View>
 		</View >
 	)
 }
 
 const styles = StyleSheet.create({
-	container: {
+	outerContainer: {
 		alignSelf: 'center',
-		padding: 10,
 		width: '100%',
-		maxWidth: 450,
-		backgroundColor: 'lightgreen',
-		borderColor: 'darkgreen',
-		borderWidth: 3
+        borderRadius: 10,
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+	},
+	innerContainer: {
+		alignSelf: 'center',
+		width: '100%',
+        padding: 12,
+		backgroundColor: Colors.E2,
+		borderColor: Colors.E1,
+		borderWidth: 3,
+        borderRadius: 10,
+        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
 	},
 	row: {
 		flexDirection: 'row',
@@ -41,21 +52,20 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		textAlign: 'left',
 		marginBottom: 4,
+        color: Colors.E3,
+        fontSize: 16,
 	},
 	display_text: {
 		fontWeight: 'bold',
 		color: 'gray'
 	},
-	icon_wrapper: {
-		width: 40,
-		height: 40,
-		borderRadius: 20,
-		borderWidth: 2,
-		borderColor: "darkgreen",
-		backgroundColor: "lightgray",
-		alignItems: "center",
-		justifyContent: "center",
-		marginRight: 4,
-		marginBottom: 4
+	icon: {
+		width: 32,
+        height: 32,
+        objectFit: 'contain',
+        position: 'absolute',
+        resizeMode: 'contain',
+        top: 0,
+        right: 0
 	}
 })

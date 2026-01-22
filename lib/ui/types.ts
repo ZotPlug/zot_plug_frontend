@@ -58,6 +58,7 @@ export type progressBarProps = {
 export type dailyTargetProps = {
 	currProgress: number,
 	maxProgress: number,
+    imagePaths: {[key: string] : string}
 }
 
 export type devicePreviewProps = {

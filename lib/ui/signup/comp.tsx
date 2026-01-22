@@ -74,6 +74,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                 <Text style={styles.entryFieldHeader}>Password</Text>
                 <TextInput
                     value={userInfo.password}
+                    secureTextEntry={true}
                     onChangeText={(password) => SetUserInfo((prev) => ({ ...prev, password }))}
                     onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password })}
                     placeholder="Type Here"
@@ -83,6 +84,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                 <Text style={styles.entryFieldHeader}>Retype Password</Text>
                 <TextInput
                     value={userInfo.confirm}
+                    secureTextEntry={true}
                     onChangeText={(confirm) => SetUserInfo((prev) => ({ ...prev, confirm }))}
                     onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password })}
                     placeholder="Type here"
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
 		paddingRight: 16,
 		width: '100%',
 		maxWidth: 500,
-		alignSelf: 'center',
+		alignSelf: 'flex-start',
         flex: 1
 	},
     form: {
@@ -122,7 +124,6 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         width: '100%',
         alignSelf: 'center',
-        //flex: 1,
     },
 	text: {
 		textAlign: 'center',

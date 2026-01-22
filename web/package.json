@@ -20,6 +20,7 @@
     "react-native-svg-transformer": "^1.5.2",
     "react-native-web": "^0.20.0",
     "react-native-web-linear-gradient": "^1.1.2",
+    "react-router-dom": "^7.12.0",
     "typescript": "^5",
     "ui": "file:../lib/ui"
   },

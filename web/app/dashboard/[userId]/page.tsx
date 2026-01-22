@@ -12,6 +12,7 @@ import DailyTarget from "ui/dailyTarget/comp"
 import DevicePreview from "ui/devicePreview/comp"
 import { useEffect, useState } from "react";
 import { UserDeviceInfo } from "ui/types"
+import imagePaths from "@/app/imagePaths"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
@@ -50,7 +51,6 @@ export default function Dashboard() {
 	return (
 		<div className="min-h-screen w-full bg-sky-200 p-6">
 			{/* Main container with padding and background color */}
-
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-3 shadow-md">
 				<div className="mt-10 pb-8 flex flex-row w-full">
 					<div className="w-full flex justify-start">
@@ -63,6 +63,7 @@ export default function Dashboard() {
 						<DailyTarget
 							currProgress={dailyTarget.currProgress}
 							maxProgress={dailyTarget.maxProgress}
+                            imagePaths={imagePaths}
 						/>
 					</div>
 				</div>

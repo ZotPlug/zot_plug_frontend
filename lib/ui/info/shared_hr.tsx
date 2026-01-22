@@ -1,16 +1,9 @@
 import { View, Text, StyleSheet, useColorScheme } from "react-native"
+import { Colors } from "../colors"
 
 // Horizontal line because hr isn't built into react native
 export default function SharedHr() {
     
-    const lightColor = 'white'
-    const darkColor = 'black'
-
-    const colorScheme = useColorScheme()
-    const useDarkMode = (colorScheme === "dark")
-    
-    const lineColor = (useDarkMode ? lightColor : darkColor)
-
     const styles = StyleSheet.create({
         container: {
             flexDirection: 'row',
@@ -22,7 +15,7 @@ export default function SharedHr() {
         line: {
             flex: 1,
             height: 3,
-            backgroundColor: lineColor,
+            backgroundColor: Colors.A2,
         },
     })
     

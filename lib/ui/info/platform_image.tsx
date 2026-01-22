@@ -6,7 +6,7 @@ type PlatformImage = {
     imagePath: string,
     width?: number,
     height?: number,
-    mobileWidth: number,
+    mobileWidth?: number,
     mobileHeight?: number,
     tabletWidth?: number,
     tabletHeight?: number,

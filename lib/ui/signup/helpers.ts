@@ -4,8 +4,6 @@ export function isNumber(char: string): boolean { return /^[0-9]$/.test(char) }
 export function isSpecial(char: string): boolean { return /^[^a-zA-Z0-9]$/.test(char) }
 export function isValidEmail(email: string): boolean { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) }
 
-export const temp_allow_email = ["kyle@example.xyz", "chris@example.xyz", "prabhav@example.xyz", "ustin@example.xyz", "jay@example.xyz"]
-
 function check_len(params: signUpInfo): string | null {
 	for (const key of Object.keys(params) as Array<keyof typeof params>) {
 		if (params[key].length === 0) {
@@ -42,11 +40,6 @@ function check_password_req(params: signUpInfo, confirmPass: string): string | n
 }
 
 export default function basic_filter_check(onSubmit: (params: signUpInfo) => void, setBasicErr: React.Dispatch<React.SetStateAction<string | null>>, params: signUpInfo, confirmPass: string): void {
-	// Temp email check block
-	if (!temp_allow_email.includes(params.email.toLowerCase())) {
-		setBasicErr("Invalid email provided.")
-		return
-	}
 
 	const len_res = check_len(params)
 	if (len_res) {
