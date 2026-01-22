@@ -56,8 +56,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
 	},
 	display_text: {
-		fontWeight: 'bold',
-		color: 'gray'
+		fontWeight: 600,
+        fontSize: 14,
+		color: Colors.E3,
+        fontStyle: 'italic'
 	},
 	icon: {
 		width: 32,

@@ -6,7 +6,7 @@ import NavBarButton from "ui/buttons/navbar_button"
 import NavBarButton2 from "ui/buttons/navbar_button2"
 import imagePaths from "../imagePaths"
 import { useLocation } from 'react-router-dom'
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import LinearGradient from "react-native-web-linear-gradient"
 import { useEffect, useState } from 'react'
 import { Colors } from "ui/colors"
@@ -70,9 +70,11 @@ export default function NavBar({currentProgress, maxProgress}: NavBar) {
                 end={{x: 1, y: 1}} 
                 colors={[Colors.BCGrad1, Colors.BCGrad2]}
                 style={styles.container}>
-                <PlatformImage 
-                    imagePath={imagePaths["welcome_logo"]}
-                    width={150} height={150}/>
+                <View style={styles.logo}>
+                    <PlatformImage 
+                        imagePath={imagePaths["welcome_logo"]}
+                        width={150} height={150}/>
+                </View>
                 <DailyTarget 
                     currProgress={currentProgress}
                     maxProgress={maxProgress}
@@ -136,7 +138,6 @@ export default function NavBar({currentProgress, maxProgress}: NavBar) {
                             router.push(`/dashboard/${userId}/settings`)
                         }}/>
                 </div>
-                <SharedHr/>
                 <NavBarButton2 
                     text="Log Out" 
                     imagePath={imagePaths["nav_logOut"]}
@@ -154,10 +155,14 @@ const styles = StyleSheet.create({
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         padding: 20,
         alignItems: 'center',
+        gap: 10,
 	},
+    logo: {
+        marginTop: 15,
+    },
     navButtonContainer: {
         marginTop: 15,
-        marginBottom: 15,
+        marginBottom: 10,
         width: '100%',
         display: 'flex',
         flexDirection: 'column',

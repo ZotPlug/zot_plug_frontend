@@ -26,4 +26,7 @@ export const Colors = {
 
     GGrad1: '#F3F3F3',
     GGrad2: '#D7D7D7',
+    
+    GrGrad1: '#78FFBC',
+    GrGrad2: '#1FDBD7'
 }

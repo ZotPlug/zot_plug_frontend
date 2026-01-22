@@ -9,12 +9,12 @@ export default function SharedHr() {
             flexDirection: 'row',
             alignItems: 'center',
             flex: 1,
-            marginLeft: 25,
-            marginRight: 25,
+            width: '100%'
         },
         line: {
             flex: 1,
             height: 3,
+            width: '100%',
             backgroundColor: Colors.A2,
         },
     })
