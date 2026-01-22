@@ -82,16 +82,59 @@ export default function Dashboard() {
 					<div className="w-full md:w-3/4 flex flex-col gap-6">
 						{/* Header Section */}
 						<div className="w-full flex justify-between items-center mb-8">
-							<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" />
-
+							<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" size="large" />
 						</div>
 
-						{/* Daily, Weekly, and Monthly Usage */}
+						{/* Usage Overview */}
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+							{/* Daily Usage */}
+							<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
+								<SharedH3 text="Daily Usage" mode="light" />
+								<p className="mt-4 text-gray-600 text-sm">
+									3.5 kWh used today
+								</p>
+								<p className="text-xs text-gray-500 mt-1">
+									Last updated: just now
+								</p>
+							</div>
 
-						{/* Quick Summary Box */}
+							{/* Weekly Usage */}
+							<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
+								<SharedH3 text="Weekly Usage" mode="light" />
+								<p className="mt-4 text-gray-600 text-sm">
+									24.1 kWh this week
+								</p>
+								<p className="text-xs text-gray-500 mt-1">
+									Mon – Sun
+								</p>
+							</div>
+
+							{/* Monthly Usage */}
+							<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
+								<SharedH3 text="Monthly Usage" mode="light" />
+								<p className="mt-4 text-gray-600 text-sm">
+									102.7 kWh this month
+								</p>
+								<p className="text-xs text-gray-500 mt-1">
+									Estimated bill: $18.42
+								</p>
+							</div>
+						</div>
+
+						{/* Quick Summary */}
+						<div className="bg-stone-100 border border-gray-300 rounded-lg p-5 shadow-md">
+							<SharedH3 text="Quick Summary" mode="light" />
+
+							<ul className="mt-4 space-y-2 text-sm text-gray-700">
+								<li> Active devices: {devices.length} </li>
+								<li> Most used device: Living Room Plug </li>
+								<li> Energy trend: Slightly lower than yesterday </li>
+								<li> Energy score: 82 / 100 </li>
+							</ul>
+						</div>
 
 						{/* My Plugs Box */}
-						<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
+						<div className="border border-gray-300 rounded-lg p-3 bg-stone-100">
 							<SharedH3 text="Most Used Devices" mode="light" />
 							<div className="flex flex-col gap-3 mt-2">
 								{devices.slice(0, 5).map((device) => (
