@@ -41,7 +41,7 @@ export default function Dashboard() {
   }
 
   async function openPlugs() {
-    router.push(`/dashboard/${userId}/plugs`)
+    router.push(`/dashboard/${userId}/devices`)
   }
 
   async function openPowerUsage() {
