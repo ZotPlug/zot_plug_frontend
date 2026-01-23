@@ -56,7 +56,7 @@ export default function Dashboard() {
 				{['Daily', 'Weekly', 'Monthly'].map((label => (
 					<div key={label} className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
 						<SharedH2 text={`${label} Usage`} mode="light" />
-						<SharedH3 text={`Total Consumption: ${Math.floor(Math.random() * 100)} kWh`} mode="light" />
+						<p className="mt-4 text-gray-600 text-sm">Placeholder Data</p>
 					</div>
 				)))}
 			</div>
@@ -65,10 +65,10 @@ export default function Dashboard() {
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-5 shadow-md">
 				<SharedH2 text="Quick Summary" mode="light" />
 				<div className="mt-4 space-y-2 text-sm text-gray-700">	
-					<SharedH3 text={`Active Devices: ${devices.length}`} mode="light" />
-					<SharedH3 text={`Most Used Device: Living Room Plug`} mode="light" />
-					<SharedH3 text={`Energy Trend: Slightly lower than yesterday`} mode="light" />
-					<SharedH3 text={`Energy Score: 82 / 100`} mode="light" />
+					<li> Active devices: {devices.length} </li>
+					<li> Most used device: Living Room Plug </li>
+					<li> Energy trend: Slightly lower than yesterday </li>
+					<li> Energy score: 82 / 100 </li>
 				</div>
 			</div>
 
