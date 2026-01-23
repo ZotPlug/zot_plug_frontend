@@ -2,13 +2,11 @@
 'use client'
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import {View, StyleSheet, ScrollView } from 'react-native'
 
 import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
 
 import SharedH1 from "ui/info/text/shared_h1"
 import SharedH2 from "ui/info/text/shared_h2"
-import SharedH3 from "ui/info/text/shared_h3"
 import AddDevice from "ui/addDevice/comp"
 import DevicePreview from "ui/devicePreview/comp"
 
