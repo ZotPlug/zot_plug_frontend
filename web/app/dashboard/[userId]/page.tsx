@@ -1,25 +1,24 @@
 // web/app/dashboard/[userId]/page.tsx
 'use client'
 import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import {View, StyleSheet, ScrollView } from 'react-native'
+
 import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
-import { useRouter } from 'next/navigation'
-import BasicButton from 'ui/buttons/basic_button'
+
 import SharedH1 from "ui/info/text/shared_h1"
 import SharedH2 from "ui/info/text/shared_h2"
 import SharedH3 from "ui/info/text/shared_h3"
 import AddDevice from "ui/addDevice/comp"
-import DailyTarget from "ui/dailyTarget/comp"
 import DevicePreview from "ui/devicePreview/comp"
-import { useEffect, useState } from "react";
+
 import { UserDeviceInfo } from "ui/types"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
 	const [user, setUser] = useState<{ firstname: string; lastname: string; userId: string } | null>(null)
 	const [devices, setDevices] = useState<UserDeviceInfo[]>([])
-	const [dailyTarget] = useState<{ currProgress: number, maxProgress: number }>({ currProgress: 350, maxProgress: 1000 })
 	const [modalMessage, SetModalMessage] = useState<{ ok: boolean, message: string } | null>(null)
-	const router = useRouter()
 
 	async function addDevice(params: { deviceName: string }) {
 		const res = await add_device({ userId: parseInt(userId), deviceName: params.deviceName })
@@ -48,132 +47,52 @@ export default function Dashboard() {
 	}, [userId])
 
 	return (
-		<div className="min-h-screen w-full bg-sky-200 p-6">
-			{/* Main container with padding and background color */}
+		<>
+			{/* Header */}
+			<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" />
 
-			<div className="bg-stone-100 border border-gray-300 rounded-lg p-3 shadow-md">
-				<div className="mt-10 pb-8 flex flex-row w-full">
-					<div className="w-full flex justify-start">
-						<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" />
+			{/* Usage Overview */}
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+				{['Daily', 'Weekly', 'Monthly'].map((label => (
+					<div key={label} className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
+						<SharedH2 text={`${label} Usage`} mode="light" />
+						<p className="mt-4 text-gray-600 text-sm">Placeholder Data</p>
 					</div>
+				)))}
+			</div>
 
-					{/* Daily Target Box */}
-					<div className="w-full flex justify-end">
-						{/* <SharedH3 text="Daily Target" mode="light"/> */}
-						<DailyTarget
-							currProgress={dailyTarget.currProgress}
-							maxProgress={dailyTarget.maxProgress}
-						/>
-					</div>
+			{/* Quick Summary */}
+			<div className="bg-stone-100 border border-gray-300 rounded-lg p-5 shadow-md">
+				<SharedH2 text="Quick Summary" mode="light" />
+				<div className="mt-4 space-y-2 text-sm text-gray-700">	
+					<li> Active devices: {devices.length} </li>
+					<li> Most used device: Living Room Plug </li>
+					<li> Energy trend: Slightly lower than yesterday </li>
+					<li> Energy score: 82 / 100 </li>
 				</div>
 			</div>
 
-			<div className="mt-10 flex flex-col md:flex-row gap-8 w-full">
-				{/* Two column layout: Left column for greeting and device previews. Right column for daily target and actions */}
-
-				{/* Left Column */}
-				<div className="w-full md:w-2/3 flex flex-col gap-6">
-
-					{/* Plugs Box */}
-					<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-						<SharedH2 text="Plugs" mode="light" />
-
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-
-							{/* Left Column - My Plugs */}
-							<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
-								<SharedH3 text="My Plugs" mode="light" />
-
-								<div className="flex flex-col gap-3 mt-2">
-									{devices.slice(0, 5).map((device) => (
-										<DevicePreview
-											key={device.device_id}
-											deviceId={device.device_id}
-											deviceName={device.device_name}
-											deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
-											currUsage={0}
-											totalUsage={0}
-											redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
-										/>
-									))}
-								</div>
-							</div>
-
-							{/* Embedded Right Column - My Friend's Plugs*/}
-							<div className="border border-gray-300 rounded-lg p-3 bg-sky-100">
-								<SharedH3 text="My Friend's Plugs" mode="light" />
-
-								<div className="flex flex-col gap-3">
-									{devices.slice(0, 5).map((device) => (
-										<DevicePreview
-											key={device.device_id}
-											deviceId={device.device_id}
-											deviceName={device.device_name}
-											deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
-											currUsage={0}
-											totalUsage={0}
-											redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
-										/>
-									))}
-								</div>
-							</div>
-						</div>
-
-						<div className="mt-6">
-							<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
-						</div>
-					</div>
+			{/* Devices Box */}
+			<div className="border border-gray-300 rounded-lg p-3 bg-stone-100">
+				<SharedH2 text="Most Used Devices" mode="light" />
+				<div className="flex flex-col gap-3 mt-2">
+					{devices.slice(0, 4).map((device) => (
+						<DevicePreview
+							key={device.device_id}
+							deviceId={device.device_id}
+							deviceName={device.device_name}
+							deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
+							currUsage={0}
+							totalUsage={0}
+							redirectOnClick={() => {}}
+						/>
+					))}
 				</div>
 
-
-				{/* Right Column */}
-				<div className="w-full md:w-1/3 flex flex-col gap-6">
-
-					{/* Action Buttons */}
-					<div className="flex flex-col gap-4">
-						<BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
-						<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
-						<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
-						<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
-						<BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
-					</div>
-
-					{/* Categories (Commented Out) */}
-
-					{/* <div className="flex flex-row justify-center gap-x-3">
-						<Category
-							displayText="Lightning"
-							imageFilePath="/images/lightning.png"
-							size="big"
-							onPress={() => console.log('Lightning pressed')}
-							accessibilityLabel={""}
-							testID={""}
-							style={undefined}
-						/>
-
-						<Category
-							displayText="Fans"
-							imageFilePath="/images/fan.png"
-							size="small"
-							onPress={() => console.log('Fans pressed')}
-							accessibilityLabel={""}
-							testID={""}
-							style={undefined}
-						/>
-
-						<Category
-							displayText="Heater"
-							imageFilePath="/images/heater.png"
-							size="small"
-							onPress={() => console.log('Heater pressed')}
-							accessibilityLabel={""}
-							testID={""}
-							style={undefined}
-						/>
-					</div> */}
+				<div className="mt-6">
+					<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
-
