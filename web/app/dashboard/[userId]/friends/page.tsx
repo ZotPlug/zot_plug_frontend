@@ -1,13 +1,8 @@
 'use client'
-import { useParams } from "next/navigation"
-import { useRouter } from 'next/navigation'
 import SharedH1 from "ui/info/text/shared_h1"
 import SharedH2 from "ui/info/text/shared_h2"
 
 export default function Friends() {
-	const { userId } = useParams<{ userId: string }>();
-    const router = useRouter()
-
 	return (
 		<>
 			{/* Header */}
