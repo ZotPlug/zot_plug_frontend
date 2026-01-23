@@ -1,19 +1,15 @@
 // web/app/dashboard/[userId]/page.tsx
 'use client'
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import {View, StyleSheet, ScrollView } from 'react-native'
-import LinearGradient from "react-native-linear-gradient"
 
 import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
-import { Colors } from "ui/colors"
 
 import SharedH1 from "ui/info/text/shared_h1"
 import SharedH2 from "ui/info/text/shared_h2"
 import SharedH3 from "ui/info/text/shared_h3"
-import BasicButton from "ui/buttons/basic_button"
 import AddDevice from "ui/addDevice/comp"
-import DailyTarget from "ui/dailyTarget/comp"
 import DevicePreview from "ui/devicePreview/comp"
 
 import { UserDeviceInfo } from "ui/types"
@@ -22,9 +18,7 @@ export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
 	const [user, setUser] = useState<{ firstname: string; lastname: string; userId: string } | null>(null)
 	const [devices, setDevices] = useState<UserDeviceInfo[]>([])
-	const [dailyTarget] = useState<{ currProgress: number, maxProgress: number }>({ currProgress: 350, maxProgress: 1000 })
 	const [modalMessage, SetModalMessage] = useState<{ ok: boolean, message: string } | null>(null)
-	const router = useRouter()
 
 	async function addDevice(params: { deviceName: string }) {
 		const res = await add_device({ userId: parseInt(userId), deviceName: params.deviceName })
@@ -53,151 +47,55 @@ export default function Dashboard() {
 	}, [userId])
 
 	return (
-		<LinearGradient 
-			start={{ x: 0, y: 0 }}
-			end={{ x: 1, y: 1 }}
-			colors={[Colors.BGrad1, Colors.BGrad2]}
-			style={styles.gradient}
-		>
+		<>
+			{/* Header */}
+			<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" />
 
-			<div className="min-h-screen w-full px-6 pt-16">
-
-				<div className="flex flex-col md:flex-row gap-8 w-full">
-
-					{/* Left Column - Navigation Bar */}
-					<div className="w-full md:w-1/4 flex flex-col gap-6">
-						<DailyTarget
-							currProgress={dailyTarget.currProgress}
-							maxProgress={dailyTarget.maxProgress}
-						/>
-						<BasicButton text='Dashboard' onPress={() => router.push(`/dashboard/${userId}`)} />
-						<BasicButton text='Plugs' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
-						<BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
-						<BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
-						<BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
-						<BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
+			{/* Usage Overview */}
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+				{['Daily', 'Weekly', 'Monthly'].map((label => (
+					<div key={label} className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
+						<SharedH2 text={`${label} Usage`} mode="light" />
+						<SharedH3 text={`Total Consumption: ${Math.floor(Math.random() * 100)} kWh`} mode="light" />
 					</div>
-
-					{/* Right Column - Main Dashboard Content */}
-					<div className="w-full md:w-3/4 flex flex-col gap-6">
-						{/* Header Section */}
-						<div className="w-full flex justify-between items-center mb-8">
-							<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" size="large" />
-						</div>
-
-						{/* Usage Overview */}
-						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-							{/* Daily Usage */}
-							<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-								<SharedH3 text="Daily Usage" mode="light" />
-								<p className="mt-4 text-gray-600 text-sm">
-									3.5 kWh used today
-								</p>
-								<p className="text-xs text-gray-500 mt-1">
-									Last updated: just now
-								</p>
-							</div>
-
-							{/* Weekly Usage */}
-							<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-								<SharedH3 text="Weekly Usage" mode="light" />
-								<p className="mt-4 text-gray-600 text-sm">
-									24.1 kWh this week
-								</p>
-								<p className="text-xs text-gray-500 mt-1">
-									Mon – Sun
-								</p>
-							</div>
-
-							{/* Monthly Usage */}
-							<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-								<SharedH3 text="Monthly Usage" mode="light" />
-								<p className="mt-4 text-gray-600 text-sm">
-									102.7 kWh this month
-								</p>
-								<p className="text-xs text-gray-500 mt-1">
-									Estimated bill: $18.42
-								</p>
-							</div>
-						</div>
-
-						{/* Quick Summary */}
-						<div className="bg-stone-100 border border-gray-300 rounded-lg p-5 shadow-md">
-							<SharedH3 text="Quick Summary" mode="light" />
-
-							<ul className="mt-4 space-y-2 text-sm text-gray-700">
-								<li> Active devices: {devices.length} </li>
-								<li> Most used device: Living Room Plug </li>
-								<li> Energy trend: Slightly lower than yesterday </li>
-								<li> Energy score: 82 / 100 </li>
-							</ul>
-						</div>
-
-						{/* My Plugs Box */}
-						<div className="border border-gray-300 rounded-lg p-3 bg-stone-100">
-							<SharedH3 text="Most Used Devices" mode="light" />
-							<div className="flex flex-col gap-3 mt-2">
-								{devices.slice(0, 5).map((device) => (
-									<DevicePreview
-										key={device.device_id}
-										deviceId={device.device_id}
-										deviceName={device.device_name}
-										deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
-										currUsage={0}
-										totalUsage={0}
-										redirectOnClick={(id: string) => router.push(`/dashboard/${userId}/device/${id}`)}
-									/>
-								))}
-							</div>
-
-							<div className="mt-6">
-								<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
-							</div>
-						</div>
-						</div>
-					</div>
+				)))}
 			</div>
-		</LinearGradient>
+
+			{/* Quick Summary */}
+			<div className="bg-stone-100 border border-gray-300 rounded-lg p-5 shadow-md">
+				<SharedH2 text="Quick Summary" mode="light" />
+				<div className="mt-4 space-y-2 text-sm text-gray-700">	
+					<SharedH3 text={`Active Devices: ${devices.length}`} mode="light" />
+					<SharedH3 text={`Most Used Device: Living Room Plug`} mode="light" />
+					<SharedH3 text={`Energy Trend: Slightly lower than yesterday`} mode="light" />
+					<SharedH3 text={`Energy Score: 82 / 100`} mode="light" />
+				</div>
+			</div>
+
+			{/* Devices Box */}
+			<div className="border border-gray-300 rounded-lg p-3 bg-stone-100">
+				<SharedH2 text="Most Used Devices" mode="light" />
+				<div className="flex flex-col gap-3 mt-2">
+					{devices.slice(0, 4).map((device) => (
+						<DevicePreview
+							key={device.device_id}
+							deviceId={device.device_id}
+							deviceName={device.device_name}
+							deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
+							currUsage={0}
+							totalUsage={0}
+							redirectOnClick={() => {}}
+						/>
+					))}
+				</div>
+
+				<div className="mt-6">
+					<AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
+				</div>
+			</div>
+		</>
 	)
 }
-
-const styles = StyleSheet.create({
-	gradient: {
-        height: '100dvh',
-	},
-	container: {
-        marginTop: 55,
-		padding: 16,
-		width: '100%',
-		alignSelf: 'center',
-        alignItems: 'center',
-        flex: 1
-	},
-	text: {
-		textAlign: 'center',
-		fontSize: 12,
-		lineHeight: 24,
-		color: "red",
-	},
-	col: {
-		flexDirection: 'column', // row doesn't work on mobile, needs to be col
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-	textInput: {
-		padding: 16,
-		backgroundColor: 'white',
-		color: 'black',
-		borderRadius: 8,
-		width: '100%',
-		marginVertical: 8,
-	},
-	button: {
-		borderRadius: 8,
-		width: '100%',
-		marginVertical: 8,
-	},
-})
 
 
 // <div className="min-h-screen w-full bg-sky-200 p-6">

@@ -4,7 +4,7 @@ export function isNumber(char: string): boolean { return /^[0-9]$/.test(char) }
 export function isSpecial(char: string): boolean { return /^[^a-zA-Z0-9]$/.test(char) }
 export function isValidEmail(email: string): boolean { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) }
 
-export const temp_allow_email = ["kyle@example.xyz", "chris@example.xyz", "prabhav@example.xyz", "ustin@example.xyz", "jay@example.xyz"]
+export const temp_allow_email = ["kyle@example.xyz", "chris@example.xyz", "prabhav@example.xyz", "justin@example.xyz", "jay@example.xyz"]
 
 function check_len(params: signUpInfo): string | null {
 	for (const key of Object.keys(params) as Array<keyof typeof params>) {

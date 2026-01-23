@@ -11,23 +11,34 @@ export default function PowerUsage() {
     const router = useRouter()
 
 	return (
-		<div className="min-h-screen w-full bg-sky-200 p-6">
+		<>
+			{/* Header */}
+			<SharedH1 text={'Power Usage'} mode="light" />
+		
+			{/* Content Placeholder */}
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-			
-				<div className="mt-10 pb-6 flex flex-row w-full">
-					<div className="w-full flex justify-start">
-						<SharedH1 text="Power Usage Overview" mode="light"/>
-					</div>
-					
-					<div className="w-full flex justify-end">
-						<BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`) } />
-					</div>
-				</div>
-
-					<SharedH3 text="Power Usage Content to come..." mode="light"/>
-				
+					<SharedH3 text="Power Usage Content to come..." mode="light" />
 			</div>
-		</div>
+		</>
 	)
 }
 
+// return (
+// 	<div className="min-h-screen w-full bg-sky-200 p-6">
+// 		<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
+		
+// 			<div className="mt-10 pb-6 flex flex-row w-full">
+// 				<div className="w-full flex justify-start">
+// 					<SharedH1 text="Power Usage Overview" mode="light"/>
+// 				</div>
+				
+// 				<div className="w-full flex justify-end">
+// 					<BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`) } />
+// 				</div>
+// 			</div>
+
+// 				<SharedH3 text="Power Usage Content to come..." mode="light"/>
+			
+// 		</div>
+// 	</div>
+// )
