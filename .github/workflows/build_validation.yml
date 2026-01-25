@@ -1,8 +1,6 @@
-name: Frontend PR Checks
+name: Frontend PR Check
 
 on:
-  push:
-    branches: [new_val_action]
   pull_request:
     branches: [main]
 
