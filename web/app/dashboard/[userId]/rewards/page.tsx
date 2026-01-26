@@ -1,50 +1,17 @@
-// web/app/dashboard/%5BuserId%5D/rewards/page.tsx
 'use client'
-import { useParams } from "next/navigation"
-import BasicButton from "ui/buttons/basic_button"
-import { useRouter } from 'next/navigation'
 import SharedH1 from "ui/info/text/shared_h1"
 import SharedH2 from "ui/info/text/shared_h2"
-import SharedH3 from "ui/info/text/shared_h3";
 
 export default function Rewards() {
-	const { userId } = useParams<{ userId: string }>();
-    const router = useRouter()
-
 	return (
-		<div className="min-h-screen w-full bg-sky-200 p-6">
-			
+		<>
+			{/* Header */}
+			<SharedH1 text={'Rewards'} mode="light" />
+
+			{/* Rewards Content */}
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-				<div className="mt-10 pb-6 flex flex-row w-full">
-					<div className="w-full flex justify-start">
-						<SharedH1 text="Rewards" mode="light"/>
-					</div>
-					
-					<div className="w-full flex justify-end">
-						<BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}`) } />
-					</div>
-				</div>
+					<SharedH2 text="List of Rewards" mode="light" />
 			</div>
-
-			<div className='mt-10 flex flex-col md:flex-row gap-8 w-full'>
-				
-				{/* Left Column - List of Rewards */}
-				<div className="w-full md:w-1/2 flex flex-col gap-6">
-					<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-						<SharedH2 text="List of Rewards" mode="light" />
-					</div>
-				</div>
-
-				{/* Right Column - Your Points*/}
-				<div className="w-full md:w-1/2 flex flex-col gap-6">
-					<div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-						<SharedH2 text="Your Points" mode="light" />
-						<SharedH3 text="(Coming Soon - Progress Bar)" mode="light" />
-						
-					</div>
-				</div>
-			</div>
-		</div>
+		</>
 	)
 }
-
