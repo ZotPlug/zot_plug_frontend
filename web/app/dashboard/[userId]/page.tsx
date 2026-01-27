@@ -11,6 +11,7 @@ import AddDevice from "ui/addDevice/comp"
 import DevicePreview from "ui/devicePreview/comp"
 
 import { UserDeviceInfo } from "ui/types"
+import { useQueries, useQuery } from "@tanstack/react-query"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
@@ -27,6 +28,19 @@ export default function Dashboard() {
 		}
 	}
 
+    const [userInfoQuery, userDeviceQuery] = useQueries({
+        queries: [
+            {
+                queryKey: ['userInfo'],
+                queryFn: async () => fetch_user_by_id({ userId })
+            },
+            {
+                queryKey: ['userDevices'],
+                queryFn: async () => get_all_devices_by_userId({ userId })
+            }
+        ]
+    })
+
 	async function fetchUserInfo() {
 		const res = await fetch_user_by_id({ userId })
 		if (!res.ok) SetModalMessage({ ok: false, message: res.error! })
@@ -40,9 +54,21 @@ export default function Dashboard() {
 	}
 
 	useEffect(() => {
-		fetchUserInfo()
-		fetchUserDevices()
-	}, [userId])
+        if (!userInfoQuery.isLoading) {
+            if (userInfoQuery.data == undefined || !userInfoQuery.data.ok) {
+                SetModalMessage({ ok: false, message: "User info query error" })
+            } else if (userInfoQuery.data.value) {
+                setUser(userInfoQuery.data.value)
+            }
+        }
+        if (!userDeviceQuery.isLoading) {
+            if (userDeviceQuery.data == undefined || !userDeviceQuery.data.ok) {
+                SetModalMessage({ ok: false, message: "User device query error" })
+            } else if (userDeviceQuery.data.value) {
+                setDevices(userDeviceQuery.data.value)
+            }
+        }}, [userInfoQuery.data, userInfoQuery.isLoading, userDeviceQuery.data, userDeviceQuery.isLoading])
+
 
 	return (
 		<>
