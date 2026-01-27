@@ -11,7 +11,6 @@ import AddDevice from "ui/addDevice/comp"
 import DevicePreview from "ui/devicePreview/comp"
 
 import { UserDeviceInfo } from "ui/types"
-import imagePaths from "@/app/imagePaths"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
