@@ -1,24 +1,23 @@
 // web/app/dashboard/[userId]/layout.tsx
+
 'use client'
-
-import {  ReactNode, useState } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { ReactNode } from "react"
+import { StyleSheet } from 'react-native'
 import LinearGradient from "react-native-linear-gradient"
-import { StyleSheet } from "react-native"
 
+import { DeviceType } from "ui/types"
+import { useResponsiveLayout } from "ui/window_utils"
 import { Colors } from "ui/colors"
-import BasicButton from "ui/buttons/basic_button"
-import DailyTarget from "ui/dailyTarget/comp"
 
-export default function DashboardLayout({ 
+import NavBar from "@/app/navbar/page"
+
+export default function DashboardLayout({
     children,
-}: { 
-    children: ReactNode 
+}: {
+    children: ReactNode
 }) {
-	const { userId } = useParams<{ userId: string }>()
-    const [dailyTarget] = useState<{ currProgress: number, maxProgress: number }>({ currProgress: 350, maxProgress: 1000 })
-    const router = useRouter()
-
+    const layout: DeviceType = useResponsiveLayout()
+    
     return (
         <LinearGradient
             start={{ x: 0, y: 0 }}
@@ -26,68 +25,67 @@ export default function DashboardLayout({
             colors={[Colors.BGrad1, Colors.BGrad2]}
             style={styles.gradient}
         >
-            
-            <div className="min-h-screen w-full px-6 pt-16">
-                <div className="flex flex-col md:flex-row gap-8 w-full">
-                
-                    {/* Left Navigation Bar (persistent)*/}
-                    <aside className="w-full md:w-1/4 flex flex-col gap-6">
-                        <DailyTarget
-                            currProgress={dailyTarget.currProgress}
-                            maxProgress={dailyTarget.maxProgress}
-                        />
-                        <BasicButton text='Dashboard' onPress={() => router.push(`/dashboard/${userId}`)} />
-                        <BasicButton text='Devices' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
-                        <BasicButton text='Power Usage' onPress={() => router.push(`/dashboard/${userId}/power_usage`)} />
-                        <BasicButton text='Rewards' onPress={() => router.push(`/dashboard/${userId}/rewards`)} />
-                        <BasicButton text='Friends' onPress={() => router.push(`/dashboard/${userId}/friends`)} />
-                        <BasicButton text='Settings' onPress={() => router.push(`/dashboard/${userId}/settings`)} />
-                    </aside>
+            <div style={styles.pageWrapper}>
+                {layout == DeviceType.Desktop ? (
+                    <div style={styles.desktopRow}>
+                        {/* Left Navbar */}
+                        <aside style={styles.navbarContainer}>
+                            <NavBar currentProgress={50} maxProgress={100} />
+                        </aside>
 
-                    {/* Right Content (changes per route) */}
-                    <main className="w-full md:w-3/4 flex flex-col gap-6">
+                        {/* Right Content (changes per route) */}
+                        <main style={styles.mainContainer}>
+                            {children}
+                        </main>
+                    </div>
+                ) : (
+                    <div style={styles.mobileContainer}>
                         {children}
-                    </main>
-                </div>
+                    </div>
+                )}
             </div>
         </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
-	gradient: {
-        height: '100dvh',
-	},
-	container: {
-        marginTop: 55,
-		padding: 16,
-		width: '100%',
-		alignSelf: 'center',
-        alignItems: 'center',
-        flex: 1
-	},
-	text: {
-		textAlign: 'center',
-		fontSize: 12,
-		lineHeight: 24,
-		color: "red",
-	},
-	col: {
-		flexDirection: 'column', // row doesn't work on mobile, needs to be col
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-	textInput: {
-		padding: 16,
-		backgroundColor: 'white',
-		color: 'black',
-		borderRadius: 8,
-		width: '100%',
-		marginVertical: 8,
-	},
-	button: {
-		borderRadius: 8,
-		width: '100%',
-		marginVertical: 8,
-	},
+    gradient: {
+        minHeight: '100vh',
+        width: '100%',
+    },
+    pageWrapper: {
+        width: '100%',
+        height: '100%',
+    },
+    desktopRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        minHeight: '100vh',
+        gap: 32,                    // gap-8
+    },
+    navbarContainer: {
+        width: 375,                 // md:w-1/4
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 24,                    // gap-6
+    },
+    mainContainer: {
+        flex: 1,                    // md:w-3/4
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 24,                    // gap-6
+        width: '100%',
+        minHeight: '100vh',
+        marginRight: 32,
+        marginTop: 96,
+        marginBottom: 24,
+    },
+    mobileContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        gap: 24,                    // gap-6
+    },
 })

@@ -5,7 +5,7 @@ import SharedH2 from "../info/text/shared_h2"
 import SharedH3 from "../info/text/shared_h3"
 import SharedH4 from "../info/text/shared_h4"
 import SharedH5 from "../info/text/shared_h5"
-import SharedHr from "../info/text/shared_hr"
+import SharedHr from "../info/shared_hr"
 
 export default function DeviceReadings({ 
     voltage, 

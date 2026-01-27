@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ReactQueryProvider } from '@/lib/react-query-provider';
 import ClientApplication from './clientApplication';
 import "./globals.css";
+import { BrowserRouter } from "react-router-dom";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
       >
         <ClientApplication>
           <ReactQueryProvider>
-            {children}
+            <BrowserRouter>
+              {children}
+            </BrowserRouter>
           </ReactQueryProvider>
         </ClientApplication>
       </body>

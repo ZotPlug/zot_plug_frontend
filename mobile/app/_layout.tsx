@@ -23,11 +23,11 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="auth" options={{ headerShown: false }} />
-          <Stack.Screen name="dashboard/[userId]" options={{ headerShown: true }} />
+          <Stack.Screen name="dashboard/[userId]" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
 
-          <Stack.Screen name="dashboard/[userId]/plugs" options={{ headerShown: true }} />
+          <Stack.Screen name="dashboard/[userId]/devices" options={{ headerShown: true }} />
           <Stack.Screen name="dashboard/[userId]/power_usage" options={{ headerShown: true }} />
           <Stack.Screen name="dashboard/[userId]/rewards" options={{ headerShown: true }} />
           <Stack.Screen name="dashboard/[userId]/friends" options={{ headerShown: true }} />

@@ -5,6 +5,7 @@ import Button_1 from '../buttons/button_1'
 import { useResponsiveLayout } from "../window_utils"
 import LinearGradient from 'react-native-linear-gradient'
 import { Colors } from '../colors'
+import PlatformImage from '../info/platform_image'
 
 type Welcome = {
 	onLogin?: () => unknown | Promise<unknown>,
@@ -15,37 +16,6 @@ type Welcome = {
 export default function Welcome({ onLogin, onSignUp, imagePaths }: Welcome) {
     const layout: DeviceType = useResponsiveLayout()
 
-    let logoSize = 200
-    switch (layout) {
-        case DeviceType.Mobile:
-            logoSize = 200
-            break
-        case DeviceType.Tablet:
-            logoSize = 280
-            break
-        case DeviceType.Desktop:
-            logoSize = 280
-            break
-    }
-
-    let logoImage
-    if (Platform.OS === 'web') {
-        logoImage = 
-            <img 
-                src={imagePaths["welcome_logo"]}
-                width={logoSize}
-                height={logoSize}
-                style={styles.webImage}
-                alt={"Zotplug Logo"} />
-    } else {
-        logoImage =
-            <RNImage 
-                source={imagePaths["welcome_logo"]}
-                style={[styles.mobileImage]} 
-                resizeMode="contain"
-            />
-    }
-
     return (
         <>
             <LinearGradient start={{x: 0, y: 0}} 
@@ -55,7 +25,11 @@ export default function Welcome({ onLogin, onSignUp, imagePaths }: Welcome) {
                 <View style={styles.centerChildren}>
                     <Shared_H1 text="Welcome to"/>
                     <View style={styles.logoSpacer}></View>
-                    {logoImage}
+                    <PlatformImage 
+                        imagePath={imagePaths["welcome_logo"]} 
+                        mobileWidth={200} mobileHeight={200}
+                        tabletWidth={280} tabletHeight={280}
+                        desktopWidth={280} desktopHeight={280}/>
                     <View style={styles.logoButtonsSpacer}></View>
                     <View style={layout === DeviceType.Mobile ? styles.buttonsAlignVertical : styles.buttonsAlignHorizontal}>
                         <Button_1 text="Login" onPress={onLogin}/>

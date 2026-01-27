@@ -10,6 +10,7 @@ import BasicButton from 'ui/buttons/basic_button'
 import Category from 'ui/components/category'
 import SharedH1 from "ui/info/text/shared_h1"
 import AddDevice from "ui/addDevice/comp"
+import imagePaths from "../imagePaths"
 
 export default function Dashboard() {
   const { userId } = useLocalSearchParams();
@@ -40,7 +41,7 @@ export default function Dashboard() {
   }
 
   async function openPlugs() {
-    router.push(`/dashboard/${userId}/plugs`)
+    router.push(`/dashboard/${userId}/devices`)
   }
 
   async function openPowerUsage() {
@@ -70,7 +71,7 @@ export default function Dashboard() {
       <SharedH1 text={'Dashboard'} />
       <Text> {`Elllo Ello, Unique Dash of user ${userId} `}</Text>
       {/* <BasicButton onPress={test_token} text={"Get All Devices"} /> */}
-      <DailyTarget currProgress={5} maxProgress={30} />
+      <DailyTarget currProgress={5} maxProgress={30} imagePaths={imagePaths} />
       <BasicButton onPress={test_val} text={"Validate Token"} />
 
       <Text>Pages</Text>

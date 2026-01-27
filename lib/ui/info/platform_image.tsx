@@ -6,7 +6,7 @@ type PlatformImage = {
     imagePath: string,
     width?: number,
     height?: number,
-    mobileWidth: number,
+    mobileWidth?: number,
     mobileHeight?: number,
     tabletWidth?: number,
     tabletHeight?: number,
@@ -52,6 +52,8 @@ export default function PlatformImage({ imagePath, width, height, mobileWidth, m
         imgHeight = height
     }
 
+    // TODO: Setup something like this so you don't have to override the width stuff when adding a custom style
+    // style={[styles.progress, { width: `${percent}%` }]}
     const styles = StyleSheet.create({
         defaultStyle: {
             width: imgWidth,

@@ -20,4 +20,13 @@ export const Colors = {
 
     BGrad1: '#EAF6FF',
     BGrad2: '#DDE2FA',
+
+    BCGrad1: '#E3EFFF',
+    BCGrad2: '#86B6F4',
+
+    GGrad1: '#F3F3F3',
+    GGrad2: '#D7D7D7',
+    
+    GrGrad1: '#78FFBC',
+    GrGrad2: '#1FDBD7'
 }

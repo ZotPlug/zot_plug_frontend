@@ -38,25 +38,27 @@ export default function AuthContent() {
         <div className="flex flex-col justify-center items-center h-screen"
             style={styles.container}>
 
-        {mode === 'login' ? (
-            <>
-            <LoginComp 
-                onSubmit={try_login} 
-                onBack={() => router.back()}
-                errorText={error} 
-                setErrorText={setError} 
-                imagePaths={imagePaths}/>
-            </>
-        ) : (
-            <>
-            <SignUpComp 
-                onSubmit={try_signup} 
-                onBack={() => router.back()}
-                errorText={error} 
-                setErrorText={setError} 
-                imagePaths={imagePaths} />
-            </>
-        )}
+            <form style={styles.formContainer}>
+                {mode === 'login' ? (
+                    <>
+                    <LoginComp 
+                        onSubmit={try_login} 
+                        onBack={() => router.back()}
+                        errorText={error} 
+                        setErrorText={setError} 
+                        imagePaths={imagePaths}/>
+                    </>
+                ) : (
+                    <>
+                    <SignUpComp 
+                        onSubmit={try_signup} 
+                        onBack={() => router.back()}
+                        errorText={error} 
+                        setErrorText={setError} 
+                        imagePaths={imagePaths} />
+                    </>
+                )}
+            </form>
         </div>
     </LinearGradient>
   )
@@ -72,8 +74,17 @@ const styles = StyleSheet.create({
 		width: '100%',
 		alignSelf: 'center',
         alignItems: 'center',
-        flex: 1
+        justifyContent: 'center',
+        display: 'flex'
 	},
+    formContainer: {
+		width: '100%',
+        height: '100%',
+		alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex'
+    },
 	text: {
 		textAlign: 'center',
 		fontSize: 12,
@@ -81,7 +92,7 @@ const styles = StyleSheet.create({
 		color: "red",
 	},
 	col: {
-		flexDirection: 'column', // row doesn't work on mobile, needs to be col
+		flexDirection: 'column',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},

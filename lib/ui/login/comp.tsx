@@ -46,6 +46,7 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, i
                 <Text style={styles.entryFieldHeader}>Password</Text>
                 <TextInput
                     value={pass}
+                    secureTextEntry={true}
                     onChangeText={setPass}
                     onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText, email, pass )}
                     placeholder="Type here"
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
 		paddingRight: 16,
 		width: '100%',
 		maxWidth: 500,
-		alignSelf: 'center',
+		alignSelf: 'flex-start',
         flex: 1
 	},
     form: {
