@@ -10,7 +10,6 @@ import { StyleSheet, View } from 'react-native';
 import LinearGradient from "react-native-web-linear-gradient"
 import { useEffect, useState } from 'react'
 import { Colors } from "ui/colors"
-import SharedHr from "ui/info/shared_hr"
 
 type NavBar = {
     currentProgress: number,
