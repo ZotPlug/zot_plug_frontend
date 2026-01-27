@@ -17,7 +17,6 @@ export default function DashboardLayout({
     children: ReactNode
 }) {
     const layout: DeviceType = useResponsiveLayout()
-    console.log(layout)
     
     return (
         <LinearGradient
