@@ -11,7 +11,7 @@ import AddDevice from "ui/addDevice/comp"
 import DevicePreview from "ui/devicePreview/comp"
 
 import { UserDeviceInfo } from "ui/types"
-import { useQueries, useQuery } from "@tanstack/react-query"
+import { useQueries } from "@tanstack/react-query"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
@@ -40,12 +40,6 @@ export default function Dashboard() {
             }
         ]
     })
-
-	async function fetchUserInfo() {
-		const res = await fetch_user_by_id({ userId })
-		if (!res.ok) SetModalMessage({ ok: false, message: res.error! })
-		else setUser(res.value)
-	}
 
 	async function fetchUserDevices() {
 		const res = await get_all_devices_by_userId({ userId })
