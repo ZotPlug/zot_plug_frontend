@@ -12,34 +12,14 @@ export default function DevicePreview({
     deviceId,
     currUsage, 
     totalUsage,
-    redirectOnClick
+    redirectOnClick,
 }: devicePreviewProps) {
-
-    const noImagePath: string = '/images/heater.png'
 
     // TODO: Get rid of all of this old image logic
 
-    if (deviceImage === '') {
-        //const noImagePath: string = '/images/ZotplugLogo_NoText_NoBackground.png'
-        const noImagePath: string = '/images/heater.png'
-        deviceImage = noImagePath
-    }
-    const rnSource = typeof deviceImage === 'string' ? { uri: deviceImage } : (deviceImage as any);
+    const noImagePath: string = '/images/device_icon.png'
+    const imagePath = (deviceImage === '') ? noImagePath : deviceImage
 
-
-
-    const image = (Platform.OS === 'web' ? (
-        <img src={deviceImage as string}
-            alt={deviceName as string}
-            style={styles.deviceImage} />
-    ) : (
-        <RNImage 
-            source={rnSource as any}
-            style={[styles.deviceImage]} 
-            resizeMode="contain"
-        />
-    ))
-    
     // We pass redirectOnClick as a component function parameter because routing
     // logic is different on mobile and web, and requires different router 
     // libraries.
@@ -53,8 +33,10 @@ export default function DevicePreview({
                 
                 <Text style={styles.deviceName}>{deviceName}</Text>
 
-                <View style={styles.imagePlugBorder}>
-                    <PlatformImage width={60} height={48} imagePath={noImagePath} />
+                <View style={styles.imageContainer}>
+                    <View style={styles.imagePlugBorder}>
+                        <PlatformImage width={60} height={48} imagePath={imagePath} style={styles.deviceImage} />
+                    </View>
                 </View>
 
                 <View style={styles.progressBar}>
@@ -90,14 +72,31 @@ const styles = StyleSheet.create({
         flexShrink: 1,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
     },
-    deviceImage: {
-        height: '100%',
+    imageContainer: {
         width: '100%',
-        maxWidth: 64,
-        maxHeight: 64,
+        display: 'flex',
+        alignChildren: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        filter: 'drop-shadow(0px 4px 4px rgba(0,0,0,0.25))'
+    },
+    deviceImage: {
+        width: '95%',
+        height: '93%',
+        objectFit: 'cover',
+        objectPosition: 'center',
+        resizeMode: 'contain',
+        alignSelf: 'center',
+        clipPath: 'ellipse(49% 65%)',
     },
     imagePlugBorder: {
-        alignSelf: 'center',
+        width: 62,
+        height: 48,
+        backgroundColor: Colors.S6,
+
+        display: 'flex',
+        justifyContent: 'center',
+        clipPath: 'ellipse(50% 65%)',
     },
     deviceDetails: {
         width: '85%',

@@ -23,14 +23,14 @@ export default function PowerUsagePage() {
     // the top level hook function Plugs()
     //
     async function openDeviceStats(deviceId: string, deviceName: string) {
-        router.push(`/dashboard/${userId}/plugs/${deviceId}/${deviceName}`)
+        router.push(`/dashboard/${userId}/devices/${deviceId}/${deviceName}`)
     }
 
     return (
         <View style={styles.container} className="justify-center items-center h-screen">
-            <SharedH1 text='Plugs' />
+            <SharedH1 text='Devices' />
             {isLoading ? (
-                <Text> Loading plug data... </Text>
+                <Text> Loading device data... </Text>
 
             ) : plugs && plugs.ok ? (
 
@@ -44,7 +44,7 @@ export default function PowerUsagePage() {
 
             ) : (
 
-                <Text> Error loading plugs </Text>
+                <Text> Error loading devices. </Text>
             )}
         </View>
     )

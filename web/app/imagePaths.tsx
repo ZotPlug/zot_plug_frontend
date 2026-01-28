@@ -23,6 +23,8 @@ export const imagePaths = {
     nav_settingsHover: '/images/settings_hover.svg',
     nav_logOut: '/images/leave.svg',
     nav_logOutHover: '/images/leave_hover.svg',
+
+    devices_preview: '/images/device_icon.png',
 }
 
 export default imagePaths
