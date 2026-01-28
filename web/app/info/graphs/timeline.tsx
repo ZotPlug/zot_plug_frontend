@@ -1,0 +1,39 @@
+import React from "react"
+import { JSX } from "react/jsx-runtime";
+import { VictoryChart, VictoryLine, VictoryTheme } from "victory"
+
+const series = [
+  {
+    name: "Canada",
+    data: [
+      3.9670002, 5.2650003, 6.201,
+      7.8010006, 9.694, 11.214001,
+      11.973001, 12.250001, 12.816001,
+      13.413001, 13.626961, 14.30356,
+      15.295461,
+    ],
+  },
+];
+
+export async function TimelineGraph() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryLine
+        data={series[0].data.map(
+          (d, i) => ({
+            x: i + 2010,
+            y: d,
+          }),
+        )}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<TimelineGraph />);
+
+function render(_arg0: JSX.Element) {
+    throw new Error("Function not implemented.");
+}
