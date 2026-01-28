@@ -1,5 +1,4 @@
 import React from "react"
-import { JSX } from "react/jsx-runtime";
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory"
 
 const series = [
@@ -14,6 +13,8 @@ const series = [
     ],
   },
 ];
+
+// Timeline of power consumption across X hours/days/weeks is a area (maybe line) graph
 
 export async function TimelineGraph() {
   return (
@@ -30,10 +31,4 @@ export async function TimelineGraph() {
       />
     </VictoryChart>
   );
-}
-
-render(<TimelineGraph />);
-
-function render(_arg0: JSX.Element) {
-    throw new Error("Function not implemented.");
 }

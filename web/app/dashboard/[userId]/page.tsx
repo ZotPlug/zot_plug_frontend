@@ -13,6 +13,9 @@ import DevicePreview from "ui/devicePreview/comp"
 import { UserDeviceInfo } from "ui/types"
 import { useQueries } from "@tanstack/react-query"
 
+import { MostUsedDevicesGraph } from "@/app/info/graphs/devices"
+import { TimelineGraph } from "@/app/info/graphs/timeline"
+
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
 	const [user, setUser] = useState<{ firstname: string; lastname: string; userId: string } | null>(null)
@@ -81,12 +84,10 @@ export default function Dashboard() {
 
 			{/* Quick Summary */}
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-5 shadow-md">
-				<SharedH2 text="Quick Summary" mode="light" />
+				<SharedH2 text="Quick Summary"/>
 				<div className="mt-4 space-y-2 text-sm text-gray-700">	
 					<li> Active devices: {devices.length} </li>
-					<li> Most used device: Living Room Plug </li>
-					<li> Energy trend: Slightly lower than yesterday </li>
-					<li> Energy score: 82 / 100 </li>
+
 				</div>
 			</div>
 

@@ -1,5 +1,4 @@
 import React from "react"
-import { JSX } from "react/jsx-runtime";
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory"
 
 const series = [
@@ -14,6 +13,8 @@ const series = [
     ],
   },
 ];
+
+// Most Used Devices Graph is a bar graph
 
 export async function MostUsedDevicesGraph() {
   return (
@@ -30,10 +31,4 @@ export async function MostUsedDevicesGraph() {
       />
     </VictoryChart>
   );
-}
-
-render(<MostUsedDevicesGraph />);
-
-function render(_arg0: JSX.Element) {
-    throw new Error("Function not implemented.");
 }
