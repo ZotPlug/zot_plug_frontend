@@ -13,8 +13,8 @@ import DevicePreview from "ui/devicePreview/comp"
 import { UserDeviceInfo } from "ui/types"
 import { useQueries } from "@tanstack/react-query"
 
-import { MostUsedDevicesGraph } from "@/app/info/graphs/devices"
-import { TimelineGraph } from "@/app/info/graphs/timeline"
+import MostUsedDevicesGraph from "@/app/info/graphs/devices"
+import TimelineGraph from "@/app/info/graphs/timeline"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
@@ -87,7 +87,8 @@ export default function Dashboard() {
 				<SharedH2 text="Quick Summary"/>
 				<div className="mt-4 space-y-2 text-sm text-gray-700">	
 					<li> Active devices: {devices.length} </li>
-
+					<MostUsedDevicesGraph></MostUsedDevicesGraph>
+					<TimelineGraph></TimelineGraph>
 				</div>
 			</div>
 

@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react"
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory"
 
@@ -16,7 +18,7 @@ const series = [
 
 // Timeline of power consumption across X hours/days/weeks is a area (maybe line) graph
 
-export async function TimelineGraph() {
+export function TimelineGraph() {
   return (
     <VictoryChart
       theme={VictoryTheme.clean}
@@ -32,3 +34,5 @@ export async function TimelineGraph() {
     </VictoryChart>
   );
 }
+
+export default TimelineGraph

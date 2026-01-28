@@ -1,5 +1,7 @@
+'use client'
+
 import React from "react"
-import { VictoryChart, VictoryLine, VictoryTheme } from "victory"
+import { VictoryBar, VictoryChart, VictoryTheme } from "victory"
 
 const series = [
   {
@@ -16,12 +18,12 @@ const series = [
 
 // Most Used Devices Graph is a bar graph
 
-export async function MostUsedDevicesGraph() {
+export function MostUsedDevicesGraph() {
   return (
     <VictoryChart
       theme={VictoryTheme.clean}
     >
-      <VictoryLine
+      <VictoryBar
         data={series[0].data.map(
           (d, i) => ({
             x: i + 2010,
@@ -32,3 +34,5 @@ export async function MostUsedDevicesGraph() {
     </VictoryChart>
   );
 }
+
+export default MostUsedDevicesGraph
