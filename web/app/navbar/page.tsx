@@ -30,7 +30,7 @@ enum CurrentPage {
  * Gets the page we're currently on.
  */
 function getCurrentPage(location: string) {
-    if (location.includes("/plugs")) {
+    if (location.includes("/devices")) {
         return CurrentPage.Devices
     }
     if (location.includes("/power_usage")) {

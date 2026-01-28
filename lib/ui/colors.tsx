@@ -7,6 +7,8 @@ export const Colors = {
     S2: '#969696',
     S3: '#C9C9C9',
     S4: '#E3E3E3',
+    S5: '#D9D9D9',
+    S6: '#9B9B9B',
     D1: '#000500',
     L1: '#EFEFEF',
     E1: '#1AAE9F',
@@ -28,5 +30,8 @@ export const Colors = {
     GGrad2: '#D7D7D7',
     
     GrGrad1: '#78FFBC',
-    GrGrad2: '#1FDBD7'
+    GrGrad2: '#1FDBD7',
+
+    BlGrad1: '#4D4D4D',
+    BlGrad2: '#828282',
 }
