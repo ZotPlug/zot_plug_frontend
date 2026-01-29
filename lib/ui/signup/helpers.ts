@@ -39,22 +39,23 @@ function check_password_req(params: signUpInfo, confirmPass: string): string | n
 	return null
 }
 
-export default function basic_filter_check(onSubmit: (params: signUpInfo) => void, setBasicErr: React.Dispatch<React.SetStateAction<string | null>>, params: signUpInfo, confirmPass: string): void {
+export default function basic_filter_check(onSubmit: (params: signUpInfo) => void, setBasicErr: React.Dispatch<React.SetStateAction<string | null>>, params: signUpInfo, confirmPass: string): boolean {
 
 	const len_res = check_len(params)
 	if (len_res) {
 		setBasicErr(len_res)
-		return
+		return false
 	}
 	const pass_req_res = check_password_req(params, confirmPass)
 	if (pass_req_res) {
 		setBasicErr(pass_req_res)
-		return
+		return false
 	} if (!isValidEmail(params.email)) {
 		setBasicErr("Invalid Email")
-		return
+		return false
 	}
 	setBasicErr(null)
 
 	onSubmit({ firstname: params.firstname, lastname: params.lastname, username: params.username, email: params.email, password: params.password })
+    return true
 }

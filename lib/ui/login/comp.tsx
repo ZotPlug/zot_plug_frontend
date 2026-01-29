@@ -1,27 +1,39 @@
 import { useState, useEffect } from 'react'
-import { TextInput, View, Text, StyleSheet } from 'react-native'
+import { ActivityIndicator, TextInput, View, Text, StyleSheet } from 'react-native'
 import { basicCreds, DeviceType, LoginCompParams } from '../types'
 import { useResponsiveLayout } from '../window_utils'
 import Header1 from '../headers/header1'
 import { Colors } from '../colors'
 import Button_1 from '../buttons/button_1'
 
-function basic_filter_check(onSubmit: (params: basicCreds) => void, setBasicErr: React.Dispatch<React.SetStateAction<string | null>>, email: string, pass: string) {
-	if (email.length === 0) setBasicErr("Email is empty")
-	else if (pass.length === 0) setBasicErr("Password is empty")
-	else onSubmit({ email, password: pass })
+function basic_filter_check(onSubmit: (params: basicCreds) => void, setBasicErr: React.Dispatch<React.SetStateAction<string | null>>, email: string, pass: string): boolean {
+	if (email.length === 0) { 
+        setBasicErr("Email is empty")
+        return false
+    }
+	else if (pass.length === 0) {
+        setBasicErr("Password is empty")
+        return false
+    }
+	else {
+        onSubmit({ email, password: pass })
+        return true
+    }
 }
 
-function submitOnEnter(event: Event, onSubmit: (params: basicCreds) => void, setErrorText: string, email: string, password: string) {
+function submitOnEnter(event: Event, onSubmit: (params: basicCreds) => void, setErrorText: string, email: string, password: string): boolean {
 	if (event.key === "Enter" || event.key === "NumpadEnter") {
 		event.preventDefault();
-        basic_filter_check(onSubmit, setErrorText, email, password,)
+        return basic_filter_check(onSubmit, setErrorText, email, password,)
 	}
+    return false
 }
 
 export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, imagePaths }: LoginCompParams) {
 	const [email, setEmail] = useState("")
 	const [pass, setPass] = useState("")
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const layout: DeviceType = useResponsiveLayout()
 
@@ -38,7 +50,7 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, i
                 <TextInput
                     value={email}
                     onChangeText={setEmail}
-                    onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText, email, pass )}
+                    onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText, email, pass ))}
                     placeholder="Type here"
                     editable={true}
                     style={styles.textInput}
@@ -48,15 +60,25 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, i
                     value={pass}
                     secureTextEntry={true}
                     onChangeText={setPass}
-                    onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText, email, pass )}
+                    onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText, email, pass ))}
                     placeholder="Type here"
                     editable={true}
                     style={styles.textInput}
                 />
             </View>
+
+            {isLoading ?
+                <ActivityIndicator 
+                    size="large" 
+                    style={styles.loadingSpinner}
+                    color={Colors.P1} />
+                :
+                <View/>
+            }
+
 			{errorText ? <Text style={styles.text}>{errorText}</Text> : null}
 
-            <Button_1 text="Login" onPress={() => basic_filter_check(onSubmit, setErrorText, email, pass,)}/>
+            <Button_1 text="Login" onPress={() => setIsLoading(basic_filter_check(onSubmit, setErrorText, email, pass,))}/>
         </View>
 	)
 }
@@ -91,6 +113,9 @@ const styles = StyleSheet.create({
 		lineHeight: 24,
 		color: "red",
 	},
+    loadingSpinner: {
+        marginBottom: 15
+    },
     entryFieldHeader: {
         color: Colors.S1,
         fontWeight: 700,

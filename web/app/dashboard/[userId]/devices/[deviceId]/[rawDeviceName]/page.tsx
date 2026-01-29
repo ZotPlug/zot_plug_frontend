@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { device_control } from "@/app/api_utils/api_actions";
 import { apiGetDeviceInfo, apiGetLatestDeviceReading } from "@/app/api_utils/api_device_actions";
 import DeviceControl from "ui/deviceControl/comp"
-import { DeviceControlReqs } from "ui/types";
+import { DeviceControlReqs, DeviceType } from "ui/types";
 import BasicButton from "ui/buttons/basic_button"
 import { useRouter } from 'next/navigation'
 import DeviceReadings from "ui/deviceReadings/comp"
@@ -13,6 +13,7 @@ import SharedH2 from "ui/info/text/shared_h2"
 import SharedH4 from "ui/info/text/shared_h4"
 import SharedH5 from "ui/info/text/shared_h5"
 import { StyleSheet } from "react-native"
+import { useResponsiveLayout } from "ui/window_utils";
 
 async function sendCommand(params: DeviceControlReqs) {
     const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
@@ -38,8 +39,8 @@ export default function DevicePage() {
         queryFn: async () => await apiGetDeviceInfo(parseInt(deviceId))
     })
 
-    // Update readings every 5s
-    const updateTime = 1000 * 5 
+    // Update readings every 8s
+    const updateTime = 1000 * 8 
 
     // Get device readings
     const { data: deviceReading } = useQuery({
@@ -47,14 +48,16 @@ export default function DevicePage() {
         queryFn: async () => await apiGetLatestDeviceReading(deviceName),
         refetchInterval: updateTime
     })
-    const loadingPageContent =
-        <div style={styles.verticalChildren}>
-            <SharedH1 text="Device Details" />
-            <SharedH5 text={`Loading device details for device ${deviceId}`} />
-        </div>
+
+    const layout: DeviceType = useResponsiveLayout()
 
     if (isLoadingDeviceInfo) {
-        return (loadingPageContent)
+        return (
+            <div style={styles.verticalChildren}>
+                <SharedH1 text="Device Details" />
+                <SharedH5 text={`Loading device details for device ${deviceId}`} />
+            </div>
+        )
     }
 
     if (deviceInfo?.ok) {
@@ -63,13 +66,26 @@ export default function DevicePage() {
         const currentVoltage = deviceReading?.ok ? deviceReading.value.voltage : -1;
         const currentCurrent = deviceReading?.ok ? deviceReading.value.current : -1;
 
-        const devicePageContent =
+        switch (layout) {
+            case DeviceType.Mobile:
+                //return <div>Mobile</div>
+                console.log("Mobile")
+                break
+            case DeviceType.Tablet:
+                console.log("Tablet")
+                break
+            case DeviceType.Desktop:
+                console.log("Desktop")
+                break
+        }
+
+        return (
             <div style={styles.verticalChildren}>
                 <SharedH1 text="Device Details" />
                 <SharedH4 text={`Name: ${deviceName}`} />
                 <SharedH4 text={`ID: ${deviceId}`} />
                 <SharedH4 text={`Status: ${deviceStatus}`} />
-                <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}/plugs`)} />
+                <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}/devices`)} />
                 <div>
                     <SharedH2 text='Statistics' />
                     <DeviceReadings voltage={currentVoltage} current={currentCurrent} />
@@ -85,8 +101,7 @@ export default function DevicePage() {
                     <SharedH2 text='Users' />
                 </div>
             </div>
-
-        return (devicePageContent)
+        )
     }
 }
 

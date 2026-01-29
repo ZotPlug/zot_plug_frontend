@@ -25,6 +25,8 @@ export const imagePaths = {
     nav_logOutHover: require('../assets/images/leave_hover.png'),
 
     devices_preview: require('../assets/images/device_icon.png'),
+    devices_preview2: require('../assets/images/device_icon2.png'),
+    devices_preview3: require('../assets/images/device_icon3.png'),
 }
 
 export default imagePaths

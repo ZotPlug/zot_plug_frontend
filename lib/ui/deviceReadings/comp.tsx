@@ -1,11 +1,11 @@
 import React from "react"
-import { Platform, Text, View, Image as RNImage, Pressable, StyleSheet, useColorScheme } from "react-native"
+import { Text, View, StyleSheet, } from "react-native"
 import { deviceReadingsProps } from "../types"
-import SharedH2 from "../info/text/shared_h2"
-import SharedH3 from "../info/text/shared_h3"
 import SharedH4 from "../info/text/shared_h4"
 import SharedH5 from "../info/text/shared_h5"
-import SharedHr from "../info/shared_hr"
+import SharedVr from "../info/shared_vr"
+import LinearGradient from "react-native-linear-gradient"
+import { Colors } from "../colors"
 
 export default function DeviceReadings({ 
     voltage, 
@@ -14,58 +14,60 @@ export default function DeviceReadings({
     
     // TODO: Find a standard way for doing this across components.
     // Maybe some kind of singleton with a color dictionary?
-    // Or maybe a standardized css file?
-    const darkModeBackgroundColor = 'darkslategray'
-    const lightModeBackgroundColor = 'white'
-
-    const colorScheme = useColorScheme()
-    const useDarkMode = (colorScheme === "dark")
-    
-    const backgroundColor = (useDarkMode ? darkModeBackgroundColor : lightModeBackgroundColor)
-    
-    const styles = StyleSheet.create({
-        container: {
-            margin: 10,
-            padding: 10,
-            backgroundColor: backgroundColor,
-        },
-        horizontalChildren: {
-            display: 'flex',
-            flexDirection: 'row',
-        },
-        centerChildren: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }
-    })
-    
+    // Or maybe a standardized css file? 
     
     // TODO: Handle unit conversion in scenarios where we need mA, micro A, etc.
-    const voltageValue = `${voltage.toFixed(2)} V`
-    const currentValue = `${current.toFixed(2)} A`
+    const voltageValue = `${voltage.toFixed(1)} V`
+    const currentValue = `${current.toFixed(1)} A`
 
     const voltageSection =
         <View style={styles.centerChildren}>
-            <SharedH4 text={voltageValue}/>
-            <SharedH5 text='Voltage'/>
+            <Text style={styles.reading} text={voltageValue}/>
+            <Text style={styles.readingDescription} text='Voltage'/>
         </View>
     
     const currentSection =
         <View style={styles.centerChildren}>
-            <SharedH4 text={currentValue}/>
-            <SharedH5 text='Current'/>
+            <Text text={currentValue}/>
+            <Text text='Current'/>
         </View>
 
     return (
-        <View style={styles.container}>
-            <SharedH3 text={"Device Readings"} />
-            <View style={styles.horizontalChildren}>
-                {voltageSection}
-                <SharedHr />               
-                {currentSection}
-            </View>
-        </View>
+        <LinearGradient
+            start={{x: 0, y: 0.1}} 
+            end={{x: 0.8, y: 0.9}} 
+            colors={[Colors.BlGrad1, Colors.BlGrad2]} 
+            style={styles.container}>
+
+            {voltageSection}
+            <SharedVr />               
+            {currentSection}
+
+        </LinearGradient>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 10,
+        display: 'grid',
+        gridTemplateColumns: '3fr 1fr 3fr',
+        gap: 5,
+    },
+    reading: {
+        color: 'white'
+    },
+    readingDescription: {
+        color: 'white'
+    },
+    horizontalChildren: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    centerChildren: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+})

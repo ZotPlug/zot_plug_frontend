@@ -6,9 +6,11 @@ import SharedH2 from "ui/info/text/shared_h2"
 import { useRouter } from 'next/navigation'
 import DevicePreview from "ui/devicePreview/comp"
 import { get_all_devices_by_userId } from '@/app/api_utils/api_actions'
+import imagePaths from '@/app/imagePaths'
 
 export default function Plugs() {
-    const img_arr = ["/images/lightning.png", "", "/images/heater.png"]
+
+    const img_arr = [imagePaths["devices_preview"], imagePaths["devices_preview2"], imagePaths["devices_preview3"]]
     let img_i = 0
     const { userId } = useParams<{ userId: string }>();
     const router = useRouter()

@@ -66,7 +66,7 @@ export default function AuthContent() {
 
 const styles = StyleSheet.create({
 	gradient: {
-        height: '100dvh',
+        minHeight: '100dvh',
 	},
 	container: {
         marginTop: 55,

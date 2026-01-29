@@ -4,10 +4,11 @@ import { useQuery } from '@tanstack/react-query'
 import SharedH1 from 'ui/info/text/shared_h1'
 import DevicePreview from 'ui/devicePreview/comp'
 import { get_all_devices_by_userId } from "@/api_utils/api_actions"
+import imagePaths from "@/app/imagePaths"
 
 
 export default function PowerUsagePage() {
-    const img_arr = ["../../../../assets/images/lightning.png", "", "../../../../assets/images/fan.png"]
+    const img_arr = [imagePaths["devices_preview"], imagePaths["devices_preview2"], imagePaths["devices_preview3"]]
     let img_i = 0
     const router = useRouter()
     const { userId } = useLocalSearchParams();
