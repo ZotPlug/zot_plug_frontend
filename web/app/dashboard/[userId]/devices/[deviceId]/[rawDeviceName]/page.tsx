@@ -12,6 +12,7 @@ import SharedH1 from "ui/info/text/shared_h1"
 import SharedH2 from "ui/info/text/shared_h2"
 import SharedH4 from "ui/info/text/shared_h4"
 import SharedH5 from "ui/info/text/shared_h5"
+import UsageCard from "ui/info/usage_card"
 import { StyleSheet } from "react-native"
 import { useResponsiveLayout } from "ui/window_utils";
 
@@ -63,21 +64,19 @@ export default function DevicePage() {
     if (deviceInfo?.ok) {
         const deviceName = deviceInfo.value.name;
         const deviceStatus = deviceInfo.value.status;
-        const currentVoltage = deviceReading?.ok ? deviceReading.value.voltage : -1;
-        const currentCurrent = deviceReading?.ok ? deviceReading.value.current : -1;
+        const currentVoltage = deviceReading?.ok ? deviceReading.value.voltage : 0
+        const currentCurrent = deviceReading?.ok ? deviceReading.value.current : 0
 
         switch (layout) {
             case DeviceType.Mobile:
-                //return <div>Mobile</div>
-                console.log("Mobile")
                 break
             case DeviceType.Tablet:
-                console.log("Tablet")
                 break
             case DeviceType.Desktop:
-                console.log("Desktop")
                 break
         }
+
+        // TODO: Get dynamic values for recent usage
 
         return (
             <div style={styles.verticalChildren}>
@@ -86,10 +85,15 @@ export default function DevicePage() {
                 <SharedH4 text={`ID: ${deviceId}`} />
                 <SharedH4 text={`Status: ${deviceStatus}`} />
                 <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}/devices`)} />
-                <div>
-                    <SharedH2 text='Statistics' />
-                    <DeviceReadings voltage={currentVoltage} current={currentCurrent} />
-                </div>
+
+                <DeviceReadings voltage={currentVoltage} current={currentCurrent} />
+
+                <UsageCard 
+                    title="Recent Usage"
+                    description="Power usage over the last 24 hours."
+                    value={"362 W"}
+                    valueDescription="Power"/>
+
                 <div>
                     <SharedH2 text='Limits' />
                 </div>

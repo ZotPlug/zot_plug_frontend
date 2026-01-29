@@ -35,8 +35,6 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, i
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const layout: DeviceType = useResponsiveLayout()
-
 	return (
 		<View style={styles.container}>
             <Header1

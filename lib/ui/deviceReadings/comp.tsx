@@ -1,8 +1,6 @@
 import React from "react"
 import { Text, View, StyleSheet, } from "react-native"
 import { deviceReadingsProps } from "../types"
-import SharedH4 from "../info/text/shared_h4"
-import SharedH5 from "../info/text/shared_h5"
 import SharedVr from "../info/shared_vr"
 import LinearGradient from "react-native-linear-gradient"
 import { Colors } from "../colors"
@@ -12,24 +10,28 @@ export default function DeviceReadings({
     current,
 }: deviceReadingsProps) {
     
-    // TODO: Find a standard way for doing this across components.
-    // Maybe some kind of singleton with a color dictionary?
-    // Or maybe a standardized css file? 
-    
     // TODO: Handle unit conversion in scenarios where we need mA, micro A, etc.
     const voltageValue = `${voltage.toFixed(1)} V`
     const currentValue = `${current.toFixed(1)} A`
 
     const voltageSection =
         <View style={styles.centerChildren}>
-            <Text style={styles.reading} text={voltageValue}/>
-            <Text style={styles.readingDescription} text='Voltage'/>
+            <Text style={styles.reading}>
+                {voltageValue}
+            </Text>
+            <Text style={styles.readingDescription}>
+                Voltage
+            </Text>
         </View>
     
     const currentSection =
         <View style={styles.centerChildren}>
-            <Text text={currentValue}/>
-            <Text text='Current'/>
+            <Text style={styles.reading}>
+                {currentValue}
+            </Text>
+            <Text style={styles.readingDescription}>
+                Current
+            </Text>
         </View>
 
     return (
@@ -39,30 +41,41 @@ export default function DeviceReadings({
             colors={[Colors.BlGrad1, Colors.BlGrad2]} 
             style={styles.container}>
 
-            {voltageSection}
-            <SharedVr />               
-            {currentSection}
-
+            <View style={styles.horizontalChildren}>
+                {voltageSection}
+                <SharedVr />               
+                {currentSection}
+            </View>
         </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        display: 'grid',
-        gridTemplateColumns: '3fr 1fr 3fr',
-        gap: 5,
+        padding: 15,
+        borderRadius: 10,
+        width: '100%',
+        height: 120,
+        display: 'flex',
+        justifyContent: 'center',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
     },
     reading: {
-        color: 'white'
+        color: Colors.S4,
+        fontSize: 32,
+        fontWeight: 700,
+        textShadow: '0px 4px 4px #535353, 0 0 0 #000, 0px 4px 4px #535353;',
     },
     readingDescription: {
-        color: 'white'
+        color: Colors.S4,
+        fontSize: 16,
+        fontWeight: 400,
+        textShadow: '0px 4px 4px #535353, 0 0 0 #000, 0px 4px 4px #535353;',
     },
     horizontalChildren: {
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center'
     },
     centerChildren: {
         display: 'flex',

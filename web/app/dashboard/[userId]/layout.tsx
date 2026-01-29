@@ -87,5 +87,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
         gap: 24,                    // gap-6
+        paddingLeft: 12,
+        paddingRight: 12
     },
 })
