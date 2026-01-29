@@ -4,13 +4,12 @@ import { useQuery } from '@tanstack/react-query'
 import { device_control } from "@/app/api_utils/api_actions";
 import { apiGetDeviceInfo, apiGetLatestDeviceReading } from "@/app/api_utils/api_device_actions";
 import DeviceControl from "ui/deviceControl/comp"
+import UsageLimits from "ui/deviceControl/usageLimits"
 import { DeviceControlReqs, DeviceType } from "ui/types";
-import BasicButton from "ui/buttons/basic_button"
 import { useRouter } from 'next/navigation'
 import DeviceReadings from "ui/deviceReadings/comp"
 import SharedH1 from "ui/info/text/shared_h1"
 import SharedH2 from "ui/info/text/shared_h2"
-import SharedH4 from "ui/info/text/shared_h4"
 import SharedH5 from "ui/info/text/shared_h5"
 import UsageCard from "ui/info/usage_card"
 import EnergyCard from "ui/info/energy_card"
@@ -90,6 +89,12 @@ export default function DevicePage() {
             </div>
         )
 
+        // TODO: Add actual logic for limits
+        const limits = (
+            <div style={styles.verticalChildren}>
+                <UsageLimits/>
+            </div>
+        )
 
         switch (layout) {
             case DeviceType.Mobile:
@@ -105,6 +110,8 @@ export default function DevicePage() {
                         <div>
                             <SharedH2 text='Limits' />
                         </div>
+                        {limits}
+
                         <div style={styles.actionsContainer}>
                             <SharedH2 text='Actions' />
                             <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
@@ -129,6 +136,9 @@ export default function DevicePage() {
                         <div>
                             <SharedH2 text='Limits' />
                         </div>
+
+                        {limits}
+
                         <div style={styles.actionsContainer}>
                             <SharedH2 text='Actions' />
                             <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
@@ -149,6 +159,9 @@ export default function DevicePage() {
                         <div>
                             <SharedH2 text='Limits' />
                         </div>
+
+                        {limits}
+
                         <div style={styles.actionsContainer}>
                             <SharedH2 text='Actions' />
                             <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />

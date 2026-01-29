@@ -52,7 +52,11 @@ export default function DeviceReadings({
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 50,
+        paddingRight: 50,
+
         borderRadius: 10,
         width: '100%',
         height: 120,

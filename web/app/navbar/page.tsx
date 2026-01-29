@@ -149,7 +149,8 @@ export default function NavBar({currentProgress, maxProgress}: NavBar) {
 
 const styles = StyleSheet.create({
 	container: {
-        width: 375,
+        maxWidth: 375,
+        width: '40vw',
         height: '100%',
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         padding: 20,

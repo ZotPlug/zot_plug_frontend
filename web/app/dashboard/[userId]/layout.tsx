@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
         gap: 32,                    // gap-8
     },
     navbarContainer: {
-        width: 375,                 // md:w-1/4
+        maxWidth: 375,                 // md:w-1/4
+        width: '40vw',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
