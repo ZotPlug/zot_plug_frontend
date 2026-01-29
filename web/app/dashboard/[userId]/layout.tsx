@@ -17,6 +17,31 @@ export default function DashboardLayout({
     children: ReactNode
 }) {
     const layout: DeviceType = useResponsiveLayout()
+
+    let content
+    switch (layout) {
+        case DeviceType.Mobile:
+            content = (
+                <div style={styles.mobileContainer}>
+                    {children}
+                </div>
+            )
+            break
+        case DeviceType.Tablet:
+            content = (
+                <div style={styles.tabletContainer}>
+                    {children}
+                </div>
+            )
+            break
+        case DeviceType.Desktop:
+            content = (
+                <main style={styles.mainContainer}>
+                    {children}
+                </main>
+            )
+            break
+    }
     
     return (
         <LinearGradient
@@ -34,13 +59,11 @@ export default function DashboardLayout({
                         </aside>
 
                         {/* Right Content (changes per route) */}
-                        <main style={styles.mainContainer}>
-                            {children}
-                        </main>
+                        {content}
                     </div>
                 ) : (
-                    <div style={styles.mobileContainer}>
-                        {children}
+                    <div>
+                        {content}
                     </div>
                 )}
             </div>
@@ -82,12 +105,22 @@ const styles = StyleSheet.create({
         marginTop: 96,
         marginBottom: 24,
     },
+    tabletContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        gap: 24,                    // gap-6
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 30,
+    },
     mobileContainer: {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
         gap: 24,                    // gap-6
         paddingLeft: 12,
-        paddingRight: 12
+        paddingRight: 12,
+        paddingTop: 55
     },
 })
