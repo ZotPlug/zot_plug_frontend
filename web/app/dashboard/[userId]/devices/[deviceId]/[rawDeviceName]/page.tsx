@@ -13,8 +13,10 @@ import SharedH2 from "ui/info/text/shared_h2"
 import SharedH4 from "ui/info/text/shared_h4"
 import SharedH5 from "ui/info/text/shared_h5"
 import UsageCard from "ui/info/usage_card"
+import EnergyCard from "ui/info/energy_card"
 import { StyleSheet } from "react-native"
 import { useResponsiveLayout } from "ui/window_utils";
+import imagePaths from "@/app/imagePaths";
 
 async function sendCommand(params: DeviceControlReqs) {
     const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
@@ -63,7 +65,6 @@ export default function DevicePage() {
 
     if (deviceInfo?.ok) {
         const deviceName = deviceInfo.value.name;
-        const deviceStatus = deviceInfo.value.status;
         const currentVoltage = deviceReading?.ok ? deviceReading.value.voltage : 0
         const currentCurrent = deviceReading?.ok ? deviceReading.value.current : 0
 
@@ -80,10 +81,7 @@ export default function DevicePage() {
 
         return (
             <div style={styles.verticalChildren}>
-                <SharedH1 text="Device Details" />
-                <SharedH4 text={`Name: ${deviceName}`} />
-                <SharedH4 text={`ID: ${deviceId}`} />
-                <SharedH4 text={`Status: ${deviceStatus}`} />
+                <SharedH1 text={deviceName} />
                 <BasicButton text='Back' onPress={() => router.push(`/dashboard/${userId}/devices`)} />
 
                 <DeviceReadings voltage={currentVoltage} current={currentCurrent} />
@@ -93,6 +91,14 @@ export default function DevicePage() {
                     description="Power usage over the last 24 hours."
                     value={"362 W"}
                     valueDescription="Power"/>
+
+                <EnergyCard 
+                    title="Putting It In Perspective"
+                    description="Yesterday's usage compared to total power usage over the last 24 hours across all devices."
+                    currentValue={362}
+                    totalValue={1200}
+                    unit="W"
+                    icon={imagePaths["device_percentage"]}/>
 
                 <div>
                     <SharedH2 text='Limits' />
@@ -115,6 +121,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
         flexDirection: 'column',
+        gap: 10
     },
     actionsContainer: {
         width: "100%",

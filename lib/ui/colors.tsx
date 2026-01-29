@@ -34,4 +34,7 @@ export const Colors = {
 
     BlGrad1: '#4D4D4D',
     BlGrad2: '#828282',
+
+    GBGrad1: '#B0E8E2',
+    GBGrad2: '#8EDDFA'
 }

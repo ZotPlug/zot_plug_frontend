@@ -103,27 +103,4 @@ const styles = StyleSheet.create({
         fontWeight: 400,
         color: Colors.P1
     },
-
-    reading: {
-        color: Colors.S4,
-        fontSize: 32,
-        fontWeight: 700,
-        textShadow: '0px 4px 4px #535353, 0 0 0 #000, 0px 4px 4px #535353;',
-    },
-    readingDescription: {
-        color: Colors.S4,
-        fontSize: 16,
-        fontWeight: 400,
-        textShadow: '0px 4px 4px #535353, 0 0 0 #000, 0px 4px 4px #535353;',
-    },
-    horizontalChildren: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    centerChildren: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
 })
