@@ -12,7 +12,7 @@ const series = [{
 },
 ];
 
-export function TimelineGraph() {
+export function UsageStatisticsGraph() {
     return (
         <VictoryChart
             theme={VictoryTheme.clean}
@@ -75,4 +75,4 @@ export function TimelineGraph() {
     );
 }
 
-export default TimelineGraph
+export default UsageStatisticsGraph

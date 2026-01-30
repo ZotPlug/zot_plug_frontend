@@ -14,7 +14,7 @@ import { UserDeviceInfo } from "ui/types"
 import { useQueries } from "@tanstack/react-query"
 
 import MostUsedDevicesGraph from "@/app/info/graphs/devices"
-import TimelineGraph from "@/app/info/graphs/timeline"
+import UsageStatisticsGraph from "@/app/info/graphs/usage_stats"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
@@ -87,7 +87,7 @@ export default function Dashboard() {
 				<SharedH2 text="Quick Summary"/>
 				<div className="mt-4 text-sm text-gray-700">
 					<div className="flex flex-row gap-4 mt-2">
-						<TimelineGraph></TimelineGraph>
+						<UsageStatisticsGraph></UsageStatisticsGraph>
 						<MostUsedDevicesGraph></MostUsedDevicesGraph>
 					</div>	
 				</div>
