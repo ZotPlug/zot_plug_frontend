@@ -23,6 +23,12 @@ export const imagePaths = {
     nav_settingsHover: require('../assets/images/settings_hover.png'),
     nav_logOut: require('../assets/images/leave.png'),
     nav_logOutHover: require('../assets/images/leave_hover.png'),
+
+    devices_preview: require('../assets/images/device_icon.png'),
+    devices_preview2: require('../assets/images/device_icon2.png'),
+    devices_preview3: require('../assets/images/device_icon3.png'),
+
+    device_percentage: require('../assets/images/percentage.png'),
 }
 
 export default imagePaths

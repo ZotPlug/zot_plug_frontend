@@ -1,4 +1,4 @@
-import { Text, Platform, StyleSheet, useColorScheme } from "react-native"
+import { Text, StyleSheet, useColorScheme } from "react-native"
 import { Colors } from "../../colors"
 import { DeviceType } from "../../types"
 import { useResponsiveLayout } from "../../window_utils"

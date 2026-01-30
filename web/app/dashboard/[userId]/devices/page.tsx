@@ -6,12 +6,19 @@ import SharedH2 from "ui/info/text/shared_h2"
 import { useRouter } from 'next/navigation'
 import DevicePreview from "ui/devicePreview/comp"
 import { get_all_devices_by_userId } from '@/app/api_utils/api_actions'
+import imagePaths from '@/app/imagePaths'
+import { DeviceType } from 'ui/types'
+import { useResponsiveLayout } from 'ui/window_utils'
+import Header1 from 'ui/headers/header1'
 
 export default function Plugs() {
-    const img_arr = ["/images/lightning.png", "", "/images/heater.png"]
+
+    const img_arr = [imagePaths["devices_preview"], imagePaths["devices_preview2"], imagePaths["devices_preview3"]]
     let img_i = 0
     const { userId } = useParams<{ userId: string }>();
     const router = useRouter()
+    
+    const layout: DeviceType = useResponsiveLayout()
 
     const { data: plugs, isLoading } = useQuery({
         queryKey: ['plugs'],
@@ -21,15 +28,24 @@ export default function Plugs() {
     // Nested function because router is only accessible from 
     // the top level hook function Plugs()
     function openDeviceStats(deviceId: number, deviceName: string) {
-        console.log("move to plug location")
         const path = `/dashboard/${userId}/devices/${deviceId.toString()}/${deviceName}`
         router.push(path)
     }
+    
+    const header = (layout === DeviceType.Desktop) ? (
+        <SharedH1 text={'Devices'} />
+    ) : (
+        <Header1 
+            title='Devices' 
+            headerIcon={imagePaths["header_plug"]}
+            imagePaths={imagePaths} 
+            onBack={() => router.push(`/dashboard/${userId}`)}/>        
+    )
 
     return (
         <>
             {/* Header */}
-            <SharedH1 text={'Devices'} mode="light" />
+            {header}
 
             {/* My Devices */}
             <div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">

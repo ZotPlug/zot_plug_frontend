@@ -4,10 +4,11 @@ import { useQuery } from '@tanstack/react-query'
 import SharedH1 from 'ui/info/text/shared_h1'
 import DevicePreview from 'ui/devicePreview/comp'
 import { get_all_devices_by_userId } from "@/api_utils/api_actions"
+import imagePaths from "@/app/imagePaths"
 
 
 export default function PowerUsagePage() {
-    const img_arr = ["../../../../assets/images/lightning.png", "", "../../../../assets/images/fan.png"]
+    const img_arr = [imagePaths["devices_preview"], imagePaths["devices_preview2"], imagePaths["devices_preview3"]]
     let img_i = 0
     const router = useRouter()
     const { userId } = useLocalSearchParams();
@@ -23,14 +24,14 @@ export default function PowerUsagePage() {
     // the top level hook function Plugs()
     //
     async function openDeviceStats(deviceId: string, deviceName: string) {
-        router.push(`/dashboard/${userId}/plugs/${deviceId}/${deviceName}`)
+        router.push(`/dashboard/${userId}/devices/${deviceId}/${deviceName}`)
     }
 
     return (
         <View style={styles.container} className="justify-center items-center h-screen">
-            <SharedH1 text='Plugs' />
+            <SharedH1 text='Devices' />
             {isLoading ? (
-                <Text> Loading plug data... </Text>
+                <Text> Loading device data... </Text>
 
             ) : plugs && plugs.ok ? (
 
@@ -44,7 +45,7 @@ export default function PowerUsagePage() {
 
             ) : (
 
-                <Text> Error loading plugs </Text>
+                <Text> Error loading devices. </Text>
             )}
         </View>
     )

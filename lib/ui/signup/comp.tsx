@@ -1,22 +1,25 @@
 import { useState } from 'react'
 import { DeviceType, SignUpCompParams, signUpInfo } from '../types'
-import { TextInput, View, Text, StyleSheet } from 'react-native'
+import { ActivityIndicator, TextInput, View, Text, StyleSheet } from 'react-native'
 import basic_filter_check from './helpers'
 import Header1 from '../headers/header1'
 import { Colors } from '../colors'
 import Button_1 from '../buttons/button_1'
 import { useResponsiveLayout } from '../window_utils'
 
-function submitOnEnter(event: Event, onSubmit: (params: signUpInfo) => Promise<void>, setErrorText: string, params: signUpInfo) {
+function submitOnEnter(event: Event, onSubmit: (params: signUpInfo) => Promise<void>, setErrorText: string, params: signUpInfo): boolean {
 	if (event.key === "Enter" || event.key === "NumpadEnter") {
 		event.preventDefault();
-        basic_filter_check(onSubmit, setErrorText, params, params.password)
+        return basic_filter_check(onSubmit, setErrorText, params, params.password)
 	}
+    return false
 }
 
 export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, imagePaths }: SignUpCompParams) {
 	const [userInfo, SetUserInfo] = useState({ firstname: "", lastname: "", username: "", email: "", password: "", confirm: "" })
     const layout: DeviceType = useResponsiveLayout()
+
+    const [isLoading, setIsLoading] = useState(false)
 
 	return (
 		<View style={styles.container}>
@@ -31,7 +34,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                 <TextInput
                     value={userInfo.username}
                     onChangeText={(username) => SetUserInfo((prev) => ({ ...prev, username }))}
-                    onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password })}
+                    onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
 
                     placeholder="Type here"
                     editable={true}
@@ -41,7 +44,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                 <TextInput
                     value={userInfo.email}
                     onChangeText={(email) => SetUserInfo((prev) => ({ ...prev, email }))}
-                    onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password })}
+                    onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                     placeholder="Type here"
                     editable={true}
                     style={styles.textInput}
@@ -52,7 +55,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                         <TextInput
                             value={userInfo.firstname}
                             onChangeText={(firstname) => SetUserInfo((prev) => ({ ...prev, firstname }))}
-                            onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password })}
+                            onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                             placeholder="Type here"
                             editable={true}
                             style={[styles.textInput, { marginRight: 2 }]}
@@ -64,7 +67,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                         <TextInput
                             value={userInfo.lastname}
                             onChangeText={(lastname) => SetUserInfo((prev) => ({ ...prev, lastname }))}
-                            onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText, { firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password })}
+                            onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText, { firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                             placeholder="Type here"
                             editable={true}
                             style={[styles.textInput, { marginLeft: 2 }]}
@@ -76,7 +79,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                     value={userInfo.password}
                     secureTextEntry={true}
                     onChangeText={(password) => SetUserInfo((prev) => ({ ...prev, password }))}
-                    onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password })}
+                    onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                     placeholder="Type Here"
                     editable={true}
                     style={styles.textInput}
@@ -86,17 +89,26 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                     value={userInfo.confirm}
                     secureTextEntry={true}
                     onChangeText={(confirm) => SetUserInfo((prev) => ({ ...prev, confirm }))}
-                    onKeyPress={(e: Event) => submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password })}
+                    onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                     placeholder="Type here"
                     editable={true}
                     style={styles.textInput}
                 />
             </View>
 
+            {isLoading ?
+                <ActivityIndicator 
+                    size="large" 
+                    style={styles.loadingSpinner}
+                    color={Colors.P1} />
+                :
+                <View/>
+            }
+
 			{errorText ? <Text style={styles.text}>{errorText}</Text> : null}
-            <Button_1 text="Sign Up" onPress={() => basic_filter_check(onSubmit, setErrorText, {
+            <Button_1 text="Sign Up" onPress={() => setIsLoading(basic_filter_check(onSubmit, setErrorText, {
 				firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password
-			}, userInfo.confirm)}/>
+			}, userInfo.confirm))}/>
         </View>
 	)
 }
@@ -131,6 +143,9 @@ const styles = StyleSheet.create({
 		lineHeight: 24,
 		color: "red",
 	},
+    loadingSpinner: {
+        marginBottom: 15
+    },
     entryFieldHeader: {
         color: Colors.S1,
         fontWeight: 700,
