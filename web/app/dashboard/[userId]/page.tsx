@@ -85,10 +85,11 @@ export default function Dashboard() {
 			{/* Quick Summary */}
 			<div className="bg-stone-100 border border-gray-300 rounded-lg p-5 shadow-md">
 				<SharedH2 text="Quick Summary"/>
-				<div className="mt-4 space-y-2 text-sm text-gray-700">	
-					<li> Active devices: {devices.length} </li>
-					<MostUsedDevicesGraph></MostUsedDevicesGraph>
-					<TimelineGraph></TimelineGraph>
+				<div className="mt-4 text-sm text-gray-700">
+					<div className="flex flex-row gap-4 mt-2">
+						<TimelineGraph></TimelineGraph>
+						<MostUsedDevicesGraph></MostUsedDevicesGraph>
+					</div>	
 				</div>
 			</div>
 
