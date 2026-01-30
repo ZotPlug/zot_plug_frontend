@@ -6,10 +6,7 @@ import { Colors } from "../colors"
 
 export default function UsageLimits() {
     const [isEnabled, setIsEnabled] = useState(false)
-    const toggleSwitch = () => setIsEnabled(!isEnabled)
-
-    // Credit to https://stackoverflow.com/questions/70716623/how-would-i-make-a-custom-switch-and-toggle-like-this-in-react-native
-    // and https://snack.expo.dev/@tnr_c/customswitch
+    const toggleSwitch = () => setIsEnabled((prev: boolean) => !prev)
 
     return (
             <LinearGradient

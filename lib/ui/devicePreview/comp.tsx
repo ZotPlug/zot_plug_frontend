@@ -1,5 +1,5 @@
 import React from "react"
-import { Platform, Text, View, Image as RNImage, TouchableOpacity, StyleSheet } from "react-native"
+import { Text, View, Image as RNImage, TouchableOpacity, StyleSheet } from "react-native"
 import { devicePreviewProps } from "../types"
 import ProgressBar from "../components/progress_bar";
 import LinearGradient from "react-native-linear-gradient"

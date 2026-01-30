@@ -16,58 +16,6 @@ export default function NavBarButton2({ onPress, imagePath, imagePathHover, text
     // that would involve some painful infra changes.
     const [hover, setHover] = useState(false)
 
-    // TODO: find a way to do this without css duplication
-    const styles = StyleSheet.create({
-        button: {
-            backgroundColor: Colors.E2,
-            height: 72,
-            width: '100%',
-
-            padding: 8,
-            borderRadius: 10,
-            borderWidth: 3,
-            borderColor: Colors.E1,
-
-            display: 'flex',
-            flexDirection: 'row',
-            alignSelf: 'center',
-            alignItems: 'center',
-            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-        },
-        buttonHover: {
-            backgroundColor: Colors.R3,
-            height: 72,
-            width: '100%',
-
-            padding: 8,
-            borderRadius: 10,
-            borderWidth: 3,
-            borderColor: Colors.R2,
-
-            display: 'flex',
-            flexDirection: 'row',
-            alignSelf: 'center',
-            alignItems: 'center',
-            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-        },
-        text: {
-            fontSize: 16,
-            fontWeight: 700,
-            color: Colors.S1,
-            textTransform: 'none',
-            textAlign: "center",
-        },
-        imageStyle: {
-            width: 48,
-            height: 48,
-            objectFit: 'contain',
-            resizeMode: 'contain',
-        },
-        spacer: {
-            flexGrow: 1
-        }
-    });
-
     const image = (
         <PlatformImage 
             imagePath={imagePath}
@@ -97,3 +45,55 @@ export default function NavBarButton2({ onPress, imagePath, imagePathHover, text
         </TouchableOpacity>
 	);
 }
+
+// TODO: find a way to do this without css duplication
+const styles = StyleSheet.create({
+    button: {
+        backgroundColor: Colors.E2,
+        height: 72,
+        width: '100%',
+
+        padding: 8,
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: Colors.E1,
+
+        display: 'flex',
+        flexDirection: 'row',
+        alignSelf: 'center',
+        alignItems: 'center',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    },
+    buttonHover: {
+        backgroundColor: Colors.R3,
+        height: 72,
+        width: '100%',
+
+        padding: 8,
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: Colors.R2,
+
+        display: 'flex',
+        flexDirection: 'row',
+        alignSelf: 'center',
+        alignItems: 'center',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    },
+    text: {
+        fontSize: 16,
+        fontWeight: 700,
+        color: Colors.S1,
+        textTransform: 'none',
+        textAlign: "center",
+    },
+    imageStyle: {
+        width: 48,
+        height: 48,
+        objectFit: 'contain',
+        resizeMode: 'contain',
+    },
+    spacer: {
+        flexGrow: 1
+    }
+});

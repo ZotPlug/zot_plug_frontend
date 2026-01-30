@@ -1,4 +1,4 @@
-import {Platform, View, Image as RNImage, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import { DeviceType } from "../types"
 import Shared_H1 from "../info/text/shared_h1"
 import Button_1 from '../buttons/button_1'
