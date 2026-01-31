@@ -102,7 +102,7 @@ export default function Dashboard() {
 							key={device.device_id}
 							deviceId={device.device_id}
 							deviceName={device.device_name}
-							deviceImage='/images/ZotplugLogo_NoText_NoBackground.png'
+							deviceImage=''
 							currUsage={0}
 							totalUsage={0}
 							redirectOnClick={() => {}}

@@ -61,6 +61,7 @@ export default function PlatformImage({ imagePath, width, height, mobileWidth, m
             objectFit: 'contain',
             objectPosition: 'top',
             resizeMode: 'contain',
+            alignSelf: 'center'
         },
     })
 

@@ -57,6 +57,7 @@ export default function Header1({ onBack, title, headerIcon, imagePaths}: Header
 
 const styles = StyleSheet.create({
     containerStyle: {
+        width: '100%'
     },
     centerChildren: {
         display: 'flex',
