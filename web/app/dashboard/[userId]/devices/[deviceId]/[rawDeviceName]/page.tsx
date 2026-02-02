@@ -18,15 +18,25 @@ import { StyleSheet } from "react-native"
 import { useResponsiveLayout } from "ui/window_utils";
 import imagePaths from "@/app/imagePaths";
 import Header1 from "ui/headers/header1";
+import { useState } from "react";
 
 async function sendCommand(params: DeviceControlReqs) {
     const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
     if (!res.ok) console.log(res.value)
 }
 
+enum SelectedDevicePage {
+    Statistics,
+    Limits,
+    Actions,
+    Users
+}
+
 export default function DevicePage() {
     // Device name is needed for mqtt to send cmd's to the proper device. I.e: Topic: {deviceName}/cmd/relay/on
     const { userId, deviceId, rawDeviceName } = useParams<{ userId: string, deviceId: string, rawDeviceName: string }>();
+
+	const [selectedPage, setSelectedPage] = useState(SelectedDevicePage.Statistics)
 
     // We need to keep track of the device ID to get the current status (online/offline)
     // And we need the device name for everything else (because of how the API 
@@ -141,12 +151,28 @@ export default function DevicePage() {
                     imagePaths["tabs_usersSelected"]
                 ]}
                 onOpen={[
-                    () => console.log("Statistics"),
-                    () => console.log("Limits"),
-                    () => console.log("Actions"),
-                    () => console.log("Users"),
+                    () => setSelectedPage(SelectedDevicePage.Statistics),
+                    () => setSelectedPage(SelectedDevicePage.Limits),
+                    () => setSelectedPage(SelectedDevicePage.Actions),
+                    () => setSelectedPage(SelectedDevicePage.Users),
                 ]}/>
         )
+        
+        let content
+        switch (selectedPage) {
+            case SelectedDevicePage.Statistics:
+                content = stats
+                break
+            case SelectedDevicePage.Limits:
+                content = limits
+                break
+            case SelectedDevicePage.Actions:
+                content = actions
+                break
+            case SelectedDevicePage.Users:
+                content = users
+                break
+        }
 
         switch (layout) {
             case DeviceType.Mobile:
@@ -157,14 +183,9 @@ export default function DevicePage() {
                             imagePaths={imagePaths}
                             title={deviceName}
                             onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
-                        {stats}
 
-                        {limits}
-                        
-                        {actions}
-
-                        {users}
-
+                            {content}
+                            {tabs}
                     </div>
                 )
                 break
@@ -177,13 +198,8 @@ export default function DevicePage() {
                             title={deviceName}
                             onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
 
-                        {stats}
-
-                        {limits}
-                        
-                        {actions}
-
-                        {users}
+                            {content}
+                            {tabs}
                     </div>
                 )
                 break
@@ -193,11 +209,8 @@ export default function DevicePage() {
                         <SharedH1 text={deviceName} />
                         
                         {stats}
-
                         {limits}
-                        
                         {actions}
-
                         {users}
                     </div>
                 )
@@ -213,7 +226,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         flexDirection: 'column',
         gap: 10,
-        width: '100%'
+        width: '100%',
+        paddingBottom: 60
     },
     actionsContainer: {
         width: "100%",
