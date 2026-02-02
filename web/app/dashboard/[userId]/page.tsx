@@ -87,7 +87,7 @@ export default function Dashboard() {
 	return (
 		<>
 			{/* Header */}
-			<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} mode="light" />
+			<SharedH1 text={`Welcome, ${user?.firstname} ${user?.lastname} !`} />
 
 			{/* Usage Overview */}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -111,11 +111,11 @@ export default function Dashboard() {
 			>
 				<SharedH2 text="Quick Summary" />
 
-				<div className="flex flex-row gap-4 mt-2 w-full">
+				<div className="flex flex-row gap-6 mt-2 w-full">
 					<LinearGradient
 						start={{ x: 0, y: 0 }}
 						end={{ x: 1, y: 1 }}
-						colors={[Colors.Graph1, Colors.Graph2]}
+						colors={[Colors.GGrad1, Colors.GGrad2]}
 						style={styles.graphCard}
 					>
 						<UsageStatisticsGraph />
@@ -124,7 +124,7 @@ export default function Dashboard() {
 					<LinearGradient
 						start={{ x: 0, y: 0 }}
 						end={{ x: 1, y: 1 }}
-						colors={[Colors.Graph1, Colors.Graph2]}
+						colors={[Colors.GGrad2, Colors.GGrad2]}
 						style={styles.graphCard}
 					>
 						<MostUsedDevicesGraph />

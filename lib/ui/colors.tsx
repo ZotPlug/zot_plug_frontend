@@ -40,7 +40,4 @@ export const Colors = {
 
     ToggleOff: '#C2C2C2',
     ToggleBorder: '#7B7B7B',
-
-    Graph1: '#C9C9C9',
-    Graph2: '#535353',
 }
