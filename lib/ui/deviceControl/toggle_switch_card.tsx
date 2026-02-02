@@ -3,10 +3,15 @@ import { Text, View, StyleSheet, TouchableOpacity, } from "react-native"
 import Switch from '../buttons/customSwitch/switch'
 import LinearGradient from "react-native-linear-gradient"
 import { Colors } from "../colors"
+import { DeviceControlReqs } from "../types"
 
-export default function UsageLimits() {
-    const [isEnabled, setIsEnabled] = useState(false)
-    const toggleSwitch = () => setIsEnabled((prev: boolean) => !prev)
+export type ToggleSwitchCard = {
+    title: string, 
+	onSwitchOn?: Function,
+	onSwitchOff?: Function,
+}
+
+export default function ToggleSwitchCard({ title, onSwitchOn, onSwitchOff } : ToggleSwitchCard) {
 
     return (
             <LinearGradient
@@ -17,11 +22,14 @@ export default function UsageLimits() {
 
                 <View style={styles.descriptionContainer}>
                     <Text style={styles.title}>
-                        Daily Usage Limits
+                        {title}
                     </Text>
                 </View>
 
-                <Switch onColor={Colors.P1}/>
+                <Switch 
+                    onSwitchOn={onSwitchOn}
+                    onSwitchOff={onSwitchOff}
+                    onColor={Colors.P1}/>
 
         </LinearGradient>
     )
@@ -51,34 +59,5 @@ const styles = StyleSheet.create({
         color: Colors.P1,
         fontSize: 18,
         fontWeight: 600,
-        textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    },
-    description: {
-        color: Colors.P1,
-        fontStyle: 'italic',
-        fontWeight: 400,
-        fontSize: 14,
-        flexShrink: 1,
-    },
-    valueContainer: {
-        alignSelf: 'end',
-        display: 'flex',
-        alignItems: 'center',
-        borderRadius: 10,
-        borderWidth: 3,
-        borderColor: Colors.S6,
-        padding: 15,
-        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
-    },
-    value: {
-        fontSize: 24,
-        fontWeight: 700,
-        color: Colors.P1,
-        textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    },
-    valueDescription: {
-        fontSize: 16,
-        fontWeight: 400,
-        color: Colors.P1
     },
 })

@@ -10,7 +10,7 @@ export default function DailyTarget({ currProgress, maxProgress, imagePaths }: d
             <View style={styles.innerContainer}>
                 <View style={styles.row}>
                     <View>
-                        <Text style={styles.header}>Daily Target</Text>
+                        <Text style={styles.header}>Daily Max Usage</Text>
                         <Text style={styles.display_text}>{`${currProgress}W of ${maxProgress}W`}</Text>
                     </View>
                     <PlatformImage

@@ -4,13 +4,14 @@ import { useQuery } from '@tanstack/react-query'
 import { device_control } from "@/app/api_utils/api_actions";
 import { apiGetDeviceInfo, apiGetLatestDeviceReading } from "@/app/api_utils/api_device_actions";
 import DeviceControl from "ui/deviceControl/comp"
-import UsageLimits from "ui/deviceControl/usageLimits"
+import ToggleSwitchCard from "ui/deviceControl/toggle_switch_card"
 import { DeviceControlReqs, DeviceType } from "ui/types";
 import { useRouter } from 'next/navigation'
 import DeviceReadings from "ui/deviceReadings/comp"
+import MobileTabs from "ui/mobileTabs/mobileTabs"
 import SharedH1 from "ui/info/text/shared_h1"
-import SharedH2 from "ui/info/text/shared_h2"
 import SharedH5 from "ui/info/text/shared_h5"
+import InfoCard from "ui/info/info_card"
 import UsageCard from "ui/info/usage_card"
 import EnergyCard from "ui/info/energy_card"
 import { StyleSheet } from "react-native"
@@ -89,11 +90,62 @@ export default function DevicePage() {
             </div>
         )
 
-        // TODO: Add actual logic for limits
+        // TODO: Add actual logic for limits if we have time.
+        // (Using placeholder components right now because it's not a
+        // priority)
         const limits = (
             <div style={styles.verticalChildren}>
-                <UsageLimits/>
+                <ToggleSwitchCard 
+                    title="Daily Usage Limits"/>
+                <ToggleSwitchCard 
+                    title="Daily Time Limits"/>
+                <ToggleSwitchCard 
+                    title="Only Allow Hours"/>
             </div>
+        )
+        
+        const actions = (
+            <div style={styles.verticalChildren}>
+                <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
+                
+            </div>
+        )
+        
+        // TODO: Add functionality to this if we have time
+        // (Using placeholder components right now because it's not a
+        // priority)
+        const users = (
+            <div style={styles.verticalChildren}>
+                <InfoCard 
+                    title="Configure Roles"
+                    description="No other users have access to this device."/>
+                <InfoCard 
+                    title="Device Owner ID"
+                    description={userId}/>
+            </div>
+        )
+        
+        const tabs = (
+            <MobileTabs 
+                titles={["Statistics", "Limits", "Actions", "Users"]}
+                images={[
+                    imagePaths["tabs_statistics"],
+                    imagePaths["tabs_limits"],
+                    imagePaths["tabs_actions"],
+                    imagePaths["tabs_users"]
+                ]}
+                imagesSelected={[
+                    imagePaths["tabs_statisticsSelected"],
+                    imagePaths["tabs_limitsSelected"],
+                    imagePaths["tabs_actionsSelected"],
+                    imagePaths["tabs_usersSelected"]
+                ]}
+                onOpen={[
+                    () => console.log("Statistics"),
+                    () => console.log("Limits"),
+                    () => console.log("Actions"),
+                    () => console.log("Users"),
+                ]}/>
         )
 
         switch (layout) {
@@ -107,18 +159,12 @@ export default function DevicePage() {
                             onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
                         {stats}
 
-                        <div>
-                            <SharedH2 text='Limits' />
-                        </div>
                         {limits}
+                        
+                        {actions}
 
-                        <div style={styles.actionsContainer}>
-                            <SharedH2 text='Actions' />
-                            <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
-                        </div>
-                        <div>
-                            <SharedH2 text='Users' />
-                        </div>
+                        {users}
+
                     </div>
                 )
                 break
@@ -133,19 +179,11 @@ export default function DevicePage() {
 
                         {stats}
 
-                        <div>
-                            <SharedH2 text='Limits' />
-                        </div>
-
                         {limits}
+                        
+                        {actions}
 
-                        <div style={styles.actionsContainer}>
-                            <SharedH2 text='Actions' />
-                            <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
-                        </div>
-                        <div>
-                            <SharedH2 text='Users' />
-                        </div>
+                        {users}
                     </div>
                 )
                 break
@@ -156,19 +194,11 @@ export default function DevicePage() {
                         
                         {stats}
 
-                        <div>
-                            <SharedH2 text='Limits' />
-                        </div>
-
                         {limits}
+                        
+                        {actions}
 
-                        <div style={styles.actionsContainer}>
-                            <SharedH2 text='Actions' />
-                            <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
-                        </div>
-                        <div>
-                            <SharedH2 text='Users' />
-                        </div>
+                        {users}
                     </div>
                 )
                 break

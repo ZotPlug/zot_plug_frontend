@@ -6,10 +6,12 @@ import {StyleSheet, Animated, TouchableOpacity, Easing} from 'react-native';
 import { Colors } from '../../colors';
 
 export type Switch = {
-    onColor: string
+    onColor: string,
+	onSwitchOn?: Function,
+	onSwitchOff?: Function,
 }
 
-export default function Switch({onColor} : Switch)
+export default function Switch({onColor, onSwitchOn, onSwitchOff} : Switch)
 {
     const positionButton = useRef(new Animated.Value(0)).current;
 
@@ -19,7 +21,8 @@ export default function Switch({onColor} : Switch)
         Animated.timing(positionButton, {
             toValue: 0,
             duration: 150,
-            easing: Easing.ease
+            easing: Easing.ease,
+            useNativeDriver: false
         }).start()
     }
 
@@ -27,7 +30,8 @@ export default function Switch({onColor} : Switch)
         Animated.timing(positionButton, {
             toValue: 1,
             duration: 150,
-            easing: Easing.ease
+            easing: Easing.ease,
+            useNativeDriver: false
         }).start()
     }
 
@@ -39,9 +43,15 @@ export default function Switch({onColor} : Switch)
         if (isOn) {
             startAnimToOff();
             setIsOn(false);
+            if (onSwitchOff) {
+                onSwitchOff()
+            }
         } else {
             startAnimToOn();
             setIsOn(true);
+            if (onSwitchOn) {
+                onSwitchOn()
+            }
         }
     };
 

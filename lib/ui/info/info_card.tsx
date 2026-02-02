@@ -3,19 +3,15 @@ import { Text, View, StyleSheet, } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
 import { Colors } from "../colors"
 
-export type UsageCard = {
+export type InfoCard = {
     title: string, 
     description: string,
-    value: string,
-    valueDescription: string,
 }
 
-export default function UsageCard({ 
+export default function InfoCard({ 
     title, 
     description,
-    value,
-    valueDescription
-}: UsageCard) {
+}: InfoCard) {
 
     return (
             <LinearGradient
@@ -32,20 +28,6 @@ export default function UsageCard({
                         {description}
                     </Text>
                 </View>
-
-                <LinearGradient 
-                    start={{x: 0, y: 0}} 
-                    end={{x: 1, y: 1}} 
-                    colors={[Colors.GGrad1, Colors.GGrad2]}
-                    style={styles.valueContainer}>
-
-                    <Text style={styles.value}>
-                        {value}
-                    </Text>
-                    <Text style={styles.valueDescription}>
-                        {valueDescription}
-                    </Text>
-                </LinearGradient>
         </LinearGradient>
     )
 }
@@ -80,26 +62,5 @@ const styles = StyleSheet.create({
         fontWeight: 400,
         fontSize: 14,
         flexShrink: 1,
-    },
-    valueContainer: {
-        alignSelf: 'end',
-        display: 'flex',
-        alignItems: 'center',
-        borderRadius: 10,
-        borderWidth: 3,
-        borderColor: Colors.S6,
-        padding: 15,
-        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
-    },
-    value: {
-        fontSize: 24,
-        fontWeight: 700,
-        color: Colors.P1,
-        textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    },
-    valueDescription: {
-        fontSize: 16,
-        fontWeight: 400,
-        color: Colors.P1
     },
 })

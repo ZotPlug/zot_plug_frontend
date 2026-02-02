@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native"
 import { DeviceControlProps } from "../types"
-import BasicButton from "../buttons/basic_button"
+import ToggleSwitchCard from "./toggle_switch_card"
 
 const defaultMqttParams = {
 	payload: { message: "Default payload message" },
@@ -11,8 +11,10 @@ const defaultMqttParams = {
 export default function DeviceControl({ deviceEndpointFn, deviceName }: DeviceControlProps) {
 	return (
 		<View style={styles.container}>
-			<BasicButton text="Turn relay off" onPress={() => deviceEndpointFn({ topic: `${deviceName}/cmd/relay/off`, ...defaultMqttParams })} />
-			<BasicButton text="Turn relay on" onPress={() => deviceEndpointFn({ topic: `${deviceName}/cmd/relay/on`, ...defaultMqttParams })} />
+            <ToggleSwitchCard 
+                title="Allow Power"
+                onSwitchOn={() => deviceEndpointFn({ topic: `${deviceName}/cmd/relay/on`, ...defaultMqttParams })}
+                onSwitchOff={() => deviceEndpointFn({ topic: `${deviceName}/cmd/relay/off`, ...defaultMqttParams })}/>
 		</View>
 	)
 }
@@ -20,9 +22,7 @@ export default function DeviceControl({ deviceEndpointFn, deviceName }: DeviceCo
 const styles = StyleSheet.create({
 	container: {
 		alignSelf: 'center',
-		padding: 10,
 		width: '100%',
-		maxWidth: 450,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
