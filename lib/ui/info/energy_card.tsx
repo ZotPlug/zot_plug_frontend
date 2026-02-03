@@ -50,7 +50,7 @@ export default function EnergyCard({
                 </View>
                 <View>
                     <Text style={styles.progressBarText}>
-                        {currentValue} {unit} of {totalValue} {unit}
+                        {currentValue.toLocaleString()} {unit} of {totalValue.toLocaleString()} {unit}
                     </Text>
                     <ProgressBar 
                         height={24}
