@@ -10,6 +10,9 @@ import imagePaths from '@/app/imagePaths'
 import { DeviceType } from 'ui/types'
 import { useResponsiveLayout } from 'ui/window_utils'
 import Header1 from 'ui/headers/header1'
+import { StyleSheet } from 'react-native'
+import { Colors } from 'ui/colors'
+import LinearGradient from 'react-native-linear-gradient'
 
 export default function Plugs() {
 
@@ -46,40 +49,69 @@ export default function Plugs() {
         <>
             {/* Header */}
             {header}
+            
+            <div className='grid grid-cols-2 gap-3 mt-2'>
+                {/* My Devices */}
+                <LinearGradient 
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    colors={[Colors.BCGrad1, Colors.BCGrad2]}
+                    style={styles.gradient}
+                >
+                    <SharedH2 text="Your Devices"/>
 
-            {/* My Devices */}
-            <div className="bg-stone-100 border border-gray-300 rounded-lg p-4 shadow-md">
-                <SharedH2 text="Your Devices" mode="light" />
+                    <div className="mt-6 flex flex-col gap-6">
+                        {isLoading ? (
+                            <div> Loading device data... </div>
 
-                <div className="mt-6 flex flex-col gap-6">
-                    {isLoading ? (
-                        <div> Loading device data... </div>
+                        ) : plugs && plugs.ok ? (
 
-                    ) : plugs && plugs.ok ? (
+                            plugs.value.map(({ device_name, device_id }) => {
+                                // These two lines mainly just for test
+                                const currUsageTest = Number((Math.random() * 30).toFixed(2));
+                                if (img_i > 1) img_i = 0; else ++img_i
 
-                        plugs.value.map(({ device_name, device_id }) => {
-                            // These two lines mainly just for test
-                            const currUsageTest = Number((Math.random() * 30).toFixed(2));
-                            if (img_i > 1) img_i = 0; else ++img_i
+                                return (
+                                    <DevicePreview 
+                                        key={device_id} 
+                                        deviceImage={img_arr[img_i]} 
+                                        deviceName={device_name} 
+                                        currUsage={currUsageTest} 
+                                        totalUsage={30} 
+                                        deviceId={device_id} 
+                                        redirectOnClick={() => openDeviceStats(device_id, device_name)} 
+                                    />
+                                )
+                            })
+                        ) : (
+                            <div> No devices attached to your account. </div>
+                        )}
+                    </div>
+                </LinearGradient>
 
-                            return (
-                                <DevicePreview 
-                                    key={device_id} 
-                                    deviceImage={img_arr[img_i]} 
-                                    deviceName={device_name} 
-                                    currUsage={currUsageTest} 
-                                    totalUsage={30} 
-                                    deviceId={device_id} 
-                                    redirectOnClick={() => openDeviceStats(device_id, device_name)} 
-                                />
-                            )
-                        })
-                    ) : (
-                        <div> No devices attached to your account. </div>
-                    )}
-                </div>
+                {/* Friend's Devices */}
+                <LinearGradient 
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    colors={[Colors.BCGrad1, Colors.BCGrad2]}
+                    style={styles.gradient}
+                >
+                    {/* TODO: Add logic to handle friends' devices (big task) */}
+                    <SharedH2 text="My Friends' Devices"/>
+                                        
+                    {/* TODO: Add card for this p block */}
+                    <p className='text-black'> No devices attached to your account </p>
+                </LinearGradient>
             </div>
         </>
-
     )
 }
+
+const styles = StyleSheet.create({
+    gradient: {
+        width: '100%',
+        padding: 12,
+        borderRadius: 12,
+    },
+})
+
