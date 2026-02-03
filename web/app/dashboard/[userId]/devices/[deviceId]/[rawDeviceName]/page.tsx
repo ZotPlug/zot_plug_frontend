@@ -222,27 +222,27 @@ export default function DevicePage() {
             case DeviceType.Mobile:
                 return (
                     <div style={styles.tabWrapper}>
-                            <Header1 
-                                headerIcon={imagePaths.header_plug}
-                                imagePaths={imagePaths}
-                                title={deviceName}
-                                onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                        <Header1 
+                            headerIcon={imagePaths.header_plug}
+                            imagePaths={imagePaths}
+                            title={deviceName}
+                            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
 
-                                <div style={styles.columns}>
-                                    {content}
-                                </div>
-                            {tabs}
+                            <div style={styles.columns}>
+                                {content}
+                            </div>
+                        {tabs}
                     </div>
                 )
                 break
             case DeviceType.Tablet:
                 return (
                     <div style={styles.tabWrapper}>
-                            <Header1 
-                                headerIcon={imagePaths.header_plug}
-                                imagePaths={imagePaths}
-                                title={deviceName}
-                                onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                        <Header1 
+                            headerIcon={imagePaths.header_plug}
+                            imagePaths={imagePaths}
+                            title={deviceName}
+                            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
 
                         <div style={styles.columns}>
                             <div style={styles.verticalChildren}>
@@ -259,21 +259,20 @@ export default function DevicePage() {
                 break
             case DeviceType.Desktop:
                 return (
-                    <div style={styles.tabWrapper}>
-                            <Header1 
-                                headerIcon={imagePaths.header_plug}
-                                imagePaths={imagePaths}
-                                title={deviceName}
-                                onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                    <div>
+                        <SharedH1 text={deviceName} center={false}/>
+                        <div style={styles.desktopSpacer}/>
+                        <div style={styles.tabWrapper}>
 
-                        <div style={styles.columns}>
-                            <div style={styles.verticalChildren}>
-                                {stats}
-                            </div>
-                            <div style={styles.verticalChildren}>
-                                {actions}
-                                {limits}
-                                {users}
+                            <div style={styles.columns}>
+                                <div style={styles.verticalChildren}>
+                                    {stats}
+                                </div>
+                                <div style={styles.verticalChildren}>
+                                    {actions}
+                                    {limits}
+                                    {users}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -292,6 +291,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: 10,
         width: '100%',
+    },
+    desktopSpacer: {
+        paddingTop: 10,
     },
     verticalChildren: {
         display: 'flex',

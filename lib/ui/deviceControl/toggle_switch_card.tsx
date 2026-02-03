@@ -1,5 +1,5 @@
-import {React, useState} from "react"
-import { Text, View, StyleSheet, TouchableOpacity, } from "react-native"
+import {React} from "react"
+import { Text, View, StyleSheet } from "react-native"
 import Switch from '../buttons/customSwitch/switch'
 import LinearGradient from "react-native-linear-gradient"
 import { Colors } from "../colors"
@@ -7,12 +7,13 @@ import { useResponsiveLayout } from "../window_utils"
 import { DeviceType } from "../types"
 
 export type ToggleSwitchCard = {
+    defaultValue?: boolean,
     title: string, 
 	onSwitchOn?: Function,
 	onSwitchOff?: Function,
 }
 
-export default function ToggleSwitchCard({ title, onSwitchOn, onSwitchOff } : ToggleSwitchCard) {
+export default function ToggleSwitchCard({defaultValue, title, onSwitchOn, onSwitchOff } : ToggleSwitchCard) {
 
     const layout: DeviceType = useResponsiveLayout()
     
@@ -35,7 +36,8 @@ export default function ToggleSwitchCard({ title, onSwitchOn, onSwitchOff } : To
                 <Switch 
                     onSwitchOn={onSwitchOn}
                     onSwitchOff={onSwitchOff}
-                    onColor={Colors.P1}/>
+                    onColor={Colors.P1}
+                    defaultValue={defaultValue}/>
             </LinearGradient>
             :
             <View style={styles.tabletContainer}>
@@ -48,6 +50,7 @@ export default function ToggleSwitchCard({ title, onSwitchOn, onSwitchOff } : To
                 <Switch 
                     onSwitchOn={onSwitchOn}
                     onSwitchOff={onSwitchOff}
+                    defaultValue={defaultValue}
                     onColor={Colors.P1}/>
             </View>
     )

@@ -8,18 +8,17 @@ import { DeviceType } from '../../types';
 import { useResponsiveLayout } from '../../window_utils';
 
 export type Switch = {
+    defaultValue?: boolean,
     onColor: string,
 	onSwitchOn?: Function,
 	onSwitchOff?: Function,
 }
 
-export default function Switch({onColor, onSwitchOn, onSwitchOff} : Switch)
+export default function Switch({defaultValue, onColor, onSwitchOn, onSwitchOff} : Switch)
 {
     const positionButton = useRef(new Animated.Value(0)).current;
-    const [isOn, setIsOn] = useState(false);
-
-    const layout: DeviceType = useResponsiveLayout()
-
+    const [isOn, setIsOn] = useState((defaultValue === undefined) ? false : defaultValue);
+    
     const startAnimToOff = () => {
         Animated.timing(positionButton, {
             toValue: 0,
@@ -28,7 +27,7 @@ export default function Switch({onColor, onSwitchOn, onSwitchOff} : Switch)
             useNativeDriver: false
         }).start()
     }
-
+    
     const startAnimToOn = () => {
         Animated.timing(positionButton, {
             toValue: 1,
@@ -36,6 +35,10 @@ export default function Switch({onColor, onSwitchOn, onSwitchOff} : Switch)
             easing: Easing.ease,
             useNativeDriver: false
         }).start()
+    }
+
+    if (isOn) {
+        startAnimToOn()
     }
 
     const positionInterPol = positionButton.interpolate({ inputRange: [0, 1], outputRange: [0, 41] })
