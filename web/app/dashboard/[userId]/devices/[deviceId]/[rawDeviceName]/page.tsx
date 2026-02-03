@@ -12,13 +12,16 @@ import MobileTabs from "ui/mobileTabs/mobileTabs"
 import SharedH1 from "ui/info/text/shared_h1"
 import SharedH5 from "ui/info/text/shared_h5"
 import InfoCard from "ui/info/info_card"
+import LinearGradient from "react-native-web-linear-gradient"
+import InfoCardWithGraph from "ui/info/info_card_with_graph"
 import UsageCard from "ui/info/usage_card"
 import EnergyCard from "ui/info/energy_card"
-import { StyleSheet } from "react-native"
+import { StyleSheet, Text } from "react-native"
 import { useResponsiveLayout } from "ui/window_utils";
 import imagePaths from "@/app/imagePaths";
 import Header1 from "ui/headers/header1";
 import { useState } from "react";
+import { Colors } from "ui/colors";
 
 async function sendCommand(params: DeviceControlReqs) {
     const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
@@ -78,17 +81,30 @@ export default function DevicePage() {
         const deviceName = deviceInfo.value.name;
         const currentVoltage = deviceReading?.ok ? deviceReading.value.voltage : 0
         const currentCurrent = deviceReading?.ok ? deviceReading.value.current : 0
+        
+        const recentUsage = (
+            (layout === DeviceType.Mobile) ?
+                <UsageCard 
+                    title="Recent Usage"
+                    description="Power usage over the last 24 hours."
+                    value={"362 W"}
+                    valueDescription="Power"/>
+                :
+                <InfoCardWithGraph 
+                    title="Usage Statistics"
+                    description="Total power consumption over the past 24 hours for this device."
+                    yesterdayValue={362}
+                    lastWeekValue={1630}
+                    lastMonthValue={12739}
+                    unit="W"/>
+        )
 
         // TODO: Get dynamic values for recent usage
         const stats = (
             <div style={styles.verticalChildren}>
                 <DeviceReadings voltage={currentVoltage} current={currentCurrent} />
 
-                <UsageCard 
-                    title="Recent Usage"
-                    description="Power usage over the last 24 hours."
-                    value={"362 W"}
-                    valueDescription="Power"/>
+                {recentUsage}
 
                 <EnergyCard 
                     title="Putting It In Perspective"
@@ -100,27 +116,55 @@ export default function DevicePage() {
             </div>
         )
 
+        const actions = (
+            (layout === DeviceType.Mobile) ?
+                <div style={styles.verticalChildren}>
+                    <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
+                </div>
+                :
+                <LinearGradient
+                    start={{x: 0, y: 0}} 
+                    end={{x: 1, y: 1}} 
+                    colors={[Colors.BCGrad1, Colors.BCGrad2]}
+                    style={styles.tabletVerticalWrapper}>
+
+                    <Text style={styles.tabletText}>
+                        Actions
+                    </Text>
+                    <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
+                </LinearGradient>
+        )
+
         // TODO: Add actual logic for limits if we have time.
         // (Using placeholder components right now because it's not a
         // priority)
         const limits = (
-            <div style={styles.verticalChildren}>
-                <ToggleSwitchCard 
-                    title="Daily Usage Limits"/>
-                <ToggleSwitchCard 
-                    title="Daily Time Limits"/>
-                <ToggleSwitchCard 
-                    title="Only Allow Hours"/>
-            </div>
-        )
-        
-        const actions = (
-            <div style={styles.verticalChildren}>
-                <DeviceControl deviceName={deviceName} deviceEndpointFn={sendCommand} />
+            (layout === DeviceType.Mobile) ?
+                <div style={styles.verticalChildren}>
+                    <ToggleSwitchCard 
+                        title="Daily Usage Limits"/>
+                    <ToggleSwitchCard 
+                        title="Daily Time Limits"/>
+                    <ToggleSwitchCard 
+                        title="Only Allow Hours"/>
+                </div>
+                :
+                <LinearGradient
+                    start={{x: 0, y: 0}} 
+                    end={{x: 1, y: 1}} 
+                    colors={[Colors.BCGrad1, Colors.BCGrad2]}
+                    style={styles.tabletVerticalWrapper}>
+                    <Text style={styles.tabletText}>Limits</Text>
+                    <ToggleSwitchCard 
+                        title="Daily Usage Limits"/>
+                    <ToggleSwitchCard 
+                        title="Daily Time Limits"/>
+                    <ToggleSwitchCard 
+                        title="Only Allow Hours"/>
+                </LinearGradient>
                 
-            </div>
         )
-        
+         
         // TODO: Add functionality to this if we have time
         // (Using placeholder components right now because it's not a
         // priority)
@@ -177,41 +221,61 @@ export default function DevicePage() {
         switch (layout) {
             case DeviceType.Mobile:
                 return (
-                    <div style={styles.verticalChildren}>
-                        <Header1 
-                            headerIcon={imagePaths.header_plug}
-                            imagePaths={imagePaths}
-                            title={deviceName}
-                            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                    <div style={styles.tabWrapper}>
+                            <Header1 
+                                headerIcon={imagePaths.header_plug}
+                                imagePaths={imagePaths}
+                                title={deviceName}
+                                onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
 
-                            {content}
+                                <div style={styles.columns}>
+                                    {content}
+                                </div>
                             {tabs}
                     </div>
                 )
                 break
             case DeviceType.Tablet:
                 return (
-                    <div style={styles.verticalChildren}>
-                        <Header1 
-                            headerIcon={imagePaths.header_plug}
-                            imagePaths={imagePaths}
-                            title={deviceName}
-                            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                    <div style={styles.tabWrapper}>
+                            <Header1 
+                                headerIcon={imagePaths.header_plug}
+                                imagePaths={imagePaths}
+                                title={deviceName}
+                                onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
 
-                            {content}
-                            {tabs}
+                        <div style={styles.columns}>
+                            <div style={styles.verticalChildren}>
+                                {stats}
+                            </div>
+                            <div style={styles.verticalChildren}>
+                                {actions}
+                                {limits}
+                                {users}
+                            </div>
+                        </div>
                     </div>
                 )
                 break
             case DeviceType.Desktop:
                 return (
-                    <div style={styles.verticalChildren}>
-                        <SharedH1 text={deviceName} />
-                        
-                        {stats}
-                        {limits}
-                        {actions}
-                        {users}
+                    <div style={styles.tabWrapper}>
+                            <Header1 
+                                headerIcon={imagePaths.header_plug}
+                                imagePaths={imagePaths}
+                                title={deviceName}
+                                onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+
+                        <div style={styles.columns}>
+                            <div style={styles.verticalChildren}>
+                                {stats}
+                            </div>
+                            <div style={styles.verticalChildren}>
+                                {actions}
+                                {limits}
+                                {users}
+                            </div>
+                        </div>
                     </div>
                 )
                 break
@@ -220,14 +284,43 @@ export default function DevicePage() {
 }
 
 const styles = StyleSheet.create({
-    verticalChildren: {
+    tabWrapper: {
+        paddingBottom: 90,
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        gap: 10,
+        width: '100%',
+    },
+    verticalChildren: {
+        display: 'flex',
         alignItems: 'flex-start',
         flexDirection: 'column',
         gap: 10,
         width: '100%',
-        paddingBottom: 60
+    },
+    tabletVerticalWrapper: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        flexDirection: 'column',
+        padding: 15,
+        gap: 10,
+        width: '100%',
+        borderRadius: 10,
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    },
+    tabletText: {
+        fontWeight: 600,
+        fontSize: 16,
+        color: Colors.P1
+    },
+    columns: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 15,
+        width: '100%'
     },
     actionsContainer: {
         width: "100%",

@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
     },
     tabletSpacer: {
         alignItems: 'center',
-        height: 40,
+        height: 30,
         marginRight: 25,
     },
     mobileSpacer: {
         alignItems: 'center',
-        height: 40,
+        height: 30,
         marginRight: 5,
         paddingLeft: 10,
         paddingRight: 10
