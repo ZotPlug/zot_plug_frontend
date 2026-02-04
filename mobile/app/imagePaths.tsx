@@ -29,6 +29,22 @@ export const imagePaths = {
     devices_preview3: require('../assets/images/device_icon3.png'),
 
     device_percentage: require('../assets/images/percentage.png'),
+
+    tabs_actions: require('../assets/images/tabs_actions.png'),
+    tabs_actionsSelected: require('../assets/images/tabs_actionsSelected.png'),
+    tabs_limits: require('../assets/images/tabs_limits.png'),
+    tabs_limitsSelected: require('../assets/images/tabs_limitsSelected.png'),
+    tabs_statistics: require('../assets/images/tabs_statistics.png'),
+    tabs_statisticsSelected: require('../assets/images/tabs_statisticsSelected.png'),
+    tabs_users: require('../assets/images/tabs_users.png'),
+    tabs_usersSelected: require('../assets/images/tabs_usersSelected.png'),
+    
+    tabs_daily: require('../assets/images/tabs_daily.png'),
+    tabs_dailySelected: require('../assets/images/tabs_dailySelected.png'),
+    tabs_weekly: require('../assets/images/tabs_weekly.png'),
+    tabs_weeklySelected: require('../assets/images/tabs_weeklySelected.png'),
+    tabs_monthly: require('../assets/images/tabs_monthly.png'),
+    tabs_monthlySelected: require('../assets/images/tabs_monthlySelected.png'),
 }
 
 export default imagePaths

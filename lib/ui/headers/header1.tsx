@@ -28,7 +28,7 @@ export default function Header1({ onBack, title, headerIcon, imagePaths}: Header
                         mobileWidth={123} mobileHeight={100} 
                         tabletWidth={200} tabletHeight={120} 
                         desktopWidth={200} desktopHeight={120} />
-                    <Shared_H1 text={title}/>
+                    <Shared_H1 text={title} center={true}/>
                 </View>
                 <TouchableOpacity 
                     onMouseEnter={() => {setHover(true)}}
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
     centerChildren: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        textAlign: 'center',
     },
     backStyle: {
         position: 'absolute',

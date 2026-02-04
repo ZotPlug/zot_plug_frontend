@@ -54,8 +54,6 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: 15,
         paddingBottom: 15,
-        paddingLeft: 50,
-        paddingRight: 50,
 
         borderRadius: 10,
         width: '100%',
@@ -86,5 +84,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        width: '50%',
     }
 })
