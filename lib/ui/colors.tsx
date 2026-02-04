@@ -39,5 +39,5 @@ export const Colors = {
     GBGrad2: '#8EDDFA',
 
     ToggleOff: '#C2C2C2',
-    ToggleBorder: '#7B7B7B'
+    ToggleBorder: '#7B7B7B',
 }

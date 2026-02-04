@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { loginRedirectUrl } from "./lib/constants";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const parts = req.nextUrl.pathname.split('/').filter(Boolean);
 
   if (parts[0] !== 'dashboard') return NextResponse.next();
