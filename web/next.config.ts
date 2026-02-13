@@ -5,13 +5,20 @@ const nextConfig = {
   transpilePackages: ['ui', 'api'],
   typescript: { ignoreBuildErrors: true },
   webpack: (config: any) => {
+    // Prefer RNW non-CJS entry to avoid the "__esModule is read-only" crash on some setups (mac)
+    let rnwEntry: string;
+    try {
+      rnwEntry = require.resolve('react-native-web/dist/index.js');
+    } catch {
+      rnwEntry = require.resolve('react-native-web');
+    }
+
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
-      'react-native': require.resolve('react-native-web'),
+      'react-native$': rnwEntry,
       'react-native-linear-gradient': require.resolve('react-native-web-linear-gradient'),
     };
 
-    // Preserve default module resolution AND add web/node_modules explicitly
     config.resolve.modules = [
       ...(config.resolve.modules || []),
       path.resolve(__dirname, 'node_modules'),
@@ -21,6 +28,7 @@ const nextConfig = {
       '.web.tsx', '.web.ts', '.web.js',
       '.tsx', '.ts', '.js', '.jsx', '.json',
     ];
+
     return config;
   },
 };
