@@ -6,7 +6,7 @@ import { Colors } from "../colors"
 export type UsageCard = {
     title: string, 
     description: string,
-    value: string,
+    value: number,
     valueDescription: string,
 }
 
@@ -40,7 +40,7 @@ export default function UsageCard({
                     style={styles.valueContainer}>
 
                     <Text style={styles.value}>
-                        {value}
+                        {value.toLocaleString()}
                     </Text>
                     <Text style={styles.valueDescription}>
                         {valueDescription}
@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
         color: Colors.P1,
         fontSize: 18,
         fontWeight: 600,
-        textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     },
     description: {
         color: Colors.P1,

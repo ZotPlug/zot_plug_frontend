@@ -50,7 +50,7 @@ export default function EnergyCard({
                 </View>
                 <View>
                     <Text style={styles.progressBarText}>
-                        {currentValue} {unit} of {totalValue} {unit}
+                        {currentValue.toLocaleString()} {unit} of {totalValue.toLocaleString()} {unit}
                     </Text>
                     <ProgressBar 
                         height={24}
@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
         color: Colors.E3,
         fontSize: 18,
         fontWeight: 600,
-        textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     },
     description: {
         color: Colors.E3,

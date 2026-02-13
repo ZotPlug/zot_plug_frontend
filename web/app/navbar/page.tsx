@@ -10,6 +10,8 @@ import { StyleSheet, View } from 'react-native';
 import LinearGradient from "react-native-web-linear-gradient"
 import { useEffect, useState } from 'react'
 import { Colors } from "ui/colors"
+import { DeviceType } from "ui/types"
+import { useResponsiveLayout } from "ui/window_utils"
 
 type NavBar = {
     currentProgress: number,
@@ -56,11 +58,13 @@ export default function NavBar({currentProgress, maxProgress}: NavBar) {
 	const { userId } = useParams<{ userId: string }>()
     const router = useRouter()
     
+    const layout: DeviceType = useResponsiveLayout()
+    
     const [page, setPage] = useState(CurrentPage.Dashboard);
     const location = useLocation()
     useEffect(() => {
         setPage(getCurrentPage(location.pathname))
-    }, [location])
+    }, [location, layout])
     
     return (
         <>
