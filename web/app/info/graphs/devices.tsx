@@ -1,78 +1,62 @@
 'use client'
 
-import { VictoryBar, VictoryChart, VictoryLabel, VictoryAxis, VictoryTheme } from "victory"
+import { 
+    VictoryChart, 
+    VictoryBar, 
+    VictoryTheme, 
+    VictoryAxis,
+    VictoryTooltip,
+    VictoryScatter
+} from "victory"
 
-const series = [{
-    name: "Canada",
-    data: [
-        396.70002, 526.50003, 62.01,
-        780.10006, 96.94, 112.14001,
-        119.73001, 122.50001, 12.816001,
-    ],
-},
-];
+interface Props {
+    data: { x: string; y: number }[]
+}
 
-export function MostUsedDevicesGraph() {
+export default function MostUsedDevicesGraph({ data }: Props) {
     return (
-        <VictoryChart
-            theme={VictoryTheme.clean}
-            width={400}
-            height={250}
-            padding={{
-                top: 50,
-                left: 70,
-                right: 50,
-                bottom: 100,
-            }}
+        <VictoryChart 
+            theme={VictoryTheme.clean} 
+            width={800}
+            height={300}
+            domainPadding={{ x: 30, y: 20 }}
         >
-
-            <VictoryLabel
-                text={"Most Used Devices"}
-                x={80}
-                y={20}
-                textAnchor={"middle"}
+            <VictoryAxis 
+                label="Device" 
                 style={{
-                    ...VictoryTheme.clean.label,
-                    fontSize: 16,
-                }}
-            />
-
-            <VictoryAxis
-                label={"Total power ponsumption over the past 24 hours for my most used devices"}
-                tickValues={[0, 1, 2, 3, 4, 5]}
-                style={{
-                    tickLabels: { fontSize: 12 },
-                    ticks: {
-                        stroke: "#757575",
-                        strokeWidth: 1,
-                    },
-                }}
+                    axisLabel: { padding: 40, fontSize: 14, fontWeight: 600 },
+                    tickLabels: { fontSize: 12, angle: -15, padding: 5 }
+                }}  
             />
 
             <VictoryAxis
                 dependentAxis
-                label={"Power (W)"}
-                tickValues={[0, 300, 600, 900, 1200]}
-                tickFormat={(value) => `${value} W`}
+                label="Energy (kWh)"
                 style={{
-                    axis: { stroke: "transparent" },
-                    axisLabel: { fontSize: 8, padding: 40 },
-                    tickLabels: { fontSize: 8 },
-                    grid: {
-                        stroke: "#d9d9d9",
-                        strokeWidth: 1,
-                    },
+                    axisLabel: { padding: 40, fontSize: 14, fontWeight: 600 },
+                    tickLabels: { fontSize: 10 }
                 }}
             />
 
             <VictoryBar
-                data={series[0].data.map((d, i) => ({
-                    x: i + 10,
-                    y: d,
-                }))}
+                data={data}
+                x='x'
+                y='y'
+                style={{
+                    data: { fill: "#10b981", width: 15 }
+                }}
             />
-        </VictoryChart>
-    );
-}
 
-export default MostUsedDevicesGraph
+            <VictoryScatter
+                data={data}
+                x="x"
+                y="y"
+                size={4}
+                style={{data: { fill: "#065f46" } }}
+                labels={({ datum }) => `${datum.y.toFixed(3)} kWh`}
+                labelComponent={<VictoryTooltip />}
+            />
+        
+        </VictoryChart>
+  )
+}
