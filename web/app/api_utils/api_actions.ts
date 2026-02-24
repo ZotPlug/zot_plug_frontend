@@ -138,3 +138,47 @@ export async function fetch_user_by_id(params: { userId: string }): Promise<Resu
 		return { ok: false, error: toErrorMessage(err) }
 	}
 }
+
+export async function get_usage_stats_graph(params: {
+	userId: string
+	range: '24h' | '7d' | '30d'
+	deviceId?: number
+}): Promise<Result<{ x: number; y: number }[]>> {
+	try {
+		const res = await fetch('/api/getUsageSeries', {
+			method: "POST",
+			credentials: "include",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ 
+				userId: params.userId,
+				range: params.range,
+				deviceId: params.deviceId
+			})
+		}).then(e => e.json())
+		if (!res.ok) throw new Error(res.message)
+		return { ok: true, value: res.value }
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
+
+export async function get_most_used_devices_graph(params: {
+	userId: string
+	range: '24h' | '7d' | '30d'
+}): Promise<Result<{ x: string; y: number }[]>> {
+	try {
+		const res = await fetch('/api/getMostUsedDevices', {
+			method: "POST",
+			credentials: "include",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ 
+				userId: params.userId,
+				range: params.range
+			})
+		}).then(e => e.json())
+		if (!res.ok) throw new Error(res.message)
+		return { ok: true, value: res.value }
+	} catch (err) {
+		return { ok: false, error: toErrorMessage(err) }
+	}
+}
