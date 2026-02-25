@@ -1,20 +1,23 @@
 'use client'
-import SharedH1 from "ui/info/text/shared_h1"
-import SharedH2 from "ui/info/text/shared_h2"
 
-import MostUsedDevicesGraph from "@/app/info/graphs/devices"
-import UsageStatisticsGraph from "@/app/info/graphs/usage_stats"
-import LinearGradient from "react-native-linear-gradient"
 import { StyleSheet } from 'react-native'
+import { useParams } from "next/navigation"
 import { Colors } from "ui/colors"
 
+import SharedH1 from "ui/info/text/shared_h1"
+import SharedH2 from 'ui/info/text/shared_h2'
+
+import GraphSection from "@/app/graph_section/page"
+import LinearGradient from "react-native-linear-gradient"
+
 export default function PowerUsage() {
+	const { userId } = useParams<{ userId: string }>()
+
 	return (
 		<>
-			{/* Header */}
 			<SharedH1 text={'Power Usage'}/>
 		
-			{/* Daily Usage */}
+			{/* DAILY */}
 			<LinearGradient
 				start={{ x: 0, y: 0 }}
 				end={{ x: 1, y: 1 }}
@@ -22,29 +25,14 @@ export default function PowerUsage() {
 				style={styles.gradient}
 			>
 				<SharedH2 text="Daily Usage" />
-
-				<div className="flex flex-row gap-6 mt-2 w-full">
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad1, Colors.GGrad2]}
-						style={styles.graphCard}
-					>
-						<UsageStatisticsGraph />
-					</LinearGradient>
-
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad2, Colors.GGrad2]}
-						style={styles.graphCard}
-					>
-						<MostUsedDevicesGraph />
-					</LinearGradient>
-				</div>
+				<GraphSection 
+					userId={userId}
+					isRange={false}
+					fixedRange='24h'
+				/>
 			</LinearGradient>
 
-			{/* Weekly Usage */}
+			{/* WEEKLY */}
 			<LinearGradient
 				start={{ x: 0, y: 0 }}
 				end={{ x: 1, y: 1 }}
@@ -52,29 +40,14 @@ export default function PowerUsage() {
 				style={styles.gradient}
 			>
 				<SharedH2 text="Weekly Usage" />
-
-				<div className="flex flex-row gap-6 mt-2 w-full">
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad1, Colors.GGrad2]}
-						style={styles.graphCard}
-					>
-						<UsageStatisticsGraph />
-					</LinearGradient>
-
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad2, Colors.GGrad2]}
-						style={styles.graphCard}
-					>
-						<MostUsedDevicesGraph />
-					</LinearGradient>
-				</div>
+				<GraphSection 
+					userId={userId}
+					isRange={false}
+					fixedRange='7d'
+				/>
 			</LinearGradient>
 
-			{/* Monthly Usage */}
+			{/* MONTHLY */}
 			<LinearGradient
 				start={{ x: 0, y: 0 }}
 				end={{ x: 1, y: 1 }}
@@ -82,26 +55,11 @@ export default function PowerUsage() {
 				style={styles.gradient}
 			>
 				<SharedH2 text="Monthly Usage" />
-
-				<div className="flex flex-row gap-6 mt-2 w-full">
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad1, Colors.GGrad2]}
-						style={styles.graphCard}
-					>
-						<UsageStatisticsGraph />
-					</LinearGradient>
-
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad2, Colors.GGrad2]}
-						style={styles.graphCard}
-					>
-						<MostUsedDevicesGraph />
-					</LinearGradient>
-				</div>
+				<GraphSection 
+					userId={userId}
+					isRange={false}
+					fixedRange='30d'
+				/>
 			</LinearGradient>
 		</>
 	)
