@@ -145,7 +145,7 @@ export async function get_usage_stats_graph(params: {
 	deviceId?: number
 }): Promise<Result<{ x: number; y: number }[]>> {
 	try {
-		const res = await fetch('/api/getUsageSeries', {
+		const res = await fetch('/api/graphs/getUsageSeries', {
 			method: "POST",
 			credentials: "include",
 			headers: { "Content-Type": "application/json" },
@@ -167,7 +167,7 @@ export async function get_most_used_devices_graph(params: {
 	range: '24h' | '7d' | '30d'
 }): Promise<Result<{ x: string; y: number }[]>> {
 	try {
-		const res = await fetch('/api/getMostUsedDevices', {
+		const res = await fetch('/api/graphs/getMostUsedDevices', {
 			method: "POST",
 			credentials: "include",
 			headers: { "Content-Type": "application/json" },
