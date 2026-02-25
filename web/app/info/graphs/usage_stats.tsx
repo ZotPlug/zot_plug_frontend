@@ -9,13 +9,13 @@ import {
     VictoryScatter
 } from "victory"
 
-interface Props {
+interface UsageStatsProps {
     data: { x: number; y: number }[]
     range: '24h' | '7d' | '30d'
     title: string
 }
 
-export default function UsageStatisticsGraph({ data, range, title }: Props) {
+export default function UsageStatisticsGraph({ data, range, title }: UsageStatsProps) {
     let domainMax = 23
     let tickValues: number[] = []
     let tickFormat: (t: number) => string = (t) => `${t}`

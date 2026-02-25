@@ -11,7 +11,7 @@ import MostUsedDevicesGraph from "../info/graphs/devices"
 import LinearGradient from "react-native-linear-gradient"
 import useGraphData from "../hooks/useGraphData"
 
-interface Props {
+interface DisplayGraphProps {
     userId: string,
     isRange?: boolean
     fixedRange?: '24h' | '7d' | '30d'
@@ -27,7 +27,7 @@ export default function GraphSection({
     showUsageStats = true,
     showDevices = true,
     globalDeviceId
- }: Props) {
+ }: DisplayGraphProps) {
     const [devices, setDevices] = useState<UserDeviceInfo[]>([])
     const [localDeviceId, setLocalDeviceId] = useState<number | undefined>()
     const selectedDeviceId = globalDeviceId ?? localDeviceId
@@ -43,17 +43,19 @@ export default function GraphSection({
         fetchDevices: showDevices
     })
 
-    useEffect(() => {
-        async function fetchDevices() {
-            const res = await get_all_devices_by_userId({ userId })
-            if (res.ok) {
-                setDevices(res.value)
-                if (res.value.length > 0) {
-                    setLocalDeviceId(res.value[0].device_id)
-                }
+    async function fetchDevices() {
+        const res = await get_all_devices_by_userId({ userId })
+        if (res.ok) {
+            setDevices(res.value)
+            if (res.value.length > 0) {
+                setLocalDeviceId(res.value[0].device_id)
             }
         }
+    }
+
+    useEffect(() => {
         fetchDevices()
+        
     }, [userId])
 
     const selectedDeviceName = devices.find(d => d.device_id === selectedDeviceId)?.device_name ?? ""

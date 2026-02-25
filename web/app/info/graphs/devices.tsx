@@ -9,12 +9,12 @@ import {
     VictoryScatter
 } from "victory"
 
-interface Props {
+interface MostUsedDevicesProps {
     data: { x: string; y: number }[]
     range: '24h' | '7d' | '30d'
 }
 
-export default function MostUsedDevicesGraph({ data, range }: Props) {
+export default function MostUsedDevicesGraph({ data, range }: MostUsedDevicesProps) {
     const rangeLabel = range === '24h' ? '24 hours' : range === '7d' ? '7 days' : '30 days'
 
     return (
