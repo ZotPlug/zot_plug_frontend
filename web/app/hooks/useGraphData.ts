@@ -1,4 +1,3 @@
-// web/app/hooks/useGraphData.ts
 'use client'
 import { useState, useEffect } from "react"
 import { get_usage_stats_graph, get_most_used_devices_graph } from "../api_utils/api_actions"

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { StyleSheet } from 'react-native'
 
 import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
-import useGraphData from "@/app/hooks/useGraphData"
+import GraphSection from "@/app/graph_section/page"
 
 import SharedH1 from "ui/info/text/shared_h1"
 import SharedH2 from "ui/info/text/shared_h2"
@@ -16,8 +16,6 @@ import { UserDeviceInfo } from "ui/types"
 import { useQueries } from "@tanstack/react-query"
 import { Colors } from "ui/colors"
 
-import MostUsedDevicesGraph from "@/app/info/graphs/devices"
-import UsageStatisticsGraph from "@/app/info/graphs/usage_stats"
 import LinearGradient from "react-native-linear-gradient"
 import UsageCard from "ui/info/usage_card"
 
@@ -25,17 +23,7 @@ export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
 	const [user, setUser] = useState<{ firstname: string; lastname: string; userId: string } | null>(null)
 	const [devices, setDevices] = useState<UserDeviceInfo[]>([])
-	const [selectedDeviceId, setSelectedDeviceId] = useState<number | undefined>(undefined)
-	const [range, setRange] = useState<'24h' | '7d' | '30d'>('24h')
 	const [modalMessage, SetModalMessage] = useState<{ ok: boolean, message: string } | null>(null)
-
-	const { usageData, deviceData, loading } = useGraphData({
-		userId, 
-		deviceId: selectedDeviceId,
-		range, 
-		fetchUsage: true,
-		fetchDevices: true
-	})
 
 	async function addDevice(params: { deviceName: string }) {
 		const res = await add_device({ userId: parseInt(userId), deviceName: params.deviceName })
@@ -95,8 +83,6 @@ export default function Dashboard() {
 		description: 'Power usage over the last 30 days.'
 	}]
 
-	const selectedDeviceName = devices.find(d => d.device_id === selectedDeviceId)?.device_name ?? ""
-
 	return (
 		<>
 			{/* Header */}
@@ -115,7 +101,7 @@ export default function Dashboard() {
 				))}
 			</div>
 
-			{/* Quick Summary */}
+			{/* Graph Section */}
 			<LinearGradient
 				start={{ x: 0, y: 0 }}
 				end={{ x: 1, y: 1 }}
@@ -123,32 +109,10 @@ export default function Dashboard() {
 				style={styles.gradient}
 			>
 				<SharedH2 text="Quick Summary" />
-
-				<div className="flex flex-row gap-6 mt-2 w-full">
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad1, Colors.GGrad2]}
-						style={styles.graphCard}
-					>
-						<UsageStatisticsGraph 
-							data={usageData}
-							range={range}
-							title={selectedDeviceName}
-						/>
-					</LinearGradient>
-
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad2, Colors.GGrad2]}
-						style={styles.graphCard}
-					>
-						<MostUsedDevicesGraph 
-							data={deviceData}
-						/>
-					</LinearGradient>
-				</div>
+				<GraphSection 
+					userId={userId}
+					isRange={true}
+				/>
 			</LinearGradient>
 
 			{/* Devices Box */}
