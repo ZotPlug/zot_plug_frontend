@@ -41,21 +41,25 @@ export default function UsageStatisticsGraph({ data, range, title }: Props) {
     const maxY = Math.max(...data.map(d => d.y), 0)
     const rawMaxY = maxY * 1.15
     const paddedMaxY = Math.ceil(rawMaxY * 100) / 100
+    const rangeLabel = range === '24h' ? '24 hours' : range === '7d' ? '7 days' : '30 days'
 
     return (
-        <div>
-            <h3 style={{ textAlign: "center", marginBottom: 10 }}>{title}</h3>
+        <div style={{ width: "100%" }}>
+            <h3 style={{ textAlign: "center", color: "black" }}>Device Name: {title}</h3>
 
             <VictoryChart 
-                theme={VictoryTheme.clean} 
-                width={800} 
+                theme={VictoryTheme.clean}  
                 height={300}
+                width={undefined}
                 domain={{ 
                     x: [0, domainMax], 
                     y: [0, paddedMaxY] 
-                }}     
-            >
-            
+                }}
+                // animate={{
+                //     duration: 500,
+                //     easing: "quadInOut"
+                // }}     
+            >  
                 <VictoryAxis 
                     tickValues={tickValues}
                     tickFormat={tickFormat}
@@ -65,7 +69,6 @@ export default function UsageStatisticsGraph({ data, range, title }: Props) {
                         tickLabels: { fontSize: 10, angle: -45, padding: 10 }
                     }}    
                 />
-
                 <VictoryAxis 
                     dependentAxis 
                     label="Energy (kWh)" 
@@ -74,7 +77,6 @@ export default function UsageStatisticsGraph({ data, range, title }: Props) {
                         tickLabels: { fontSize: 10 }
                     }}
                 />
-
                 <VictoryArea
                     data={data}
                     interpolation="linear"
@@ -86,7 +88,6 @@ export default function UsageStatisticsGraph({ data, range, title }: Props) {
                         }
                     }}
                 />
-
                 <VictoryScatter
                     data={data}
                     size={4}
@@ -96,6 +97,10 @@ export default function UsageStatisticsGraph({ data, range, title }: Props) {
                 />
 
             </VictoryChart>
+
+            <h3 style={{ textAlign: "center", marginTop: 12, width: "100%", color: "black", wordWrap: 'break-word' }}>
+                Total energy consumption over the past {rangeLabel}
+            </h3>
         </div>
     );
 }
