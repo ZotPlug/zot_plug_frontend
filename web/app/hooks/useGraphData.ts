@@ -36,9 +36,10 @@ export default function useGraphData({
                 
                 if (res.ok) {
                     const expectedLength = range === '24h' ? 24 : range === '7d' ? 7 : 30
-                    const formatted: UsageDataPoint[] = Array.from({ length: expectedLength }, (_, range) => ({
-                        x: range,
-                        y: Number(res.value[range]?.y ?? 0)
+                    const values = res.value.map(d => Number(d.value ?? 0))
+                    const formatted: UsageDataPoint[] = Array.from({ length: expectedLength }, (_, index) => ({
+                        x: index,
+                        y: Number(values[index] ?? 0)
                     }))
                     setUsageData(formatted)
                 } else {
@@ -53,8 +54,8 @@ export default function useGraphData({
                 
                 if (res.ok) {
                     const formatted: DeviceDataPoint[] = res.value.map(d => ({
-                        x: d.x ?? "Unknown Device",
-                        y: Number(d.y ?? 0)
+                        x: d.device_name ?? "Unknown Device",
+                        y: Number(d.total_energy ?? 0)
                     }))
                     setDeviceData(formatted)
                 } else {
@@ -71,8 +72,9 @@ export default function useGraphData({
     }
 
     useEffect(() => {
+        if (!userId) return
+
         fetchGraphs()
-        
     }, [userId, deviceId, range, fetchUsage, fetchDevices])
 
     return { usageData, deviceData, loading }

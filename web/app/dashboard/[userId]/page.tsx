@@ -71,16 +71,16 @@ export default function Dashboard() {
 
 	const usagePeriods = [{
 		label: 'Daily',
-		value: '362 W',
-		description: 'Power usage over the last 24 hours.'
+		value: '362 kWh',
+		description: 'Energy usage over the last 24 hours.'
 	},{
 		label: 'Weekly',
-		value: '1,362 W',
-		description: 'Power usage over the last 7 days.'
+		value: '1,362 kWh',
+		description: 'Energy usage over the last 7 days.'
 	},{
 		label: 'Monthly',
-		value: '4,362 W',
-		description: 'Power usage over the last 30 days.'
+		value: '4,362 kWh',
+		description: 'Energy usage over the last 30 days.'
 	}]
 
 	return (
@@ -96,7 +96,7 @@ export default function Dashboard() {
 						title={`${label} Usage`}
 						description={description}
 						value={value}
-						valueDescription="Power"
+						valueDescription="Energy"
 					/>
 				))}
 			</div>

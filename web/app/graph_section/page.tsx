@@ -17,7 +17,6 @@ interface DisplayGraphProps {
     fixedRange?: '24h' | '7d' | '30d'
     showUsageStats?: boolean
     showDevices?: boolean
-    globalDeviceId?: number
 }
 
 export default function GraphSection({ 
@@ -26,15 +25,16 @@ export default function GraphSection({
     fixedRange,
     showUsageStats = true,
     showDevices = true,
-    globalDeviceId
  }: DisplayGraphProps) {
     const [devices, setDevices] = useState<UserDeviceInfo[]>([])
-    const [localDeviceId, setLocalDeviceId] = useState<number | undefined>()
-    const selectedDeviceId = globalDeviceId ?? localDeviceId
+    const [selectedDeviceId, setSelectedDeviceId] = useState<number | undefined>()
+    
     const [range, setRange] = useState<'24h' | '7d' | '30d'>(
         fixedRange ?? '24h'
     )
+    
     const effectiveRange = fixedRange ?? range
+
     const { usageData, deviceData, loading } = useGraphData({
         userId, 
         deviceId: selectedDeviceId,
@@ -48,7 +48,7 @@ export default function GraphSection({
         if (res.ok) {
             setDevices(res.value)
             if (res.value.length > 0) {
-                setLocalDeviceId(res.value[0].device_id)
+                setSelectedDeviceId(res.value[0].device_id)
             }
         }
     }
@@ -82,7 +82,7 @@ export default function GraphSection({
                 {devices.length > 0 && (
                     <select
                         value={selectedDeviceId}
-                        onChange={(e) => setLocalDeviceId(Number(e.target.value))}
+                        onChange={(e) => setSelectedDeviceId(Number(e.target.value))}
                         className="p-2 border rounded-md text-black"
                     >
                         {devices.map(device => (
@@ -112,7 +112,7 @@ export default function GraphSection({
                             
                             <UsageStatisticsGraph 
                                 data={usageData}
-                                range={range}
+                                range={effectiveRange}
                                 title={selectedDeviceName}
                             />
                         </LinearGradient>
@@ -129,7 +129,7 @@ export default function GraphSection({
                             
                             <MostUsedDevicesGraph 
                                 data={deviceData}
-                                range={range}
+                                range={effectiveRange}
                             />
                         </LinearGradient>
                     )}
