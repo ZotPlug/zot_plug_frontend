@@ -69,13 +69,20 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
                         <VictoryLabel
                             dy={60}   
                             textAnchor="middle"
-                            style={{ fontSize: 14, fontWeight: 600 }}
+                            lineHeight={1.3}
                             text={[
                                 xLabel,
-                                `Total energy consumption over the past ${rangeLabel}`
+                                `Total energy consumption over the past ${rangeLabel}`,
+                            ]}
+                            style={[
+                                { fontSize: 14, fontWeight: 600 },
+                                { fontSize: 11, fontWeight: 400 }
                             ]}
                         />
-                    }  
+                    }
+                    style={{
+                        tickLabels: { fontSize: 10, angle: -45, padding: 10}
+                    }}  
                 /> */}
                 <VictoryAxis 
                     dependentAxis 
