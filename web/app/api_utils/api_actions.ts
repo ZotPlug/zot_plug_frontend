@@ -139,9 +139,6 @@ export async function fetch_user_by_id(params: { userId: string }): Promise<Resu
 	}
 }
 
-
-
-
 export async function get_usage_stats_graph(params: {
 	userId: string
 	range: '24h' | '7d' | '30d'
