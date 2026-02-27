@@ -10,6 +10,7 @@ import UsageStatisticsGraph from "../info/graphs/usage_stats"
 import MostUsedDevicesGraph from "../info/graphs/devices"
 import LinearGradient from "react-native-linear-gradient"
 import useGraphData from "../hooks/useGraphData"
+import SharedH4 from "ui/info/text/shared_h4"
 
 interface DisplayGraphProps {
     userId: string,
@@ -108,7 +109,8 @@ export default function GraphSection({
                             colors={[Colors.GGrad1, Colors.GGrad2]}
                             style={styles.graphCard}
                         >
-                            <h3 className="text-black font-semibold mb-2">Usage Statistics</h3>
+                            {/* <h3 className="text-black font-semibold mb-2">Usage Statistics</h3> */}
+                            <SharedH4 text="Usage Statistics"/>
                             
                             <UsageStatisticsGraph 
                                 data={usageData}
@@ -125,7 +127,8 @@ export default function GraphSection({
                             colors={[Colors.GGrad1, Colors.GGrad2]}
                             style={styles.graphCard}
                         >
-                            <h3 className="text-black font-semibold mb-2">Most Used Devices</h3>
+                            {/* <h3 className="text-black font-semibold mb-2">Most Used Devices</h3> */}
+                            <SharedH4 text="Most Used Devices"/>
                             
                             <MostUsedDevicesGraph 
                                 data={deviceData}
@@ -148,6 +151,6 @@ const styles = StyleSheet.create({
     graphCard: {
         flex: 1,          
         padding: 12,
-        borderRadius: 12,
+        borderRadius: 12
     },
 })

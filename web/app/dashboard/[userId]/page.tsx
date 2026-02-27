@@ -71,15 +71,15 @@ export default function Dashboard() {
 
 	const usagePeriods = [{
 		label: 'Daily',
-		value: '362 kWh',
+		value: '3 kWh',
 		description: 'Energy usage over the last 24 hours.'
 	},{
 		label: 'Weekly',
-		value: '1,362 kWh',
+		value: '13 kWh',
 		description: 'Energy usage over the last 7 days.'
 	},{
 		label: 'Monthly',
-		value: '4,362 kWh',
+		value: '100 kWh',
 		description: 'Energy usage over the last 30 days.'
 	}]
 
