@@ -1,13 +1,10 @@
 'use client'
 
-import { 
-    VictoryChart, 
-    VictoryBar, 
-    VictoryTheme, 
-    VictoryAxis,
-    VictoryTooltip,
-    VictoryScatter
-} from "victory"
+import { VictoryChart, VictoryBar, VictoryTheme, VictoryAxis, VictoryTooltip, VictoryScatter } from "victory"
+import { Colors } from "ui/colors"
+import { StyleSheet } from 'react-native'
+import SharedH5 from "ui/info/text/shared_h5"
+
 
 interface MostUsedDevicesProps {
     data: { x: string; y: number }[]
@@ -18,29 +15,30 @@ export default function MostUsedDevicesGraph({ data, range }: MostUsedDevicesPro
     const rangeLabel = range === '24h' ? '24 hours' : range === '7d' ? '7 days' : '30 days'
 
     return (
-        <div style={{ width: "100%" }}>
+        <div style={styles.graphContainer}>
             <VictoryChart 
                 theme={VictoryTheme.clean} 
-                height={300}
-                width={undefined}
+                height={250}
+                padding={{
+                    top: 0,
+                    bottom: 60,
+                    right: 20,
+                    left: 60
+                }}
                 domainPadding={{ x: 30, y: 20 }}
-                // animate={{
-                //     duration: 500,
-                //     easing: "quadInOut"
-                // }}
             >
                 <VictoryAxis 
-                    label="My Devices" 
+                    label="My Devices"
                     style={{
                         axisLabel: { padding: 40, fontSize: 14, fontWeight: 600 },
-                        tickLabels: { fontSize: 12, angle: -15, padding: 5 }
+                        tickLabels: { fontSize: 10, angle: -15, padding: 5 }
                     }}  
                 />
                 <VictoryAxis
                     dependentAxis
                     label="Energy (kWh)"
                     style={{
-                        axisLabel: { padding: 40, fontSize: 14, fontWeight: 600 },
+                        axisLabel: { padding: 42, fontSize: 14, fontWeight: 600 },
                         tickLabels: { fontSize: 10 }
                     }}
                 />
@@ -49,7 +47,7 @@ export default function MostUsedDevicesGraph({ data, range }: MostUsedDevicesPro
                     x='x'
                     y='y'
                     style={{
-                        data: { fill: "#10b981", width: 25 }
+                        data: { fill: Colors.BCGrad2, width: 50 }
                     }}
                 />
                 <VictoryScatter
@@ -57,15 +55,20 @@ export default function MostUsedDevicesGraph({ data, range }: MostUsedDevicesPro
                     x="x"
                     y="y"
                     size={4}
-                    style={{data: { fill: "#065f46" } }}
+                    style={{data: { fill: Colors.P1 } }}
                     labels={({ datum }) => `${datum.y.toFixed(3)} kWh`}
                     labelComponent={<VictoryTooltip />}
                 />
             </VictoryChart>
-
-            <h3 style={{ textAlign: "center", marginTop: 2, width: "100%", color: "black", wordWrap: 'break-word' }}>
-                Total energy consumption over the past {rangeLabel} across my most used devices
-            </h3>
+            
+            <SharedH5 text={`Total energy consumption over the past ${rangeLabel} across my most used devices`}/>
         </div>
     )
 }
+
+const styles = StyleSheet.create({
+    graphContainer: {
+        height: '100%',
+        width: '100%'
+    },
+})

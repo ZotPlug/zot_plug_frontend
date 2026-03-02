@@ -10,6 +10,7 @@ import UsageStatisticsGraph from "../info/graphs/usage_stats"
 import MostUsedDevicesGraph from "../info/graphs/devices"
 import LinearGradient from "react-native-linear-gradient"
 import useGraphData from "../hooks/useGraphData"
+import SharedH4 from "ui/info/text/shared_h4"
 
 interface DisplayGraphProps {
     userId: string,
@@ -17,7 +18,6 @@ interface DisplayGraphProps {
     fixedRange?: '24h' | '7d' | '30d'
     showUsageStats?: boolean
     showDevices?: boolean
-    globalDeviceId?: number
 }
 
 export default function GraphSection({ 
@@ -26,15 +26,16 @@ export default function GraphSection({
     fixedRange,
     showUsageStats = true,
     showDevices = true,
-    globalDeviceId
  }: DisplayGraphProps) {
     const [devices, setDevices] = useState<UserDeviceInfo[]>([])
-    const [localDeviceId, setLocalDeviceId] = useState<number | undefined>()
-    const selectedDeviceId = globalDeviceId ?? localDeviceId
+    const [selectedDeviceId, setSelectedDeviceId] = useState<number | undefined>()
+    
     const [range, setRange] = useState<'24h' | '7d' | '30d'>(
         fixedRange ?? '24h'
     )
+    
     const effectiveRange = fixedRange ?? range
+
     const { usageData, deviceData, loading } = useGraphData({
         userId, 
         deviceId: selectedDeviceId,
@@ -48,7 +49,7 @@ export default function GraphSection({
         if (res.ok) {
             setDevices(res.value)
             if (res.value.length > 0) {
-                setLocalDeviceId(res.value[0].device_id)
+                setSelectedDeviceId(res.value[0].device_id)
             }
         }
     }
@@ -82,7 +83,7 @@ export default function GraphSection({
                 {devices.length > 0 && (
                     <select
                         value={selectedDeviceId}
-                        onChange={(e) => setLocalDeviceId(Number(e.target.value))}
+                        onChange={(e) => setSelectedDeviceId(Number(e.target.value))}
                         className="p-2 border rounded-md text-black"
                     >
                         {devices.map(device => (
@@ -108,11 +109,12 @@ export default function GraphSection({
                             colors={[Colors.GGrad1, Colors.GGrad2]}
                             style={styles.graphCard}
                         >
-                            <h3 className="text-black font-semibold mb-2">Usage Statistics</h3>
+                            {/* <h3 className="text-black font-semibold mb-2">Usage Statistics</h3> */}
+                            <SharedH4 text="Usage Statistics"/>
                             
                             <UsageStatisticsGraph 
                                 data={usageData}
-                                range={range}
+                                range={effectiveRange}
                                 title={selectedDeviceName}
                             />
                         </LinearGradient>
@@ -125,11 +127,12 @@ export default function GraphSection({
                             colors={[Colors.GGrad1, Colors.GGrad2]}
                             style={styles.graphCard}
                         >
-                            <h3 className="text-black font-semibold mb-2">Most Used Devices</h3>
+                            {/* <h3 className="text-black font-semibold mb-2">Most Used Devices</h3> */}
+                            <SharedH4 text="Most Used Devices"/>
                             
                             <MostUsedDevicesGraph 
                                 data={deviceData}
-                                range={range}
+                                range={effectiveRange}
                             />
                         </LinearGradient>
                     )}
@@ -148,6 +151,6 @@ const styles = StyleSheet.create({
     graphCard: {
         flex: 1,          
         padding: 12,
-        borderRadius: 12,
+        borderRadius: 12
     },
 })

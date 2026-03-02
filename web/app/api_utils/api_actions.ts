@@ -1,6 +1,6 @@
 // web/app/api_utils/api_actions.ts
 import { toErrorMessage } from "./helper";
-import { signUpInfo, basicCreds } from "./types";
+import { signUpInfo, basicCreds, RawUsagePoint, RawDevicePoint } from "./types";
 import { addDeviceReqs, DeviceControlReqs, UserDeviceInfo } from "ui/types";
 type Result<T> = { ok: true; value: T } | { ok: false, error: string }
 
@@ -143,7 +143,7 @@ export async function get_usage_stats_graph(params: {
 	userId: string
 	range: '24h' | '7d' | '30d'
 	deviceId?: number
-}): Promise<Result<{ x: number; y: number }[]>> {
+}): Promise<Result<RawUsagePoint[]>> {
 	try {
 		const res = await fetch('/api/graphs/getUsageSeries', {
 			method: "POST",
@@ -165,7 +165,7 @@ export async function get_usage_stats_graph(params: {
 export async function get_most_used_devices_graph(params: {
 	userId: string
 	range: '24h' | '7d' | '30d'
-}): Promise<Result<{ x: string; y: number }[]>> {
+}): Promise<Result<RawDevicePoint[]>> {
 	try {
 		const res = await fetch('/api/graphs/getMostUsedDevices', {
 			method: "POST",
