@@ -37,6 +37,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                     onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
 
                     placeholder="Type here"
+                    placeholderTextColor={Colors.S1}
                     editable={true}
                     style={styles.textInput}
                 />
@@ -46,6 +47,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                     onChangeText={(email) => SetUserInfo((prev) => ({ ...prev, email }))}
                     onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                     placeholder="Type here"
+                    placeholderTextColor={Colors.S1}
                     editable={true}
                     style={styles.textInput}
                 />
@@ -57,6 +59,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                             onChangeText={(firstname) => SetUserInfo((prev) => ({ ...prev, firstname }))}
                             onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                             placeholder="Type here"
+                            placeholderTextColor={Colors.S1}
                             editable={true}
                             style={[styles.textInput, { marginRight: 2 }]}
                         />
@@ -69,6 +72,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                             onChangeText={(lastname) => SetUserInfo((prev) => ({ ...prev, lastname }))}
                             onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText, { firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                             placeholder="Type here"
+                            placeholderTextColor={Colors.S1}
                             editable={true}
                             style={[styles.textInput, { marginLeft: 2 }]}
                         />
@@ -81,6 +85,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                     onChangeText={(password) => SetUserInfo((prev) => ({ ...prev, password }))}
                     onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                     placeholder="Type Here"
+                    placeholderTextColor={Colors.S1}
                     editable={true}
                     style={styles.textInput}
                 />
@@ -91,6 +96,7 @@ export default function SignUpComp({ onSubmit, onBack, errorText, setErrorText, 
                     onChangeText={(confirm) => SetUserInfo((prev) => ({ ...prev, confirm }))}
                     onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText,{ firstname: userInfo.firstname, lastname: userInfo.lastname, username: userInfo.username, email: userInfo.email, password: userInfo.password }))}
                     placeholder="Type here"
+                    placeholderTextColor={Colors.S1}
                     editable={true}
                     style={styles.textInput}
                 />

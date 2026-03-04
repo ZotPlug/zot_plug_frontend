@@ -2,7 +2,7 @@
 'use client'
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 
 import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
 
@@ -109,7 +109,7 @@ export default function Dashboard() {
 				colors={[Colors.BCGrad1, Colors.BCGrad2]}
 				style={styles.gradient}
 			>
-				<SharedH2 text="Quick Summary" />
+                <Text style={styles.headerText}>Quick Summary</Text>
 
 				<div className="flex flex-row gap-6 mt-2 w-full">
 					<LinearGradient
@@ -124,7 +124,7 @@ export default function Dashboard() {
 					<LinearGradient
 						start={{ x: 0, y: 0 }}
 						end={{ x: 1, y: 1 }}
-						colors={[Colors.GGrad2, Colors.GGrad2]}
+						colors={[Colors.GGrad1, Colors.GGrad2]}
 						style={styles.graphCard}
 					>
 						<MostUsedDevicesGraph />
@@ -139,7 +139,7 @@ export default function Dashboard() {
 				colors={[Colors.BCGrad1, Colors.BCGrad2]}
 				style={styles.gradient}
 			>
-				<SharedH2 text="Most Used Devices" mode="light" />
+                <Text style={styles.headerText}>Most Used Devices</Text>
 				<div className="grid grid-cols-2 gap-3 mt-2">
 					{devices.slice(0, 4).map((device) => (
 						<DevicePreview
@@ -167,10 +167,18 @@ const styles = StyleSheet.create({
 		width: '100%',
 		padding: 12,
 		borderRadius: 12,
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
 	},
 	graphCard: {
 		flex: 1,          
 		padding: 12,
 		borderRadius: 12,
+        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
 	},
+    headerText: {
+        color: Colors.S1,
+        fontWeight: 600,
+        fontSize: 24,
+        textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    }
 })

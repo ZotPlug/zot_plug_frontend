@@ -17,35 +17,37 @@ export default function UsageCard({
     valueDescription
 }: UsageCard) {
 
+    // TODO: If the width is under a certain amount, change the layout to vertical instead of horizontal (it fits better)
+
     return (
-            <LinearGradient
-                start={{x: 0, y: 0.4}} 
-                end={{x: 1, y: 0.6}} 
-                colors={[Colors.BCGrad1, Colors.BCGrad2]}
-                style={styles.container}>
+        <LinearGradient
+            start={{x: 0, y: 0.4}} 
+            end={{x: 1, y: 0.6}} 
+            colors={[Colors.BCGrad1, Colors.BCGrad2]}
+            style={styles.container}>
 
-                <View style={styles.descriptionContainer}>
-                    <Text style={styles.title}>
-                        {title}
-                    </Text>
-                    <Text style={styles.description}>
-                        {description}
-                    </Text>
-                </View>
+            <View style={styles.descriptionContainer}>
+                <Text style={styles.title}>
+                    {title}
+                </Text>
+                <Text style={styles.description}>
+                    {description}
+                </Text>
+            </View>
 
-                <LinearGradient 
-                    start={{x: 0, y: 0}} 
-                    end={{x: 1, y: 1}} 
-                    colors={[Colors.GGrad1, Colors.GGrad2]}
-                    style={styles.valueContainer}>
+            <LinearGradient 
+                start={{x: 0, y: 0}} 
+                end={{x: 1, y: 1}} 
+                colors={[Colors.GGrad1, Colors.GGrad2]}
+                style={styles.valueContainer}>
 
-                    <Text style={styles.value}>
-                        {value.toLocaleString()}
-                    </Text>
-                    <Text style={styles.valueDescription}>
-                        {valueDescription}
-                    </Text>
-                </LinearGradient>
+                <Text style={styles.value}>
+                    {value.toLocaleString()}
+                </Text>
+                <Text style={styles.valueDescription}>
+                    {valueDescription}
+                </Text>
+            </LinearGradient>
         </LinearGradient>
     )
 }
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         width: '100%',
-        height: 120,
+        minHeight: 120,
 
         display: 'flex',
         flexDirection: 'row',
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
         flexShrink: 1,
     },
     valueContainer: {
-        alignSelf: 'end',
+        alignSelf: 'center',
         display: 'flex',
         alignItems: 'center',
         borderRadius: 10,
