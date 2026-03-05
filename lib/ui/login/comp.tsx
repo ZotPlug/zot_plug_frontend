@@ -67,7 +67,7 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, i
             </View>
 
             {isLoading ?
-                <ActivityIndicator 
+                <ActivityIndicator
                     size="large" 
                     style={styles.loadingSpinner}
                     color={Colors.P1} />

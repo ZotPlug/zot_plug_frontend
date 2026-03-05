@@ -4,6 +4,8 @@ import LinearGradient from "react-native-linear-gradient"
 import { Colors } from "../colors"
 import { DeviceType } from "../types"
 import { useResponsiveLayout } from "../window_utils"
+import AddDeviceButton from "../buttons/add_device_button"
+import SharedHr from "./shared_hr"
 
 export type InfoCardWithGraph = {
     title: string, 
@@ -13,8 +15,10 @@ export type InfoCardWithGraph = {
     lastMonthValue: number,
     unit: string,
     graph: any,
-    showBackground?: boolean
-    showButton?: boolean
+    showBackground?: boolean,
+    showButton?: boolean,
+    buttonImage?: string,
+	onPress?: () => unknown | Promise<unknown>,
 }
 
 export default function InfoCardWithGraph({ 
@@ -26,7 +30,9 @@ export default function InfoCardWithGraph({
     unit,
     graph,
     showBackground=true,
-    showButton=false // Used for the power usage breakdown on tablet
+    showButton=false, // Used for the power usage breakdown on tablet
+    buttonImage="",
+    onPress
 }: InfoCardWithGraph) {
     
     const layout: DeviceType = useResponsiveLayout()
@@ -92,6 +98,15 @@ export default function InfoCardWithGraph({
                     </Text>
                 </View>
             </View>
+
+            {showButton ? (
+                <AddDeviceButton 
+                    text="Power Usage Breakdown" 
+                    imagePath={buttonImage}
+                    onPress={onPress}/>
+            ) : (
+                <View></View>
+            )}
         </View>
     )
     

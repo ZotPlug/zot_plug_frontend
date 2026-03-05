@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { UserDeviceInfo } from "ui/types"
+import { DeviceType, UserDeviceInfo } from "ui/types"
 import { get_all_devices_by_userId } from "../api_utils/api_actions"
 import { Colors } from "ui/colors"
 import { StyleSheet, Text } from 'react-native'
@@ -10,6 +10,7 @@ import UsageStatisticsGraph from "../info/graphs/usage_stats"
 import MostUsedDevicesGraph from "../info/graphs/devices"
 import LinearGradient from "react-native-linear-gradient"
 import useGraphData from "../hooks/useGraphData"
+import { useResponsiveLayout } from "ui/window_utils"
 
 interface DisplayGraphProps {
     userId: string,
@@ -18,7 +19,8 @@ interface DisplayGraphProps {
     showUsageStats?: boolean
     showDevices?: boolean,
     showDeviceName?: boolean,
-    showDescription?: boolean
+    showDescription?: boolean,
+    deviceId?: string
 }
 
 export default function GraphSection({ 
@@ -28,7 +30,8 @@ export default function GraphSection({
     showUsageStats = true,
     showDevices = true,
     showDeviceName = true,
-    showDescription = true
+    showDescription = true,
+    deviceId
  }: DisplayGraphProps) {
     const [devices, setDevices] = useState<UserDeviceInfo[]>([])
     const [selectedDeviceId, setSelectedDeviceId] = useState<number | undefined>()
@@ -36,6 +39,8 @@ export default function GraphSection({
     const [range, setRange] = useState<'24h' | '7d' | '30d'>(
         fixedRange ?? '24h'
     )
+    
+    const layout: DeviceType = useResponsiveLayout()
     
     const effectiveRange = fixedRange ?? range
 
@@ -52,7 +57,11 @@ export default function GraphSection({
         if (res.ok) {
             setDevices(res.value)
             if (res.value.length > 0) {
-                setSelectedDeviceId(res.value[0].device_id)
+                if (typeof deviceId !== 'undefined') {
+                    setSelectedDeviceId(parseInt(deviceId))
+                } else {
+                    setSelectedDeviceId(res.value[0].device_id)
+                }
             }
         }
     }
@@ -63,7 +72,7 @@ export default function GraphSection({
     }, [userId])
 
     const selectedDeviceName = devices.find(d => d.device_id === selectedDeviceId)?.device_name ?? ""
-
+    
     return (
         <div>
             {/* CONTROLS */}
@@ -103,8 +112,45 @@ export default function GraphSection({
                     <Text style={styles.loadingText}>Loading graphs...</Text>
                 </div>
             ) : (
-                // <div className="flex flex-row gap-6 mt-2 w-full">
-                //<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2 w-full">
+                layout !== DeviceType.Desktop ? (
+
+                 <div className="flex flex-col gap-6 mt-2 w-full">
+                    {showUsageStats && (
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            colors={[Colors.GGrad1, Colors.GGrad2]}
+                            style={styles.graphCard}
+                        >
+                            <Text style={styles.graphTitle}>Usage Statistics</Text>
+                            
+                            <UsageStatisticsGraph 
+                                showDescription={showDescription}
+                                data={usageData}
+                                range={effectiveRange}
+                                title={selectedDeviceName}
+                            />
+                        </LinearGradient>
+                    )}
+
+                    {showDevices && (
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            colors={[Colors.GGrad1, Colors.GGrad2]}
+                            style={styles.graphCard}
+                        >
+                            <Text style={styles.graphTitle}>Most Used Devices</Text>
+                            
+                            <MostUsedDevicesGraph 
+                                showDescription={showDescription}
+                                data={deviceData}
+                                range={effectiveRange}
+                            />
+                        </LinearGradient>
+                    )}
+                </div>
+                ) : (
                  <div className="flex flex-row gap-6 mt-2 w-full">
                     {showUsageStats && (
                         <LinearGradient
@@ -141,6 +187,9 @@ export default function GraphSection({
                         </LinearGradient>
                     )}
                 </div>
+                )
+                // <div className="flex flex-row gap-6 mt-2 w-full">
+                //<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2 w-full">
             )}
         </div>
     )

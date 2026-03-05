@@ -68,12 +68,22 @@ export default function DevicePage() {
     })
 
     const layout: DeviceType = useResponsiveLayout()
+    
+    const header = (layout === DeviceType.Desktop) ? (
+        <SharedH1 text={deviceName} />
+    ) : (
+        <Header1 
+            headerIcon={imagePaths.header_plug}
+            imagePaths={imagePaths}
+            title={deviceName}
+            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+    )
 
     if (isLoadingDeviceInfo) {
         return (
             <div style={styles.verticalChildren}>
-                <SharedH1 text="Device Details" />
-                <SharedH5 text={`Loading device details for device ${deviceId}`} />
+                {header}
+                <Text>Loading device details...</Text>
             </div>
         )
     }
@@ -105,6 +115,7 @@ export default function DevicePage() {
                             showDevices={false}
                             showDeviceName={false}
                             showDescription={false}
+                            deviceId={deviceId}
                             />
                     }
                     unit="kWh"/>
@@ -233,15 +244,11 @@ export default function DevicePage() {
             case DeviceType.Mobile:
                 return (
                     <div style={styles.tabWrapper}>
-                        <Header1 
-                            headerIcon={imagePaths.header_plug}
-                            imagePaths={imagePaths}
-                            title={deviceName}
-                            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                        {header}
 
-                            <div style={styles.columns}>
-                                {content}
-                            </div>
+                        <div style={styles.columns}>
+                            {content}
+                        </div>
                         {tabs}
                     </div>
                 )
@@ -249,11 +256,7 @@ export default function DevicePage() {
             case DeviceType.Tablet:
                 return (
                     <div style={styles.tabWrapper}>
-                        <Header1 
-                            headerIcon={imagePaths.header_plug}
-                            imagePaths={imagePaths}
-                            title={deviceName}
-                            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                        {header}
 
                         <div style={styles.columns}>
                             <div style={styles.verticalChildren}>
@@ -271,7 +274,7 @@ export default function DevicePage() {
             case DeviceType.Desktop:
                 return (
                     <div>
-                        <SharedH1 text={deviceName} center={false}/>
+                        {header}
                         <div style={styles.desktopSpacer}/>
                         <div style={styles.tabWrapper}>
 

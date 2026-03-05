@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, ActivityIndicator } from 'react-native'
 
 import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
 import GraphSection from "@/app/graph_section/page"
@@ -100,7 +100,7 @@ export default function Dashboard() {
     
     const layout: DeviceType = useResponsiveLayout()
     
-    const headerText = `Welcome, ${user?.firstname} ${user?.lastname} !`
+    const headerText = `Welcome, ${user?.firstname} ${user?.lastname}`
     
     let header
     switch (layout) {
@@ -171,6 +171,16 @@ export default function Dashboard() {
     const lastWeekValue = 1630
     const lastMonthValue = 12739
     
+    if (userDeviceQuery.isLoading || userInfoQuery.isLoading) {
+        return (
+            <>
+                <ActivityIndicator
+                    size="large" 
+                    color={Colors.P1} />
+            </>
+        )
+    }
+    
     switch (layout) {
         case DeviceType.Mobile:
             return (
@@ -218,12 +228,15 @@ export default function Dashboard() {
                         <div style={styles.tabletUsageStatistics}>
                             <div style={styles.headerText}>Usage Statistics</div>
                             <InfoCardWithGraph 
-                                title="Usage Statistics"
+                                title=""
                                 description="Energy usage over the past 24 hours."
                                 yesterdayValue={yesterdayValue}
                                 lastWeekValue={lastWeekValue}
                                 lastMonthValue={lastMonthValue}
                                 showBackground={false}
+                                buttonImage={imagePaths["nav_powerUsageHover"]}
+                                onPress={() => router.push(`/dashboard/${userId}/power_usage`)}
+                                showButton={true}
                                 graph={
                                 <GraphSection 
                                     userId={userId}
@@ -357,7 +370,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         borderColor: Colors.P1,
-        padding: 12
+        padding: 12,
+        height: '100%'
     },
     tabletUsageStatistics: {
         gridRow: 'span 5',

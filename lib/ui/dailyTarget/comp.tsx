@@ -30,11 +30,15 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		width: '100%',
         borderRadius: 10,
+        height: '100%',
+        maxHeight: 120,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
 	},
 	innerContainer: {
 		alignSelf: 'center',
 		width: '100%',
+        height: '100%',
+        maxHeight: 120,
         padding: 12,
 		backgroundColor: Colors.E2,
 		borderColor: Colors.E1,
