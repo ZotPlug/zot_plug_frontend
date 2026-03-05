@@ -40,7 +40,7 @@ export default function UsageStatisticsGraph({ data, range, title, showDescripti
     const paddedMaxY = Math.ceil(rawMaxY * 100) / 100
     const rangeLabel = range === '24h' ? '24 hours' : range === '7d' ? '7 days' : '30 days'
     
-    const description = `Total energy consumption over the past ${rangeLabel} (${title})`
+    const description = `Energy consumption over the past ${rangeLabel} (${title})`
 
     return (
         <div style={styles.graphContainer}>
