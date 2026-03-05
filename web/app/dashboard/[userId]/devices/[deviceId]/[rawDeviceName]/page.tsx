@@ -22,6 +22,7 @@ import imagePaths from "@/app/imagePaths";
 import Header1 from "ui/headers/header1";
 import { useState } from "react";
 import { Colors } from "ui/colors";
+import GraphSection from "@/app/graph_section/page";
 
 async function sendCommand(params: DeviceControlReqs) {
     const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
@@ -67,12 +68,22 @@ export default function DevicePage() {
     })
 
     const layout: DeviceType = useResponsiveLayout()
+    
+    const header = (layout === DeviceType.Desktop) ? (
+        <SharedH1 text={deviceName} />
+    ) : (
+        <Header1 
+            headerIcon={imagePaths.header_plug}
+            imagePaths={imagePaths}
+            title={deviceName}
+            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+    )
 
     if (isLoadingDeviceInfo) {
         return (
             <div style={styles.verticalChildren}>
-                <SharedH1 text="Device Details" />
-                <SharedH5 text={`Loading device details for device ${deviceId}`} />
+                {header}
+                <Text>Loading device details...</Text>
             </div>
         )
     }
@@ -87,8 +98,8 @@ export default function DevicePage() {
                 <UsageCard 
                     title="Recent Usage"
                     description="Power usage over the last 24 hours."
-                    value={"362 W"}
-                    valueDescription="Power"/>
+                    value={"362 kWh"}
+                    valueDescription="Energy"/>
                 :
                 <InfoCardWithGraph 
                     title="Usage Statistics"
@@ -96,7 +107,18 @@ export default function DevicePage() {
                     yesterdayValue={362}
                     lastWeekValue={1630}
                     lastMonthValue={12739}
-                    unit="W"/>
+                    graph={
+                        <GraphSection 
+                            userId={userId}
+                            isRange={true}
+                            showUsageStats={true}
+                            showDevices={false}
+                            showDeviceName={false}
+                            showDescription={false}
+                            deviceId={deviceId}
+                            />
+                    }
+                    unit="kWh"/>
         )
 
         // TODO: Get dynamic values for recent usage
@@ -222,15 +244,11 @@ export default function DevicePage() {
             case DeviceType.Mobile:
                 return (
                     <div style={styles.tabWrapper}>
-                        <Header1 
-                            headerIcon={imagePaths.header_plug}
-                            imagePaths={imagePaths}
-                            title={deviceName}
-                            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                        {header}
 
-                            <div style={styles.columns}>
-                                {content}
-                            </div>
+                        <div style={styles.columns}>
+                            {content}
+                        </div>
                         {tabs}
                     </div>
                 )
@@ -238,11 +256,7 @@ export default function DevicePage() {
             case DeviceType.Tablet:
                 return (
                     <div style={styles.tabWrapper}>
-                        <Header1 
-                            headerIcon={imagePaths.header_plug}
-                            imagePaths={imagePaths}
-                            title={deviceName}
-                            onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
+                        {header}
 
                         <div style={styles.columns}>
                             <div style={styles.verticalChildren}>
@@ -260,7 +274,7 @@ export default function DevicePage() {
             case DeviceType.Desktop:
                 return (
                     <div>
-                        <SharedH1 text={deviceName} center={false}/>
+                        {header}
                         <div style={styles.desktopSpacer}/>
                         <div style={styles.tabWrapper}>
 

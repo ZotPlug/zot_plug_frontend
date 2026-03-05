@@ -21,7 +21,7 @@ export default function Button_1({ onPress, text, style }: Button_1) {
     const height = 50
     // We use viewport width on desktop so it still takes up 40% in scenarios 
     // where the parent doesn't take up the whole screen width
-    const width = (layout === DeviceType.Mobile ? '100%' : '40vw')
+    const width = (layout === DeviceType.Mobile ? '100%' : '45%')
     const maxWidth = (layout === DeviceType.Mobile ? 270 : 300)
 
     // TODO: find a way to do this without css duplication

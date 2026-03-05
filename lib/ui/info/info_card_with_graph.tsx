@@ -4,6 +4,8 @@ import LinearGradient from "react-native-linear-gradient"
 import { Colors } from "../colors"
 import { DeviceType } from "../types"
 import { useResponsiveLayout } from "../window_utils"
+import AddDeviceButton from "../buttons/add_device_button"
+import SharedHr from "./shared_hr"
 
 export type InfoCardWithGraph = {
     title: string, 
@@ -11,7 +13,12 @@ export type InfoCardWithGraph = {
     yesterdayValue: number,
     lastWeekValue: number,
     lastMonthValue: number,
-    unit: string
+    unit: string,
+    graph: any,
+    showBackground?: boolean,
+    showButton?: boolean,
+    buttonImage?: string,
+	onPress?: () => unknown | Promise<unknown>,
 }
 
 export default function InfoCardWithGraph({ 
@@ -20,77 +27,103 @@ export default function InfoCardWithGraph({
     yesterdayValue,
     lastWeekValue,
     lastMonthValue,
-    unit
+    unit,
+    graph,
+    showBackground=true,
+    showButton=false, // Used for the power usage breakdown on tablet
+    buttonImage="",
+    onPress
 }: InfoCardWithGraph) {
     
     const layout: DeviceType = useResponsiveLayout()
+    
+    const infoContent = (
+        <View style={styles.descriptionContainer}>
+            {showBackground ? (
+                <Text style={styles.title}>
+                    {title}
+                </Text>
+            ) : (
+                <View></View>
+            )}
+            {graph}
+            <Text style={styles.description}>
+                {description}
+            </Text>
+            <View style={styles.horizontalChildren}>
+                <LinearGradient
+                    start={{x: 0, y: 0.5}} 
+                    end={{x: 1, y: 0.5}} 
+                    colors={[Colors.BlGrad1, Colors.BlGrad2]}
+                    style={styles.statNameContainer}>
+                    <Text style={styles.statName}>
+                        Yesterday
+                    </Text>
+                </LinearGradient>
+                <View style={layout === DeviceType.Desktop ? styles.desktopStatValueContainer : styles.tabletStatValueContainer}>
+                    <Text style={styles.statValue}>
+                        {yesterdayValue.toLocaleString()} {unit}
+                    </Text>
+                </View>
+            </View>
+            <View style={styles.horizontalChildren}>
+                <LinearGradient
+                    start={{x: 0, y: 0.5}} 
+                    end={{x: 1, y: 0.5}} 
+                    colors={[Colors.BlGrad1, Colors.BlGrad2]}
+                    style={styles.statNameContainer}>
+                    <Text style={styles.statName}>
+                        Last Week
+                    </Text>
+                </LinearGradient>
+                <View style={layout === DeviceType.Desktop ? styles.desktopStatValueContainer : styles.tabletStatValueContainer}>
+                    <Text style={styles.statValue}>
+                        {lastWeekValue.toLocaleString()} {unit}
+                    </Text>
+                </View>
+            </View>
+            <View style={styles.horizontalChildren}>
+                <LinearGradient
+                    start={{x: 0, y: 0.5}} 
+                    end={{x: 1, y: 0.5}} 
+                    colors={[Colors.BlGrad1, Colors.BlGrad2]}
+                    style={styles.statNameContainer}>
+                    <Text style={styles.statName}>
+                        Last Month
+                    </Text>
+                </LinearGradient>
+                <View style={layout === DeviceType.Desktop ? styles.desktopStatValueContainer : styles.tabletStatValueContainer}>
+                    <Text style={styles.statValue}>
+                        {lastMonthValue.toLocaleString()} {unit}
+                    </Text>
+                </View>
+            </View>
 
-    return (
-            <LinearGradient
+            {showButton ? (
+                <AddDeviceButton 
+                    text="Power Usage Breakdown" 
+                    imagePath={buttonImage}
+                    onPress={onPress}/>
+            ) : (
+                <View></View>
+            )}
+        </View>
+    )
+    
+    // Ternary doesn't work here
+    if (showBackground) {
+        return <LinearGradient
                 start={{x: 0, y: 0.4}} 
                 end={{x: 1, y: 0.6}} 
                 colors={[Colors.BCGrad1, Colors.BCGrad2]}
                 style={styles.container}>
 
-                <View style={styles.descriptionContainer}>
-                    <Text style={styles.title}>
-                        {title}
-                    </Text>
-                    <Text>(Insert graph here)</Text>
-                    <Text style={styles.description}>
-                        {description}
-                    </Text>
-                    <View style={styles.horizontalChildren}>
-                        <LinearGradient
-                            start={{x: 0, y: 0.5}} 
-                            end={{x: 1, y: 0.5}} 
-                            colors={[Colors.BlGrad1, Colors.BlGrad2]}
-                            style={styles.statNameContainer}>
-                            <Text style={styles.statName}>
-                                Yesterday
-                            </Text>
-                        </LinearGradient>
-                        <View style={layout === DeviceType.Desktop ? styles.desktopStatValueContainer : styles.tabletStatValueContainer}>
-                            <Text style={styles.statValue}>
-                                {yesterdayValue.toLocaleString()} {unit}
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.horizontalChildren}>
-                        <LinearGradient
-                            start={{x: 0, y: 0.5}} 
-                            end={{x: 1, y: 0.5}} 
-                            colors={[Colors.BlGrad1, Colors.BlGrad2]}
-                            style={styles.statNameContainer}>
-                            <Text style={styles.statName}>
-                                Last Week
-                            </Text>
-                        </LinearGradient>
-                        <View style={layout === DeviceType.Desktop ? styles.desktopStatValueContainer : styles.tabletStatValueContainer}>
-                            <Text style={styles.statValue}>
-                                {lastWeekValue.toLocaleString()} {unit}
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.horizontalChildren}>
-                        <LinearGradient
-                            start={{x: 0, y: 0.5}} 
-                            end={{x: 1, y: 0.5}} 
-                            colors={[Colors.BlGrad1, Colors.BlGrad2]}
-                            style={styles.statNameContainer}>
-                            <Text style={styles.statName}>
-                                Last Month
-                            </Text>
-                        </LinearGradient>
-                        <View style={layout === DeviceType.Desktop ? styles.desktopStatValueContainer : styles.tabletStatValueContainer}>
-                            <Text style={styles.statValue}>
-                                {lastMonthValue.toLocaleString()} {unit}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-        </LinearGradient>
-    )
+                {infoContent}
+
+            </LinearGradient>
+    } else {
+        return infoContent
+    }
 }
 
 const styles = StyleSheet.create({
@@ -125,7 +158,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     tabletStatValueContainer: {
-        width: '35%',
+        width: '45%',
         padding: 8,
         backgroundColor: Colors.S4,
 
@@ -135,7 +168,7 @@ const styles = StyleSheet.create({
         boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)',
     },
     desktopStatValueContainer: {
-        width: '25%',
+        width: '35%',
         padding: 8,
         backgroundColor: Colors.S4,
 

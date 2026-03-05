@@ -2,16 +2,17 @@
 
 import { VictoryChart, VictoryArea, VictoryTheme, VictoryAxis, VictoryTooltip, VictoryScatter } from "victory"
 import { Colors } from "ui/colors"
-import { StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import SharedH5 from "ui/info/text/shared_h5"
 
 interface UsageStatsProps {
     data: { x: number; y: number }[]
     range: '24h' | '7d' | '30d'
-    title: string
+    title: string,
+    showDescription?: boolean
 }
 
-export default function UsageStatisticsGraph({ data, range, title }: UsageStatsProps) {
+export default function UsageStatisticsGraph({ data, range, title, showDescription=true }: UsageStatsProps) {
     let domainMax = 23
     let tickValues: number[] = []
     let tickFormat: (t: number) => string = (t) => `${t}`
@@ -38,11 +39,11 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
     const rawMaxY = maxY * 1.15
     const paddedMaxY = Math.ceil(rawMaxY * 100) / 100
     const rangeLabel = range === '24h' ? '24 hours' : range === '7d' ? '7 days' : '30 days'
+    
+    const description = `Energy consumption over the past ${rangeLabel} (${title})`
 
     return (
         <div style={styles.graphContainer}>
-            <SharedH5 text={`Device Name: ${title}`} />
-
             <VictoryChart 
                 theme={VictoryTheme.clean}  
                 height={250}
@@ -56,37 +57,17 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
                     tickValues={tickValues}
                     tickFormat={tickFormat}
                     label={xLabel} 
+                    orientation="bottom"
                     style={{
                         axisLabel: { padding: 40, fontSize: 14, fontWeight: 600 },
                         tickLabels: { fontSize: 10, angle: -45, padding: 10 }
                     }}    
                 />
-                {/* <VictoryAxis 
-                    tickValues={tickValues}
-                    tickFormat={tickFormat}
-                    label=""
-                    axisLabelComponent={
-                        <VictoryLabel
-                            dy={60}   
-                            textAnchor="middle"
-                            lineHeight={1.3}
-                            text={[
-                                xLabel,
-                                `Total energy consumption over the past ${rangeLabel}`,
-                            ]}
-                            style={[
-                                { fontSize: 14, fontWeight: 600 },
-                                { fontSize: 11, fontWeight: 400 }
-                            ]}
-                        />
-                    }
-                    style={{
-                        tickLabels: { fontSize: 10, angle: -45, padding: 10}
-                    }}  
-                /> */}
                 <VictoryAxis 
                     dependentAxis 
                     label="Energy (kWh)" 
+                    orientation="left"
+                    tickFormat={(t) => t.toFixed(2)}
                     style={{
                         axisLabel: { padding: 42, fontSize: 14, fontWeight: 600 },
                         tickLabels: { fontSize: 10 }
@@ -111,15 +92,32 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
                     labelComponent={<VictoryTooltip />}
                 />
             </VictoryChart>
-            
-            <SharedH5 text={`Total energy consumption over the past ${rangeLabel}`} />
+            {showDescription ? 
+                <Text style={styles.graphDescription}>
+                    {description}
+                </Text>
+                :
+                <div></div>
+            }
+
         </div>
     );
 }
 
 const styles = StyleSheet.create({
     graphContainer: {
+        width: '100%',
         height: '100%',
-        width: '100%'
+        minHeight: 250,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
+    graphDescription: {
+        color: Colors.S1,
+        fontWeight: 400,
+        fontStyle: 'italic',
+        fontSize: 12,
+        textAlign: 'center',
+    }
 })

@@ -1,23 +1,26 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { UserDeviceInfo } from "ui/types"
+import { DeviceType, UserDeviceInfo } from "ui/types"
 import { get_all_devices_by_userId } from "../api_utils/api_actions"
 import { Colors } from "ui/colors"
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 
 import UsageStatisticsGraph from "../info/graphs/usage_stats"
 import MostUsedDevicesGraph from "../info/graphs/devices"
 import LinearGradient from "react-native-linear-gradient"
 import useGraphData from "../hooks/useGraphData"
-import SharedH4 from "ui/info/text/shared_h4"
+import { useResponsiveLayout } from "ui/window_utils"
 
 interface DisplayGraphProps {
     userId: string,
     isRange?: boolean
     fixedRange?: '24h' | '7d' | '30d'
     showUsageStats?: boolean
-    showDevices?: boolean
+    showDevices?: boolean,
+    showDeviceName?: boolean,
+    showDescription?: boolean,
+    deviceId?: string
 }
 
 export default function GraphSection({ 
@@ -26,6 +29,9 @@ export default function GraphSection({
     fixedRange,
     showUsageStats = true,
     showDevices = true,
+    showDeviceName = true,
+    showDescription = true,
+    deviceId
  }: DisplayGraphProps) {
     const [devices, setDevices] = useState<UserDeviceInfo[]>([])
     const [selectedDeviceId, setSelectedDeviceId] = useState<number | undefined>()
@@ -33,6 +39,8 @@ export default function GraphSection({
     const [range, setRange] = useState<'24h' | '7d' | '30d'>(
         fixedRange ?? '24h'
     )
+    
+    const layout: DeviceType = useResponsiveLayout()
     
     const effectiveRange = fixedRange ?? range
 
@@ -49,7 +57,11 @@ export default function GraphSection({
         if (res.ok) {
             setDevices(res.value)
             if (res.value.length > 0) {
-                setSelectedDeviceId(res.value[0].device_id)
+                if (typeof deviceId !== 'undefined') {
+                    setSelectedDeviceId(parseInt(deviceId))
+                } else {
+                    setSelectedDeviceId(res.value[0].device_id)
+                }
             }
         }
     }
@@ -60,7 +72,7 @@ export default function GraphSection({
     }, [userId])
 
     const selectedDeviceName = devices.find(d => d.device_id === selectedDeviceId)?.device_name ?? ""
-
+    
     return (
         <div>
             {/* CONTROLS */}
@@ -80,7 +92,7 @@ export default function GraphSection({
                 
                 
                 {/* DEVICE SELECT (ONLY AFFECTS USAGE GRAPH)*/}
-                {devices.length > 0 && (
+                {showDeviceName && devices.length > 0 && (
                     <select
                         value={selectedDeviceId}
                         onChange={(e) => setSelectedDeviceId(Number(e.target.value))}
@@ -97,11 +109,12 @@ export default function GraphSection({
 
             {loading ? (
                 <div className="text-center py-10 text-black">
-                    <p>Loading graphs...</p>
+                    <Text style={styles.loadingText}>Loading graphs...</Text>
                 </div>
             ) : (
-                // <div className="flex flex-row gap-6 mt-2 w-full">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2 w-full">
+                layout !== DeviceType.Desktop ? (
+
+                 <div className="flex flex-col gap-6 mt-2 w-full">
                     {showUsageStats && (
                         <LinearGradient
                             start={{ x: 0, y: 0 }}
@@ -109,10 +122,10 @@ export default function GraphSection({
                             colors={[Colors.GGrad1, Colors.GGrad2]}
                             style={styles.graphCard}
                         >
-                            {/* <h3 className="text-black font-semibold mb-2">Usage Statistics</h3> */}
-                            <SharedH4 text="Usage Statistics"/>
+                            <Text style={styles.graphTitle}>Usage Statistics</Text>
                             
                             <UsageStatisticsGraph 
+                                showDescription={showDescription}
                                 data={usageData}
                                 range={effectiveRange}
                                 title={selectedDeviceName}
@@ -127,16 +140,56 @@ export default function GraphSection({
                             colors={[Colors.GGrad1, Colors.GGrad2]}
                             style={styles.graphCard}
                         >
-                            {/* <h3 className="text-black font-semibold mb-2">Most Used Devices</h3> */}
-                            <SharedH4 text="Most Used Devices"/>
+                            <Text style={styles.graphTitle}>Most Used Devices</Text>
                             
                             <MostUsedDevicesGraph 
+                                showDescription={showDescription}
                                 data={deviceData}
                                 range={effectiveRange}
                             />
                         </LinearGradient>
                     )}
                 </div>
+                ) : (
+                 <div className="flex flex-row gap-6 mt-2 w-full">
+                    {showUsageStats && (
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            colors={[Colors.GGrad1, Colors.GGrad2]}
+                            style={styles.graphCard}
+                        >
+                            <Text style={styles.graphTitle}>Usage Statistics</Text>
+                            
+                            <UsageStatisticsGraph 
+                                showDescription={showDescription}
+                                data={usageData}
+                                range={effectiveRange}
+                                title={selectedDeviceName}
+                            />
+                        </LinearGradient>
+                    )}
+
+                    {showDevices && (
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            colors={[Colors.GGrad1, Colors.GGrad2]}
+                            style={styles.graphCard}
+                        >
+                            <Text style={styles.graphTitle}>Most Used Devices</Text>
+                            
+                            <MostUsedDevicesGraph 
+                                showDescription={showDescription}
+                                data={deviceData}
+                                range={effectiveRange}
+                            />
+                        </LinearGradient>
+                    )}
+                </div>
+                )
+                // <div className="flex flex-row gap-6 mt-2 w-full">
+                //<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2 w-full">
             )}
         </div>
     )
@@ -148,9 +201,22 @@ const styles = StyleSheet.create({
         padding: 12,
         borderRadius: 12,
     },
+    graphTitle: {
+        fontWeight: 600,
+        fontSize: 16,
+        color: Colors.S1
+    },
+    loadingText: {
+        color: Colors.S1,
+        fontSize: 14,
+        fontStyle: 'italic'
+    },
     graphCard: {
-        flex: 1,          
+        flex: 1,
+        flexDirection: 'column',
+        height: '100%',
         padding: 12,
-        borderRadius: 12
+        borderRadius: 12,
+        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
     },
 })

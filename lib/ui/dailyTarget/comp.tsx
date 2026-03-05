@@ -11,7 +11,7 @@ export default function DailyTarget({ currProgress, maxProgress, imagePaths }: d
                 <View style={styles.row}>
                     <View>
                         <Text style={styles.header}>Daily Max Usage</Text>
-                        <Text style={styles.display_text}>{`${currProgress}W of ${maxProgress}W`}</Text>
+                        <Text style={styles.display_text}>{`${currProgress} kWh of ${maxProgress} kWh`}</Text>
                     </View>
                     <PlatformImage
                         imagePath={imagePaths["energy_leaf"]}
@@ -30,11 +30,15 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		width: '100%',
         borderRadius: 10,
+        height: '100%',
+        maxHeight: 120,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
 	},
 	innerContainer: {
 		alignSelf: 'center',
 		width: '100%',
+        height: '100%',
+        maxHeight: 120,
         padding: 12,
 		backgroundColor: Colors.E2,
 		borderColor: Colors.E1,

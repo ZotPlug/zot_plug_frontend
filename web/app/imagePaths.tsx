@@ -27,6 +27,7 @@ export const imagePaths = {
     devices_preview: '/images/device_icon.png',
     devices_preview2: '/images/device_icon2.png',
     devices_preview3: '/images/device_icon3.png',
+    devices_add: '/images/devices_add.svg',
 
     device_percentage: '/images/percentage.svg',
 
@@ -45,6 +46,11 @@ export const imagePaths = {
     tabs_weeklySelected: '/images/tabs_weeklySelected.svg',
     tabs_monthly: '/images/tabs_monthly.svg',
     tabs_monthlySelected: '/images/tabs_monthlySelected.svg',
+
+    power_plug: '/images/power_plug.svg',
+    rewards_plug: '/images/rewards_plug.svg',
+    friends_plug: '/images/friends_plug.svg',
+    settings_plug: '/images/settings_plug.svg',
 }
 
 export default imagePaths

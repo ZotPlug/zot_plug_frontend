@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { Text, View, Image as RNImage, TouchableOpacity, StyleSheet } from "react-native"
 import { devicePreviewProps } from "../types"
 import ProgressBar from "../components/progress_bar";
@@ -17,6 +17,8 @@ export default function DevicePreview({
 
     // TODO: Get rid of all of this old image logic
 
+    const [hover, setHover] = useState(false)
+
     const noImagePath: string = '/images/device_icon.png'
     const imagePath = (deviceImage === '') ? noImagePath : deviceImage
 
@@ -24,12 +26,16 @@ export default function DevicePreview({
     // logic is different on mobile and web, and requires different router 
     // libraries.
     return (
-        <TouchableOpacity onPress={() => redirectOnClick(deviceId)}>
+        <TouchableOpacity 
+            onMouseEnter={() => {setHover(true)}}
+            onMouseLeave={() => {setHover(false)}}
+            onPress={() => redirectOnClick(deviceId)} 
+            style={styles.containerContainer}>
             <LinearGradient
                 start={{x: 0, y: 0.1}} 
                 end={{x: 0.8, y: 0.9}} 
                 colors={[Colors.BlGrad1, Colors.BlGrad2]} 
-                style={styles.container}>
+                style={hover ? styles.containerHover : styles.container}>
                 
                 <Text style={styles.deviceName}>{deviceName}</Text>
 
@@ -45,7 +51,7 @@ export default function DevicePreview({
 
                 <View style={styles.powerStatsContainer}>
                     <View style={styles.powerStatsInsetContainer}>
-                        <Text style={styles.powerStats}>{currUsage} W</Text>
+                        <Text style={styles.powerStats}>{currUsage} kWh</Text>
                     </View>
                 </View>
 
@@ -55,6 +61,9 @@ export default function DevicePreview({
 }
 
 const styles = StyleSheet.create({
+    containerContainer: {
+        width: '100%',
+    },
     container: {
         display: 'grid',
         gridTemplateColumns: '5fr 1fr',
@@ -71,6 +80,23 @@ const styles = StyleSheet.create({
         paddingBottom: 6,
         flexShrink: 1,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    },
+    containerHover: {
+        display: 'grid',
+        gridTemplateColumns: '5fr 1fr',
+        gridTemplateRows: '1fr 0.5fr',
+        gap: 5,
+
+        flexDirection: 'row',
+        width: '100%',
+        maxWidth: 500,
+        borderRadius: 10,
+        paddingTop: 12,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingBottom: 6,
+        flexShrink: 1,
+        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
     },
     imageContainer: {
         width: '100%',
@@ -128,7 +154,7 @@ const styles = StyleSheet.create({
         borderColor: Colors.S6,
         borderWidth: 3,
         borderRadius: 10,
-        minWidth: 75,
+        minWidth: 95,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         alignSelf: 'center',
     },

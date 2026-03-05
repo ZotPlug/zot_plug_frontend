@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { Text, View, StyleSheet, } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
 import { Colors } from "../colors"
+import { DeviceType } from "../types"
+import { useResponsiveLayout } from "../window_utils"
 
 export type UsageCard = {
     title: string, 
@@ -16,36 +18,46 @@ export default function UsageCard({
     value,
     valueDescription
 }: UsageCard) {
-
+    
+    const [width, setWidth] = useState(0)
+    const onLayout = (event: { nativeEvent: { layout: { width: any } } }) => {
+        const { width } = event.nativeEvent.layout
+        setWidth(width)
+    }
+    
+    const verticalLimit = 250
+    const layoutVertical = (width < verticalLimit)
+    
     return (
-            <LinearGradient
-                start={{x: 0, y: 0.4}} 
-                end={{x: 1, y: 0.6}} 
-                colors={[Colors.BCGrad1, Colors.BCGrad2]}
-                style={styles.container}>
+        <LinearGradient
+            start={{x: 0, y: 0.4}} 
+            end={{x: 1, y: 0.6}} 
+            colors={[Colors.BCGrad1, Colors.BCGrad2]}
+            onLayout={onLayout}
+            style={layoutVertical ? styles.verticalContainer : styles.container}>
 
-                <View style={styles.descriptionContainer}>
-                    <Text style={styles.title}>
-                        {title}
-                    </Text>
-                    <Text style={styles.description}>
-                        {description}
-                    </Text>
-                </View>
+            <View style={styles.descriptionContainer}>
+                <Text style={styles.title}>
+                    {title}
+                </Text>
+                <Text style={styles.description}>
+                    {description}
+                </Text>
+            </View>
 
-                <LinearGradient 
-                    start={{x: 0, y: 0}} 
-                    end={{x: 1, y: 1}} 
-                    colors={[Colors.GGrad1, Colors.GGrad2]}
-                    style={styles.valueContainer}>
+            <LinearGradient 
+                start={{x: 0, y: 0}} 
+                end={{x: 1, y: 1}} 
+                colors={[Colors.GGrad1, Colors.GGrad2]}
+                style={layoutVertical ? styles.verticalValueContainer : styles.valueContainer}>
 
-                    <Text style={styles.value}>
-                        {value.toLocaleString()}
-                    </Text>
-                    <Text style={styles.valueDescription}>
-                        {valueDescription}
-                    </Text>
-                </LinearGradient>
+                <Text style={styles.value}>
+                    {value.toLocaleString()}
+                </Text>
+                <Text style={styles.valueDescription}>
+                    {valueDescription}
+                </Text>
+            </LinearGradient>
         </LinearGradient>
     )
 }
@@ -55,14 +67,25 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         width: '100%',
-        height: 120,
+        minHeight: 120,
 
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         gap: 10,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    },
+    verticalContainer: {
+        padding: 15,
+        borderRadius: 10,
+        width: '100%',
+        minHeight: 120,
 
+        display: 'flex',
+        flexDirection: 'vertical',
+        justifyContent: 'space-between',
+        gap: 10,
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
     },
     descriptionContainer: {
         alignSelf: 'center',
@@ -82,14 +105,25 @@ const styles = StyleSheet.create({
         flexShrink: 1,
     },
     valueContainer: {
-        alignSelf: 'end',
+        alignSelf: 'center',
         display: 'flex',
         alignItems: 'center',
         borderRadius: 10,
         borderWidth: 3,
         borderColor: Colors.S6,
         padding: 15,
-        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
+        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)',
+        minWidth: 150,
+    },
+    verticalValueContainer: {
+        alignSelf: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: Colors.S6,
+        padding: 15,
+        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)',
     },
     value: {
         fontSize: 24,

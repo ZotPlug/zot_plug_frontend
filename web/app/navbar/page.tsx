@@ -56,12 +56,20 @@ function getCurrentPage(location: string) {
 
 export default function NavBar({currentProgress, maxProgress}: NavBar) {
 	const { userId } = useParams<{ userId: string }>()
+    const [ hasLoaded, setHasLoaded ] = useState(false)
     const router = useRouter()
     
     const layout: DeviceType = useResponsiveLayout()
     
     const [page, setPage] = useState(CurrentPage.Dashboard);
+
     const location = useLocation()
+
+    if (!hasLoaded) {
+        setPage(getCurrentPage(location.pathname))
+        setHasLoaded(true)
+    }
+    
     useEffect(() => {
         setPage(getCurrentPage(location.pathname))
     }, [location, layout])
