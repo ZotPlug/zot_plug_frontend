@@ -87,8 +87,8 @@ export default function DevicePage() {
                 <UsageCard 
                     title="Recent Usage"
                     description="Power usage over the last 24 hours."
-                    value={"362 W"}
-                    valueDescription="Power"/>
+                    value={"362 kWh"}
+                    valueDescription="Energy"/>
                 :
                 <InfoCardWithGraph 
                     title="Usage Statistics"
@@ -96,7 +96,10 @@ export default function DevicePage() {
                     yesterdayValue={362}
                     lastWeekValue={1630}
                     lastMonthValue={12739}
-                    unit="W"/>
+                    graph={
+                        <Text>Test graph stuff</Text>
+                    }
+                    unit="kWh"/>
         )
 
         // TODO: Get dynamic values for recent usage

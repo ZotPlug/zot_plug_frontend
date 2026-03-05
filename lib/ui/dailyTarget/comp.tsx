@@ -11,7 +11,7 @@ export default function DailyTarget({ currProgress, maxProgress, imagePaths }: d
                 <View style={styles.row}>
                     <View>
                         <Text style={styles.header}>Daily Max Usage</Text>
-                        <Text style={styles.display_text}>{`${currProgress}W of ${maxProgress}W`}</Text>
+                        <Text style={styles.display_text}>{`${currProgress} kWh of ${maxProgress} kWh`}</Text>
                     </View>
                     <PlatformImage
                         imagePath={imagePaths["energy_leaf"]}

@@ -11,7 +11,8 @@ export type InfoCardWithGraph = {
     yesterdayValue: number,
     lastWeekValue: number,
     lastMonthValue: number,
-    unit: string
+    unit: string,
+    graph: any
 }
 
 export default function InfoCardWithGraph({ 
@@ -20,7 +21,8 @@ export default function InfoCardWithGraph({
     yesterdayValue,
     lastWeekValue,
     lastMonthValue,
-    unit
+    unit,
+    graph
 }: InfoCardWithGraph) {
     
     const layout: DeviceType = useResponsiveLayout()
@@ -36,7 +38,7 @@ export default function InfoCardWithGraph({
                     <Text style={styles.title}>
                         {title}
                     </Text>
-                    <Text>(Insert graph here)</Text>
+                    {graph}
                     <Text style={styles.description}>
                         {description}
                     </Text>
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     tabletStatValueContainer: {
-        width: '35%',
+        width: '45%',
         padding: 8,
         backgroundColor: Colors.S4,
 
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
         boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)',
     },
     desktopStatValueContainer: {
-        width: '25%',
+        width: '35%',
         padding: 8,
         backgroundColor: Colors.S4,
 

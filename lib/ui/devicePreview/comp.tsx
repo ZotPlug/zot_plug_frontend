@@ -45,7 +45,7 @@ export default function DevicePreview({
 
                 <View style={styles.powerStatsContainer}>
                     <View style={styles.powerStatsInsetContainer}>
-                        <Text style={styles.powerStats}>{currUsage} W</Text>
+                        <Text style={styles.powerStats}>{currUsage} kWh</Text>
                     </View>
                 </View>
 
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         borderColor: Colors.S6,
         borderWidth: 3,
         borderRadius: 10,
-        minWidth: 75,
+        minWidth: 95,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         alignSelf: 'center',
     },

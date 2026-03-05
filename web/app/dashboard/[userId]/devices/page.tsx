@@ -10,9 +10,11 @@ import imagePaths from '@/app/imagePaths'
 import { DeviceType } from 'ui/types'
 import { useResponsiveLayout } from 'ui/window_utils'
 import Header1 from 'ui/headers/header1'
+import TextHeader from 'ui/headers/text_header'
 import { StyleSheet } from 'react-native'
 import { Colors } from 'ui/colors'
 import LinearGradient from 'react-native-linear-gradient'
+import AddDeviceButton from 'ui/buttons/add_device_button'
 
 export default function Plugs() {
 
@@ -34,7 +36,7 @@ export default function Plugs() {
         const path = `/dashboard/${userId}/devices/${deviceId.toString()}/${deviceName}`
         router.push(path)
     }
-    
+     
     const header = (layout === DeviceType.Desktop) ? (
         <SharedH1 text={'Devices'} />
     ) : (
@@ -44,67 +46,125 @@ export default function Plugs() {
             imagePaths={imagePaths} 
             onBack={() => router.push(`/dashboard/${userId}`)}/>        
     )
-
-    return (
-        <>
-            {/* Header */}
-            {header}
-            
-            <div className='grid grid-cols-2 gap-3 mt-2'>
-                {/* My Devices */}
+    
+    const yourDevices = (
+        <div className="flex flex-col gap-6">
+            {isLoading ? (
                 <LinearGradient 
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
-                    colors={[Colors.BCGrad1, Colors.BCGrad2]}
-                    style={styles.gradient}
-                >
-                    <SharedH2 text="Your Devices"/>
-
-                    <div className="mt-6 flex flex-col gap-6">
-                        {isLoading ? (
-                            <div> Loading device data... </div>
-
-                        ) : plugs && plugs.ok ? (
-
-                            plugs.value.map(({ device_name, device_id }) => {
-                                // These two lines mainly just for test
-                                const currUsageTest = Number((Math.random() * 30).toFixed(2));
-                                if (img_i > 1) img_i = 0; else ++img_i
-
-                                return (
-                                    <DevicePreview 
-                                        key={device_id} 
-                                        deviceImage={img_arr[img_i]} 
-                                        deviceName={device_name} 
-                                        currUsage={currUsageTest} 
-                                        totalUsage={30} 
-                                        deviceId={device_id} 
-                                        redirectOnClick={() => openDeviceStats(device_id, device_name)} 
-                                    />
-                                )
-                            })
-                        ) : (
-                            <div> No devices attached to your account. </div>
-                        )}
+                    colors={[Colors.GGrad1, Colors.GGrad2]}
+                    style={styles.noDevicesContainer}>
+                    <div style={styles.noDevices}>
+                        Loading device data...
                     </div>
                 </LinearGradient>
 
-                {/* Friend's Devices */}
+            ) : plugs && plugs.ok ? (
+
+                plugs.value.map(({ device_name, device_id }) => {
+                    // These two lines mainly just for test
+                    const currUsageTest = Number((Math.random() * 30).toFixed(2));
+                    if (img_i > 1) img_i = 0; else ++img_i
+
+                    return (
+                        <DevicePreview 
+                            key={device_id} 
+                            deviceImage={img_arr[img_i]} 
+                            deviceName={device_name} 
+                            currUsage={currUsageTest} 
+                            totalUsage={30} 
+                            deviceId={device_id} 
+                            redirectOnClick={() => openDeviceStats(device_id, device_name)} 
+                        />
+                    )
+                })
+            ) : (
                 <LinearGradient 
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
-                    colors={[Colors.BCGrad1, Colors.BCGrad2]}
-                    style={styles.gradient}
-                >
-                    {/* TODO: Add logic to handle friends' devices (big task) */}
-                    <SharedH2 text="My Friends' Devices"/>
-                                        
-                    {/* TODO: Add card for this p block */}
-                    <p className='text-black'> No devices attached to your account </p>
+                    colors={[Colors.GGrad1, Colors.GGrad2]}
+                    style={styles.noDevicesContainer}>
+                    <div style={styles.noDevices}>
+                        No devices attached to your account.
+                    </div>
                 </LinearGradient>
-            </div>
-        </>
+            )}
+        </div>
     )
+    
+    const friendsDevices = (
+        <LinearGradient 
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            colors={[Colors.GGrad1, Colors.GGrad2]}
+            style={styles.noDevicesContainer}>
+            <div style={styles.noDevices}>
+                No devices found.
+            </div>
+        </LinearGradient>
+    )
+    
+    switch (layout) {
+        case DeviceType.Mobile:
+            return (
+                <>
+                    <div style={styles.centerChildren}>
+                        {/* Header */}
+                        {header}
+                        {/* If we had time, we would add the whole setup process here */}
+                        {/*<AddDeviceButton 
+                            text='Add a Device'
+                            imagePath={imagePaths["devices_add"]}
+                            onPress={() => console.log("Add a device")}/>
+                        */}
+                        <TextHeader text="My Devices"/>
+                        {yourDevices}
+
+                        <TextHeader text="My Friends' Devices"/>
+                        {/* Friend's Devices */}
+                        {friendsDevices}
+                    </div>
+                </>
+            )
+            break
+        case DeviceType.Tablet:
+        case DeviceType.Desktop:
+            return (
+                <>
+                    <div style={styles.centerChildren}>
+                        {/* Header */}
+                        {header}
+                        {/* If we had time, we would add the whole setup process here */}
+                        {/*<AddDeviceButton 
+                            text='Add a Device'
+                            imagePath={imagePaths["devices_add"]}
+                            onPress={() => console.log("Add a device")}/>
+                        */}
+                            
+                        
+                        <div className='grid grid-cols-2 gap-3 mt-2'>
+                            <div style={styles.tabletDeviceContainer}>
+                                <div style={styles.tabletDeviceText}>
+                                    My Devices
+                                </div>
+                                {yourDevices}
+                            </div>
+
+                            <div style={styles.tabletDeviceContainer}>
+                                <div style={styles.tabletDeviceText}>
+                                    My Friends' Devices
+                                </div>
+                                {friendsDevices}
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )
+            break
+        case DeviceType.Desktop:
+            break
+    }
 }
 
 const styles = StyleSheet.create({
@@ -112,6 +172,44 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 12,
         borderRadius: 12,
+        flex: 1,
+        height: '100%'
     },
+    centerChildren: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    noDevices: {
+        color: Colors.S1,
+        fontWeight: 400,
+        fontSize: 12,
+        fontStyle: 'italic'
+    },
+    noDevicesContainer: {
+        width: '100%',
+        height: 90,
+        flexGrow: 1,
+        borderRadius: 10,
+        justifyContent: 'center',
+        padding: 12,
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        alignItems: 'center'
+    },
+    tabletDeviceContainer: {
+        backgroundColor: Colors.P4,
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: Colors.P1,
+        padding: 12,
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        marginTop: 8
+    },
+    tabletDeviceText: {
+        fontWeight: 700,
+        fontSize: 16,
+        color: Colors.P1,
+        marginBottom: 4
+    }
 })
 

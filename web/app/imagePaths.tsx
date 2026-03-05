@@ -27,6 +27,7 @@ export const imagePaths = {
     devices_preview: '/images/device_icon.png',
     devices_preview2: '/images/device_icon2.png',
     devices_preview3: '/images/device_icon3.png',
+    devices_add: '/images/devices_add.svg',
 
     device_percentage: '/images/percentage.svg',
 

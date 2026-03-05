@@ -62,29 +62,6 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
                         tickLabels: { fontSize: 10, angle: -45, padding: 10 }
                     }}    
                 />
-                {/* <VictoryAxis 
-                    tickValues={tickValues}
-                    tickFormat={tickFormat}
-                    label=""
-                    axisLabelComponent={
-                        <VictoryLabel
-                            dy={60}   
-                            textAnchor="middle"
-                            lineHeight={1.3}
-                            text={[
-                                xLabel,
-                                `Total energy consumption over the past ${rangeLabel}`,
-                            ]}
-                            style={[
-                                { fontSize: 14, fontWeight: 600 },
-                                { fontSize: 11, fontWeight: 400 }
-                            ]}
-                        />
-                    }
-                    style={{
-                        tickLabels: { fontSize: 10, angle: -45, padding: 10}
-                    }}  
-                /> */}
                 <VictoryAxis 
                     dependentAxis 
                     label="Energy (kWh)" 
