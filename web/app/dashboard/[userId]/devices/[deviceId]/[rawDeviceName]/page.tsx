@@ -22,6 +22,7 @@ import imagePaths from "@/app/imagePaths";
 import Header1 from "ui/headers/header1";
 import { useState } from "react";
 import { Colors } from "ui/colors";
+import GraphSection from "@/app/graph_section/page";
 
 async function sendCommand(params: DeviceControlReqs) {
     const res = await device_control({ topic: params.topic, payload: params.payload, qos: params.qos, retain: params.retain })
@@ -97,7 +98,14 @@ export default function DevicePage() {
                     lastWeekValue={1630}
                     lastMonthValue={12739}
                     graph={
-                        <Text>Test graph stuff</Text>
+                        <GraphSection 
+                            userId={userId}
+                            isRange={true}
+                            showUsageStats={true}
+                            showDevices={false}
+                            showDeviceName={false}
+                            showDescription={false}
+                            />
                     }
                     unit="kWh"/>
         )

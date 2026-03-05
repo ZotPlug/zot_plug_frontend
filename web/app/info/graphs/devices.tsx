@@ -7,10 +7,11 @@ import { Text, StyleSheet } from 'react-native'
 
 interface MostUsedDevicesProps {
     data: { x: string; y: number }[]
-    range: '24h' | '7d' | '30d'
+    range: '24h' | '7d' | '30d',
+    showDescription?: boolean
 }
 
-export default function MostUsedDevicesGraph({ data, range }: MostUsedDevicesProps) {
+export default function MostUsedDevicesGraph({ data, range, showDescription=true }: MostUsedDevicesProps) {
     const rangeLabel = range === '24h' ? '24 hours' : range === '7d' ? '7 days' : '30 days'
     
     const description = `Total energy consumption over the past ${rangeLabel} across my most used devices`
@@ -62,9 +63,13 @@ export default function MostUsedDevicesGraph({ data, range }: MostUsedDevicesPro
                 />
             </VictoryChart>
             
-            <Text style={styles.graphDescription}>
-                {description}
-            </Text>
+            {showDescription ? 
+                <Text style={styles.graphDescription}>
+                    {description}
+                </Text>
+                :
+                <div></div>
+            }
         </div>
     )
 }
@@ -73,7 +78,7 @@ const styles = StyleSheet.create({
     graphContainer: {
         height: '100%',
         width: '100%',
-        minHeight: 180,
+        minHeight: 250,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'

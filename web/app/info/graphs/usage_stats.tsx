@@ -8,10 +8,11 @@ import SharedH5 from "ui/info/text/shared_h5"
 interface UsageStatsProps {
     data: { x: number; y: number }[]
     range: '24h' | '7d' | '30d'
-    title: string
+    title: string,
+    showDescription?: boolean
 }
 
-export default function UsageStatisticsGraph({ data, range, title }: UsageStatsProps) {
+export default function UsageStatisticsGraph({ data, range, title, showDescription=true }: UsageStatsProps) {
     let domainMax = 23
     let tickValues: number[] = []
     let tickFormat: (t: number) => string = (t) => `${t}`
@@ -91,10 +92,13 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
                     labelComponent={<VictoryTooltip />}
                 />
             </VictoryChart>
-            
-            <Text style={styles.graphDescription}>
-                {description}
-            </Text>
+            {showDescription ? 
+                <Text style={styles.graphDescription}>
+                    {description}
+                </Text>
+                :
+                <div></div>
+            }
 
         </div>
     );
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
     graphContainer: {
         width: '100%',
         height: '100%',
-        minHeight: 180,
+        minHeight: 250,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'

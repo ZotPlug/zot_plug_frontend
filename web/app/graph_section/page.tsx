@@ -10,14 +10,15 @@ import UsageStatisticsGraph from "../info/graphs/usage_stats"
 import MostUsedDevicesGraph from "../info/graphs/devices"
 import LinearGradient from "react-native-linear-gradient"
 import useGraphData from "../hooks/useGraphData"
-import SharedH4 from "ui/info/text/shared_h4"
 
 interface DisplayGraphProps {
     userId: string,
     isRange?: boolean
     fixedRange?: '24h' | '7d' | '30d'
     showUsageStats?: boolean
-    showDevices?: boolean
+    showDevices?: boolean,
+    showDeviceName?: boolean,
+    showDescription?: boolean
 }
 
 export default function GraphSection({ 
@@ -26,6 +27,8 @@ export default function GraphSection({
     fixedRange,
     showUsageStats = true,
     showDevices = true,
+    showDeviceName = true,
+    showDescription = true
  }: DisplayGraphProps) {
     const [devices, setDevices] = useState<UserDeviceInfo[]>([])
     const [selectedDeviceId, setSelectedDeviceId] = useState<number | undefined>()
@@ -80,7 +83,7 @@ export default function GraphSection({
                 
                 
                 {/* DEVICE SELECT (ONLY AFFECTS USAGE GRAPH)*/}
-                {devices.length > 0 && (
+                {showDeviceName && devices.length > 0 && (
                     <select
                         value={selectedDeviceId}
                         onChange={(e) => setSelectedDeviceId(Number(e.target.value))}
@@ -113,6 +116,7 @@ export default function GraphSection({
                             <Text style={styles.graphTitle}>Usage Statistics</Text>
                             
                             <UsageStatisticsGraph 
+                                showDescription={showDescription}
                                 data={usageData}
                                 range={effectiveRange}
                                 title={selectedDeviceName}
@@ -130,6 +134,7 @@ export default function GraphSection({
                             <Text style={styles.graphTitle}>Most Used Devices</Text>
                             
                             <MostUsedDevicesGraph 
+                                showDescription={showDescription}
                                 data={deviceData}
                                 range={effectiveRange}
                             />
