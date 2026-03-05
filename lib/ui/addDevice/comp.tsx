@@ -3,6 +3,7 @@ import { View, Text, Modal, StyleSheet, TextInput, useWindowDimensions } from 'r
 import BasicButton from "../buttons/basic_button";
 import SharedH4 from "../info/text/shared_h4";
 import { AddDeviceCompParams } from "../types";
+import Button_1 from "../buttons/button_1";
 
 export default function AddDevice({ onSubmit, modalMessage, SetModalMesage }: AddDeviceCompParams) {
 	const [overlayState, SetOverlayState] = useState(false)
@@ -12,7 +13,7 @@ export default function AddDevice({ onSubmit, modalMessage, SetModalMesage }: Ad
 
 	return (
 		<View>
-			<BasicButton text={"Add device"} onPress={() => SetOverlayState(!overlayState)} />
+			<Button_1 text={"Add device"} onPress={() => SetOverlayState(!overlayState)} />
 
 			<Modal visible={overlayState} transparent animationType="fade" onRequestClose={() => SetOverlayState(false)}>
 				<View style={styles.modalContainer}>
@@ -41,8 +42,8 @@ export default function AddDevice({ onSubmit, modalMessage, SetModalMesage }: Ad
 							}
 						</View>
 						<View style={styles.buttonContainer}>
-							<BasicButton text={"Close"} onPress={() => SetOverlayState(false)} />
-							<BasicButton text={"Submit"} onPress={() => onSubmit({ deviceName: textInput.toLowerCase() })} />
+							<Button_1 text={"Close"} onPress={() => SetOverlayState(false)} />
+							<Button_1 text={"Submit"} onPress={() => onSubmit({ deviceName: textInput.toLowerCase() })} />
 						</View>
 					</View>
 				</View>
@@ -89,7 +90,9 @@ const styles = StyleSheet.create({
 	},
 	buttonContainer: {
 		flexDirection: 'row',
-		width: '50%'
+		width: '100%',
+		justifyContent: 'space-between',
+        padding: 10
 	},
 	textInput: {
 		backgroundColor: 'lightgray',

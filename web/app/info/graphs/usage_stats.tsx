@@ -2,7 +2,7 @@
 
 import { VictoryChart, VictoryArea, VictoryTheme, VictoryAxis, VictoryTooltip, VictoryScatter } from "victory"
 import { Colors } from "ui/colors"
-import { StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import SharedH5 from "ui/info/text/shared_h5"
 
 interface UsageStatsProps {
@@ -38,11 +38,11 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
     const rawMaxY = maxY * 1.15
     const paddedMaxY = Math.ceil(rawMaxY * 100) / 100
     const rangeLabel = range === '24h' ? '24 hours' : range === '7d' ? '7 days' : '30 days'
+    
+    const description = `Total energy consumption over the past ${rangeLabel} (${title})`
 
     return (
         <div style={styles.graphContainer}>
-            <SharedH5 text={`Device Name: ${title}`} />
-
             <VictoryChart 
                 theme={VictoryTheme.clean}  
                 height={250}
@@ -56,6 +56,7 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
                     tickValues={tickValues}
                     tickFormat={tickFormat}
                     label={xLabel} 
+                    orientation="bottom"
                     style={{
                         axisLabel: { padding: 40, fontSize: 14, fontWeight: 600 },
                         tickLabels: { fontSize: 10, angle: -45, padding: 10 }
@@ -87,6 +88,8 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
                 <VictoryAxis 
                     dependentAxis 
                     label="Energy (kWh)" 
+                    orientation="left"
+                    tickFormat={(t) => t.toFixed(2)}
                     style={{
                         axisLabel: { padding: 42, fontSize: 14, fontWeight: 600 },
                         tickLabels: { fontSize: 10 }
@@ -112,14 +115,28 @@ export default function UsageStatisticsGraph({ data, range, title }: UsageStatsP
                 />
             </VictoryChart>
             
-            <SharedH5 text={`Total energy consumption over the past ${rangeLabel}`} />
+            <Text style={styles.graphDescription}>
+                {description}
+            </Text>
+
         </div>
     );
 }
 
 const styles = StyleSheet.create({
     graphContainer: {
+        width: '100%',
         height: '100%',
-        width: '100%'
+        minHeight: 180,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
+    graphDescription: {
+        color: Colors.S1,
+        fontWeight: 400,
+        fontStyle: 'italic',
+        fontSize: 12,
+        textAlign: 'center',
+    }
 })

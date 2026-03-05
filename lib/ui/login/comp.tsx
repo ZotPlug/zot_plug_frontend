@@ -50,6 +50,7 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, i
                     onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText, email, pass ))}
                     placeholder="Type here"
                     editable={true}
+                    placeholderTextColor={Colors.S1}
                     style={styles.textInput}
                 />
                 <Text style={styles.entryFieldHeader}>Password</Text>
@@ -60,6 +61,7 @@ export default function LoginComp({ onSubmit, onBack, errorText, setErrorText, i
                     onKeyPress={(e: Event) => setIsLoading(submitOnEnter(e, onSubmit, setErrorText, email, pass ))}
                     placeholder="Type here"
                     editable={true}
+                    placeholderTextColor={Colors.S1}
                     style={styles.textInput}
                 />
             </View>

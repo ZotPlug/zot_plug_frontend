@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { UserDeviceInfo } from "ui/types"
 import { get_all_devices_by_userId } from "../api_utils/api_actions"
 import { Colors } from "ui/colors"
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 
 import UsageStatisticsGraph from "../info/graphs/usage_stats"
 import MostUsedDevicesGraph from "../info/graphs/devices"
@@ -97,11 +97,12 @@ export default function GraphSection({
 
             {loading ? (
                 <div className="text-center py-10 text-black">
-                    <p>Loading graphs...</p>
+                    <Text style={styles.loadingText}>Loading graphs...</Text>
                 </div>
             ) : (
                 // <div className="flex flex-row gap-6 mt-2 w-full">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2 w-full">
+                //<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2 w-full">
+                 <div className="flex flex-row gap-6 mt-2 w-full">
                     {showUsageStats && (
                         <LinearGradient
                             start={{ x: 0, y: 0 }}
@@ -109,8 +110,7 @@ export default function GraphSection({
                             colors={[Colors.GGrad1, Colors.GGrad2]}
                             style={styles.graphCard}
                         >
-                            {/* <h3 className="text-black font-semibold mb-2">Usage Statistics</h3> */}
-                            <SharedH4 text="Usage Statistics"/>
+                            <Text style={styles.graphTitle}>Usage Statistics</Text>
                             
                             <UsageStatisticsGraph 
                                 data={usageData}
@@ -127,8 +127,7 @@ export default function GraphSection({
                             colors={[Colors.GGrad1, Colors.GGrad2]}
                             style={styles.graphCard}
                         >
-                            {/* <h3 className="text-black font-semibold mb-2">Most Used Devices</h3> */}
-                            <SharedH4 text="Most Used Devices"/>
+                            <Text style={styles.graphTitle}>Most Used Devices</Text>
                             
                             <MostUsedDevicesGraph 
                                 data={deviceData}
@@ -148,9 +147,22 @@ const styles = StyleSheet.create({
         padding: 12,
         borderRadius: 12,
     },
+    graphTitle: {
+        fontWeight: 600,
+        fontSize: 16,
+        color: Colors.S1
+    },
+    loadingText: {
+        color: Colors.S1,
+        fontSize: 14,
+        fontStyle: 'italic'
+    },
     graphCard: {
-        flex: 1,          
+        flex: 1,
+        flexDirection: 'column',
+        height: '100%',
         padding: 12,
-        borderRadius: 12
+        borderRadius: 12,
+        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
     },
 })
