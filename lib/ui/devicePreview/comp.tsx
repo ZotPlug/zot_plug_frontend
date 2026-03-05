@@ -24,7 +24,7 @@ export default function DevicePreview({
     // logic is different on mobile and web, and requires different router 
     // libraries.
     return (
-        <TouchableOpacity onPress={() => redirectOnClick(deviceId)}>
+        <TouchableOpacity onPress={() => redirectOnClick(deviceId)} style={styles.containerContainer}>
             <LinearGradient
                 start={{x: 0, y: 0.1}} 
                 end={{x: 0.8, y: 0.9}} 
@@ -55,6 +55,9 @@ export default function DevicePreview({
 }
 
 const styles = StyleSheet.create({
+    containerContainer: {
+        width: '100%',
+    },
     container: {
         display: 'grid',
         gridTemplateColumns: '5fr 1fr',

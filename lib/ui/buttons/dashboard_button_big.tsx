@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { Colors } from '../colors'
 import PlatformImage from '../info/platform_image'
 import LinearGradient from "react-native-linear-gradient"
+import { DeviceType } from '../types'
+import { useResponsiveLayout } from '../window_utils'
 
 type DashboardButton = {
     className?: string,
@@ -16,6 +18,8 @@ export default function DashboardButtonBig({className, onPress, imagePath, text 
     // It's less performant than a pure external css implementation, but
     // that would involve some painful infra changes.
     const [hover, setHover] = useState(false)
+    
+    const layout: DeviceType = useResponsiveLayout()
 
     const navbarContent = (
         <>
@@ -32,22 +36,35 @@ export default function DashboardButtonBig({className, onPress, imagePath, text 
     )
 
     return (
-        <>
-            <TouchableOpacity 
-                onMouseEnter={() => {setHover(true)}}
-                onMouseLeave={() => {setHover(false)}}
-                style={hover ? styles.buttonHover : styles.button}
-                className={className}
-                onPress={onPress}>
-                {navbarContent}
-            </TouchableOpacity>
-        </>
+        layout === DeviceType.Mobile ? (
+            <>
+                <TouchableOpacity 
+                    onMouseEnter={() => {setHover(true)}}
+                    onMouseLeave={() => {setHover(false)}}
+                    style={hover ? styles.buttonHoverMobile : styles.buttonMobile}
+                    className={className}
+                    onPress={onPress}>
+                    {navbarContent}
+                </TouchableOpacity>
+            </>
+        ) : (
+            <>
+                <TouchableOpacity 
+                    onMouseEnter={() => {setHover(true)}}
+                    onMouseLeave={() => {setHover(false)}}
+                    style={hover ? styles.buttonHover : styles.button}
+                    className={className}
+                    onPress={onPress}>
+                    {navbarContent}
+                </TouchableOpacity>
+            </>
+        )
     )
 }
 
 // TODO: find a way to do this without css duplication
 const styles = StyleSheet.create({
-    button: {
+    buttonMobile: {
         backgroundColor: Colors.P4,
         height: 100,
         width: '100%',
@@ -64,7 +81,7 @@ const styles = StyleSheet.create({
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         gridColumn: 'span 2'
     },
-    buttonHover: {
+    buttonHoverMobile: {
         backgroundColor: Colors.P4,
         height: 100,
         width: '100%',
@@ -80,6 +97,38 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)',
         gridColumn: 'span 2'
+    },
+    button: {
+        backgroundColor: Colors.P4,
+        height: 100,
+        width: '100%',
+
+        padding: 12,
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: Colors.P1,
+
+        display: 'flex',
+        flexDirection: 'row',
+        alignSelf: 'center',
+        alignItems: 'center',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    },
+    buttonHover: {
+        backgroundColor: Colors.P4,
+        height: 100,
+        width: '100%',
+
+        padding: 12,
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: Colors.P1,
+
+        display: 'flex',
+        flexDirection: 'row',
+        alignSelf: 'center',
+        alignItems: 'center',
+        boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)',
     },
     text: {
         fontSize: 16,

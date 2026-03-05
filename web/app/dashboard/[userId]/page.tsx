@@ -25,6 +25,8 @@ import imagePaths from "@/app/imagePaths"
 import DailyTarget from "ui/dailyTarget/comp"
 import DashboardButtonBig from "ui/buttons/dashboard_button_big"
 import DashboardButtonSmall from "ui/buttons/dashboard_button_small"
+import AddDeviceButton from "ui/buttons/add_device_button"
+import InfoCardWithGraph from "ui/info/info_card_with_graph"
 
 export default function Dashboard() {
 	const { userId } = useParams<{ userId: string }>()
@@ -128,6 +130,47 @@ export default function Dashboard() {
             imagePaths={imagePaths}/>
     )
     
+    const devicesSection = (
+        layout === DeviceType.Desktop ? (
+            <>
+                <div className="grid grid-cols-2 gap-3 mt-2">
+                    {devices.slice(0, 4).map((device) => (
+                        <DevicePreview
+                            key={device.device_id}
+                            deviceId={device.device_id}
+                            deviceName={device.device_name}
+                            deviceImage=''
+                            currUsage={0}
+                            totalUsage={0}
+                            redirectOnClick={() => {router.push(`/dashboard/${userId}/devices/${device.device_id.toString()}/${device.device_name}`)}}
+                        />
+                    ))}
+                </div>
+            </>
+        ) : (
+            <>
+                <div className="grid grid-cols-1 gap-3 mt-2">
+                    {devices.slice(0, 4).map((device) => (
+                        <DevicePreview
+                            key={device.device_id}
+                            deviceId={device.device_id}
+                            deviceName={device.device_name}
+                            deviceImage=''
+                            currUsage={0}
+                            totalUsage={0}
+                            redirectOnClick={() => {router.push(`/dashboard/${userId}/devices/${device.device_id.toString()}/${device.device_name}`)}}
+                        />
+                    ))}
+                </div>
+            </>
+        )
+    )
+    
+    // TODO: Add actual query logic to grab these numbers
+    const yesterdayValue = 362
+    const lastWeekValue = 1630
+    const lastMonthValue = 12739
+    
     switch (layout) {
         case DeviceType.Mobile:
             return (
@@ -170,7 +213,61 @@ export default function Dashboard() {
             return (
                 <>
                     {header}
-                    {targetUsage}
+                    <div style={styles.mobileGrid}> 
+                        {targetUsage}
+                        <div style={styles.tabletUsageStatistics}>
+                            <div style={styles.headerText}>Usage Statistics</div>
+                            <InfoCardWithGraph 
+                                title="Usage Statistics"
+                                description="Energy usage over the past 24 hours."
+                                yesterdayValue={yesterdayValue}
+                                lastWeekValue={lastWeekValue}
+                                lastMonthValue={lastMonthValue}
+                                showBackground={false}
+                                graph={
+                                <GraphSection 
+                                    userId={userId}
+                                    isRange={false}
+                                    fixedRange="24h"
+                                    showUsageStats={true}
+                                    showDevices={false}
+                                    showDeviceName={true}
+                                    showDescription={false}
+                                    />
+                                }
+                                unit="kWh"
+                                />
+                        </div>
+                        <div style={styles.tabletMostUsedDevices}>
+                            <div style={styles.headerText}>Most Used Devices</div>
+                            {devicesSection}
+                            <div style={styles.spacer}></div>
+                            <SharedHr />
+                            <div style={styles.spacer}></div>
+                            <AddDeviceButton 
+                                text="All Devices" 
+                                imagePath={imagePaths["nav_devicesHover"]}
+                                onPress={() => {}} />
+                        </div>
+                        <DashboardButtonBig
+                            text="Rewards" 
+                            imagePath={imagePaths["nav_rewards"]}
+                            onPress={() => router.push(`/dashboard/${userId}/rewards`)}/>
+                        <DashboardButtonBig
+                            text="Friends" 
+                            imagePath={imagePaths["nav_friends"]}
+                            onPress={() => router.push(`/dashboard/${userId}/friends`)}/>
+                        <DashboardButtonBig
+                            text="Settings" 
+                            imagePath={imagePaths["nav_settings"]}
+                            onPress={() => router.push(`/dashboard/${userId}/settings`)}/>
+                        
+
+                        <DashboardButtonBig 
+                            text="Campus Usage" 
+                            imagePath={imagePaths["nav_campusUsage"]}
+                            onPress={() => router.push(`/dashboard/${userId}/campus_usage`)}/>
+                    </div>
                 </>
             )
             break
@@ -215,19 +312,7 @@ export default function Dashboard() {
                         style={styles.gradient}
                     >
                         <Text style={styles.headerText}>Most Used Devices</Text>
-                        <div className="grid grid-cols-2 gap-3 mt-2">
-                            {devices.slice(0, 4).map((device) => (
-                                <DevicePreview
-                                    key={device.device_id}
-                                    deviceId={device.device_id}
-                                    deviceName={device.device_name}
-                                    deviceImage=''
-                                    currUsage={0}
-                                    totalUsage={0}
-                                    redirectOnClick={() => {}}
-                                />
-                            ))}
-                        </div>
+                        {devicesSection}
                         
                         <div className="mt-6">
                             <AddDevice onSubmit={addDevice} modalMessage={modalMessage} SetModalMesage={SetModalMessage} />
@@ -264,5 +349,27 @@ const styles = StyleSheet.create({
         fontWeight: 600,
         fontSize: 24,
         textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    },
+    tabletMostUsedDevices: {
+        gridRow: 'span 4',
+        backgroundColor: Colors.P4,
+        borderRadius: 10,
+        borderWidth: 3,
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        borderColor: Colors.P1,
+        padding: 12
+    },
+    tabletUsageStatistics: {
+        gridRow: 'span 5',
+        backgroundColor: Colors.P4,
+        borderRadius: 10,
+        borderWidth: 3,
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        borderColor: Colors.P1,
+        padding: 12
+    },
+    spacer: {
+        marginTop: 16,
+        marginBottom: 12
     }
 })
