@@ -55,7 +55,7 @@ export default function DashboardLayout({
                     <div style={styles.desktopRow}>
                         {/* Left Navbar */}
                         <aside style={styles.navbarContainer}>
-                            <NavBar currentProgress={50} maxProgress={100} />
+                            <NavBar currentProgress={10} maxProgress={30} />
                         </aside>
 
                         {/* Right Content (changes per route) */}
