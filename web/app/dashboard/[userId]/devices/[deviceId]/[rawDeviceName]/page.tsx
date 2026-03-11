@@ -1,11 +1,11 @@
 'use client'
 import { useParams } from "next/navigation"
 import { useQuery } from '@tanstack/react-query'
-import { device_control } from "@/app/api_utils/api_actions";
+import { device_control, get_usage_overview } from "@/app/api_utils/api_actions";
 import { apiGetDeviceInfo, apiGetLatestDeviceReading } from "@/app/api_utils/api_device_actions";
 import DeviceControl from "ui/deviceControl/comp"
 import ToggleSwitchCard from "ui/deviceControl/toggle_switch_card"
-import { DeviceControlReqs, DeviceType } from "ui/types";
+import { DeviceControlReqs, DeviceType, UsageOverview } from "ui/types";
 import { useRouter } from 'next/navigation'
 import DeviceReadings from "ui/deviceReadings/comp"
 import MobileTabs from "ui/mobileTabs/mobileTabs"
@@ -20,7 +20,7 @@ import { StyleSheet, Text } from "react-native"
 import { useResponsiveLayout } from "ui/window_utils";
 import imagePaths from "@/app/imagePaths";
 import Header1 from "ui/headers/header1";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Colors } from "ui/colors";
 import GraphSection from "@/app/graph_section/page";
 
@@ -41,6 +41,8 @@ export default function DevicePage() {
     const { userId, deviceId, rawDeviceName } = useParams<{ userId: string, deviceId: string, rawDeviceName: string }>();
 
 	const [selectedPage, setSelectedPage] = useState(SelectedDevicePage.Statistics)
+    const [totalUsageOverview, setTotalUsageOverview] = useState<UsageOverview>({ daily: 0, weekly: 0, monthly: 0 })
+    const [deviceUsageOverview, setDeviceUsageOverview] = useState<UsageOverview>({ daily: 0, weekly: 0, monthly: 0 })
 
     // We need to keep track of the device ID to get the current status (online/offline)
     // And we need the device name for everything else (because of how the API 
@@ -79,6 +81,22 @@ export default function DevicePage() {
             onBack={ () => router.push(`/dashboard/${userId}/devices`) }/>
     )
 
+    async function fetchTotalandDeviceOverview() {
+        const [totalRes, deviceRes] = await Promise.all([
+            get_usage_overview({ userId }),
+            get_usage_overview({ userId, deviceId: parseInt(deviceId) })
+        ])
+
+        if (totalRes.ok) setTotalUsageOverview(totalRes.value)
+            else console.log('Error fetching total usage overview', totalRes.error)
+        if (deviceRes.ok) setDeviceUsageOverview(deviceRes.value)
+            else console.log('Error fetching device usage overview', deviceRes.error)
+    }
+
+    useEffect(() => {
+        fetchTotalandDeviceOverview()
+    }, [userId, deviceId])
+
     if (isLoadingDeviceInfo) {
         return (
             <div style={styles.verticalChildren}>
@@ -97,16 +115,16 @@ export default function DevicePage() {
             (layout === DeviceType.Mobile) ?
                 <UsageCard 
                     title="Recent Usage"
-                    description="Power usage over the last 24 hours."
-                    value={"362 kWh"}
+                    description="Energy usage over the last 24 hours."
+                    value={`${deviceUsageOverview.daily.toFixed(2)} kWh`}
                     valueDescription="Energy"/>
                 :
                 <InfoCardWithGraph 
                     title="Usage Statistics"
-                    description="Total power consumption over the past 24 hours for this device."
-                    yesterdayValue={362}
-                    lastWeekValue={1630}
-                    lastMonthValue={12739}
+                    description="Total energy usage over the past 24 hours for this device."
+                    yesterdayValue={deviceUsageOverview.daily}
+                    lastWeekValue={deviceUsageOverview.weekly}
+                    lastMonthValue={deviceUsageOverview.monthly}
                     graph={
                         <GraphSection 
                             userId={userId}
@@ -130,10 +148,10 @@ export default function DevicePage() {
 
                 <EnergyCard 
                     title="Putting It In Perspective"
-                    description="Yesterday's usage compared to total power usage over the last 24 hours across all devices."
-                    currentValue={362}
-                    totalValue={1200}
-                    unit="W"
+                    description="Yesterday's usage compared to total energy usage over the last 24 hours across all devices."
+                    currentValue={deviceUsageOverview.daily}
+                    totalValue={totalUsageOverview.daily}
+                    unit="kWh"
                     icon={imagePaths["device_percentage"]}/>
             </div>
         )

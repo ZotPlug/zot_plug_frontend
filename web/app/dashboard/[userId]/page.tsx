@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Text, StyleSheet, ActivityIndicator } from 'react-native'
 
-import { add_device, fetch_user_by_id, get_all_devices_by_userId } from "@/app/api_utils/api_actions"
+import { add_device, fetch_user_by_id, get_all_devices_by_userId, get_usage_overview } from "@/app/api_utils/api_actions"
 import GraphSection from "@/app/graph_section/page"
 
 import SharedH1 from "ui/info/text/shared_h1"
@@ -13,7 +13,7 @@ import SharedHr from "ui/info/shared_hr"
 import AddDevice from "ui/addDevice/comp"
 import DevicePreview from "ui/devicePreview/comp"
 
-import { DeviceType, UserDeviceInfo } from "ui/types"
+import { DeviceType, UserDeviceInfo, UsageOverview } from "ui/types"
 import { useQueries } from "@tanstack/react-query"
 import { Colors } from "ui/colors"
 
@@ -33,12 +33,13 @@ export default function Dashboard() {
 	const [user, setUser] = useState<{ firstname: string; lastname: string; userId: string } | null>(null)
 	const [devices, setDevices] = useState<UserDeviceInfo[]>([])
 	const [modalMessage, SetModalMessage] = useState<{ ok: boolean, message: string } | null>(null)
+	const [usageOverview, setUsageOverview] = useState<UsageOverview>({ daily: 0, weekly: 0, monthly: 0 })
 
     const router = useRouter()
     
-    // TODO: Add actual target logic
-    const currentUsage = 50
-    const maxUsage = 100
+    // TODO: Add actual target logic for maxUsage
+    const currentUsage = parseFloat(usageOverview.daily.toFixed(2))
+    const maxUsage = 30
 
 	async function addDevice(params: { deviceName: string }) {
 		const res = await add_device({ userId: parseInt(userId), deviceName: params.deviceName })
@@ -68,6 +69,12 @@ export default function Dashboard() {
 		else setDevices(res.value)
 	}
 
+	async function fetchOverview() {
+		const res = await get_usage_overview({ userId })
+		if (!res.ok) SetModalMessage({ ok: false, message: res.error! })
+		else setUsageOverview(res.value)
+	}
+    
 	useEffect(() => {
         if (!userInfoQuery.isLoading) {
             if (userInfoQuery.data == undefined || !userInfoQuery.data.ok) {
@@ -84,19 +91,25 @@ export default function Dashboard() {
             }
         }}, [userInfoQuery.data, userInfoQuery.isLoading, userDeviceQuery.data, userDeviceQuery.isLoading])
 
-	const usagePeriods = [{
-		label: 'Daily',
-		value: '3 kWh',
-		description: 'Energy usage over the last 24 hours.'
-	},{
-		label: 'Weekly',
-		value: '13 kWh',
-		description: 'Energy usage over the last 7 days.'
-	},{
-		label: 'Monthly',
-		value: '100 kWh',
-		description: 'Energy usage over the last 30 days.'
-	}]
+	useEffect(() => {
+		if (userId) fetchOverview()
+	}, [userId])
+
+	const usagePeriods = usageOverview ? [
+		{
+			label: 'Daily',
+			value: `${usageOverview.daily.toFixed(2)} kWh`,
+			description: 'Energy usage over the last 24 hours.'
+		},{
+			label: 'Weekly',
+			value: `${usageOverview.weekly.toFixed(2)} kWh`,
+			description: 'Energy usage over the last 7 days.'
+		},{
+			label: 'Monthly',
+			value: `${usageOverview.monthly.toFixed(2)} kWh`,
+			description: 'Energy usage over the last 30 days.'
+		}
+	] : []
     
     const layout: DeviceType = useResponsiveLayout()
     
@@ -166,10 +179,9 @@ export default function Dashboard() {
         )
     )
     
-    // TODO: Add actual query logic to grab these numbers
-    const yesterdayValue = 362
-    const lastWeekValue = 1630
-    const lastMonthValue = 12739
+    const yesterdayValue = parseFloat(usageOverview.daily.toFixed(2))
+    const lastWeekValue = parseFloat(usageOverview.weekly.toFixed(2))
+    const lastMonthValue = parseFloat(usageOverview.monthly.toFixed(2))
     
     if (userDeviceQuery.isLoading || userInfoQuery.isLoading) {
         return (
