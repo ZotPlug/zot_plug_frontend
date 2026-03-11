@@ -119,3 +119,9 @@ export enum DeviceType {
     Tablet,
     Desktop
 }
+
+export interface UsageOverview {
+	daily: number;
+	weekly: number;
+	monthly: number;
+}

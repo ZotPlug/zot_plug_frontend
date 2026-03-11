@@ -142,7 +142,7 @@ export async function fetch_user_by_id(params: { userId: string }): Promise<Resu
 export async function get_usage_overview(params: {
 	userId: string
 	deviceId?: number
-}): Promise<Result<UsageOverview[]>> {
+}): Promise<Result<UsageOverview>> {
 	try {
 		const res = await fetch('/api/frontendDevices/getUsageOverview', {
 			method: "POST",
