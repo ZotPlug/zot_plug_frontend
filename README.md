@@ -2,7 +2,7 @@
 
 ![ZotPlug Frontend](./screenshots/readme_frontend.jpg)
 
-Welcome to ZotPlug! This is the full-stack web and mobile frontend for our smart plug IoT solution. 
+Welcome to ZotPlug! This is the web and mobile frontend for our smart plug IoT solution. 
 
 ## Project Poster & Technical Report
 
